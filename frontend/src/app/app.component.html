@@ -1,0 +1,25 @@
+<style>
+
+</style>
+
+<main class="main">
+  <div class="content">
+    <h1>Custom Report</h1>
+    <button 
+      (click)="callApi()" 
+      [disabled]="isLoading">
+      {{ isLoading ? 'Loading...' : 'Call Backend' }}
+    </button>
+  </div>
+  
+      @if (isLoading) {
+        <p>Loading...</p>
+      } @else if (error) {
+        <p class="error">Error: {{ error }}</p>
+      } @else if (response) {
+        <p>Response: {{ response }}</p>
+      }
+</main>
+
+
+<router-outlet />
