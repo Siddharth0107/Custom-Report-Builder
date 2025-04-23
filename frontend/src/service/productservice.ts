@@ -5,64 +5,69 @@ export class ProductService {
     getProductsData() {
         return [
             {
-                id: '1000',
-                code: 'f230fh0g3',
-                name: 'Bamboo Watch',
+                id: '1',
+                code: 'report_1',
+                name: 'Task Report',
                 description: 'Product Description',
                 image: 'bamboo-watch.jpg',
                 price: 65,
                 category: 'Accessories',
                 quantity: 24,
                 inventoryStatus: 'INSTOCK',
-                rating: 5
+                rating: 5,
+                columnsList:['Task Name', 'Task Id', 'Assigned To', 'Assigned By', 'Due Date', 'Start Date', 'Reporting Person', 'Task Description']
             },
             {
-                id: '1001',
-                code: 'nvklal433',
-                name: 'Black Watch',
+                id: '2',
+                code: 'report_2',
+                name: 'Lead Report',
                 description: 'Product Description',
                 image: 'black-watch.jpg',
                 price: 72,
                 category: 'Accessories',
                 quantity: 61,
                 inventoryStatus: 'OUTOFSTOCK',
-                rating: 4
+                rating: 4,
+                columnsList:['Lead Name', 'Lead Generator', 'Found On', 'Lead Number', 'Lead For', 'Lead Description']
             },
             {
-                id: '1002',
-                code: 'zz21cz3c1',
-                name: 'Blue Band',
+                id: '3',
+                code: 'report_3',
+                name: 'Enquiry Report',
                 description: 'Product Description',
                 image: 'blue-band.jpg',
                 price: 79,
                 category: 'Fitness',
                 quantity: 2,
                 inventoryStatus: 'LOWSTOCK',
-                rating: 3
+                rating: 3,
+                columnsList:['Enquiry Related To', 'Enquiry Date', 'Follow Up Person', 'Enquiry For', 'Enquiry Description']
             },
             {
-                id: '1003',
-                code: '244wgerg2',
-                name: 'Blue T-Shirt',
+                id: '4',
+                code: 'report_4',
+                name: 'Quotation Report',
                 description: 'Product Description',
                 image: 'blue-t-shirt.jpg',
                 price: 29,
                 category: 'Clothing',
                 quantity: 25,
                 inventoryStatus: 'INSTOCK',
-                rating: 5
+                rating: 5,
+                columnsList:['Quotation ID', 'Transaction Date', 'Sales Order No', 'Sales Order Date', 'Organization Name', 'Organiztion Description', 'Assigned To', 'Valid Until', 'Open Activities', 'Closed Activites', 'Closed Activites', 'Closed Activites', 'Closed Activites', 'Closed Activites', 'Closed Activites', 'Closed Activites', 'Closed Activites']
             },
             {
-                id: '1004',
-                code: 'h456wer53',
-                name: 'Bracelet',
+                id: '5',
+                code: 'report_5',
+                name: 'Sample Report',
                 description: 'Product Description',
                 image: 'bracelet.jpg',
                 price: 15,
                 category: 'Accessories',
                 quantity: 73,
                 inventoryStatus: 'INSTOCK',
-                rating: 4
+                rating: 4,
+                columnsList:['Sample Order ID', 'Transaction Date', 'Sales Order No', 'Sales Order Date', 'Company Name', 'Status']
             },
             {
                 id: '1005',
