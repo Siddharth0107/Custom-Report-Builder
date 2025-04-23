@@ -129,9 +129,10 @@
       [dropdown]="true"
       [suggestions]="filteredRoles"
       (completeMethod)="search($event)"
+      (change)="onRoleChange()"
     />
   </div>
-
+12{{products}}
   <div *ngIf="roleValue.id" class="table-container">
     <table class="custom-table">
       <thead>
@@ -150,13 +151,21 @@
             <div class="column-scroll">
               <div class="column-items">
                 <span class="spanDiv" *ngFor="let item of product.selectedColumns">
-                  {{ item.column }}
+                  <!-- <div *ngFor="let report of reports"> -->
+                    <!-- <h3>{{ report.name }} ({{ report.reportId }})</h3> -->
+                    <ul>
+                      <li *ngFor="let col of product.selectedColumns">
+                        <input type="checkbox" [checked]="col.is_selected" disabled /> {{ col.column }}
+                      </li>
+                    </ul>
+                  <!-- </div> -->
+                  <!-- {{ item.column }}
                   <input
                     class="input-class"
                     type="checkbox"
                     [(ngModel)]="item.is_selected"
                     [disabled]="product.readonly"
-                  />
+                  /> -->
                 </span>
               </div>
             </div>
@@ -183,7 +192,7 @@
     </table>
     <div class="submit-wrapper">
       <p-button
-        [disabled]="!isAnyReportSaved()"
+        [disabled]="!showSubmit"
         severity="info"
         (click)="submit()"
         label="Submit"

@@ -8,11 +8,16 @@ import { Observable } from 'rxjs';
 })
 export class ReportService {
 
-  private apiUrl = 'http://localhost:8000/api/report_permissions/'; // Replace with your Django URL
+  private reportPermissionsUrl = 'http://localhost:8000/api/report_permissions/'; // Replace with your Django URL
+  private initialListUrl = 'http://localhost:8000/api/all_permissions/';
 
   constructor(private http: HttpClient) {}
 
   submitReport(data: any): Observable<any> {
-    return this.http.post(this.apiUrl, data);
+    return this.http.post(this.reportPermissionsUrl, data);
+  }
+
+  handleList():Observable<any>{
+    return this.http.get(this.initialListUrl);
   }
 }
