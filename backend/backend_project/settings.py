@@ -82,25 +82,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'report_builder',
         'USER': 'django_user',
-        'PASSWORD': 'Django@123!',
+        'PASSWORD': 'developer',
         'HOST': 'localhost',
         'PORT': '3306',
         
     }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'your_db_name',
-#         'USER': 'your_db_user',
-#         'PASSWORD': 'your_db_password',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#         'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-#         },
-#     }
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

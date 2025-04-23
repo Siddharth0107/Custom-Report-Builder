@@ -7,6 +7,7 @@ import { TableModule } from 'primeng/table';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { ReportService } from './service/report.service';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
   products!: Product[];
   count = Array.from({ length: 10 });
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private reportService: ReportService) {}
 
   search(event: any) {
     const query = event.query.toLowerCase();
@@ -45,7 +46,7 @@ export class AppComponent implements OnInit {
         ...product,
         selectedColumns: product.columnsList.map((col: string) => ({
           column: col,
-          isSelected: false
+          is_selected: false
         })),
         isSaved: false,
       }));      
@@ -65,10 +66,19 @@ export class AppComponent implements OnInit {
       report_name: product.name,
       role: this.roleValue,
       report_id:product.code,
-      all_columns: product.selectedColumns
+      all_fields: product.selectedColumns
     }));
 
     console.log('Final Submitted Data:', selectedData);
+
+    this.reportService.submitReport(selectedData).subscribe({
+      next: (response:any) => {
+        console.log('Submitted Successfully:', response);
+      },
+      error: (error:any) => {
+        console.error('Error submitting data:', error);
+      }
+    });
   }
 
   isAnyColumnSelected(product: any): boolean {

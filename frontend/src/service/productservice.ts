@@ -6,7 +6,7 @@ export class ProductService {
         return [
             {
                 id: '1',
-                code: 'report_1',
+                code: 1,
                 name: 'Task Report',
                 description: 'Product Description',
                 image: 'bamboo-watch.jpg',
@@ -19,7 +19,7 @@ export class ProductService {
             },
             {
                 id: '2',
-                code: 'report_2',
+                code: 2,
                 name: 'Lead Report',
                 description: 'Product Description',
                 image: 'black-watch.jpg',
@@ -32,7 +32,7 @@ export class ProductService {
             },
             {
                 id: '3',
-                code: 'report_3',
+                code: 3,
                 name: 'Enquiry Report',
                 description: 'Product Description',
                 image: 'blue-band.jpg',
@@ -45,7 +45,7 @@ export class ProductService {
             },
             {
                 id: '4',
-                code: 'report_4',
+                code: 4,
                 name: 'Quotation Report',
                 description: 'Product Description',
                 image: 'blue-t-shirt.jpg',
@@ -58,7 +58,7 @@ export class ProductService {
             },
             {
                 id: '5',
-                code: 'report_5',
+                code: 5,
                 name: 'Sample Report',
                 description: 'Product Description',
                 image: 'bracelet.jpg',
