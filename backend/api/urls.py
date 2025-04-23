@@ -7,5 +7,5 @@ from .views import show_report_permission
 urlpatterns = [
     path('report_permissions/', set_report_permissions),
     path('all_permissions/', get_report_permissions),
-    path('show_report_permission/<str:encoded_id>/', show_report_permission),
+    path('show_report_permission/<str:role_id>/', show_report_permission),
 ]

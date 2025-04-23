@@ -5,8 +5,9 @@ from .models import ReportPermission
 from .serializers import ReportPermissionSerializer
 from .serializers import ReportPermissionListSerializer
 from django.db import DatabaseError
-from .utils import decode_id
 import logging
+from collections import defaultdict
+
 
 logger = logging.getLogger(__name__)
 
@@ -52,31 +53,47 @@ def set_report_permissions(request):
             return Response({"error": "An unexpected error occurred.", "details": str(e)},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+
 @api_view(['GET'])
 def get_report_permissions(request):
-     try:
+    try:
         permissions = ReportPermission.objects.all()
         if not permissions:
             return Response({"message": "No report permissions found"}, status=status.HTTP_404_NOT_FOUND)
-        serializer = ReportPermissionListSerializer(permissions, many=True)
-        
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        grouped_data = defaultdict(dict)
+        for perm in permissions:
+            role_id = str(perm.role_id)   
+            report_id = str(perm.report_id)
 
-        # return Response(permissions.values(), status=status.HTTP_200_OK)
+            grouped_data[role_id][report_id] = {
+                "report_name": perm.report_name,
+                "columns": perm.columns  
+            }
 
-     except Exception as e:
-         logger.exception("Error fetching report permissions")
-         return Response({"error": "An error occurred while fetching report permissions", "details": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(grouped_data, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        logger.exception("Error building nested report permissions")
+        return Response({
+            "error": "An error occurred while fetching report permissions",
+            "details": str(e)
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
 
 @api_view(['GET'])
-def show_report_permission(request, encoded_id):
+def show_report_permission(request, role_id):
     try:
-        pid = decode_id(encoded_id)
-        if not pid:
-            return Response({"error": "Invalid report permission ID"}, status=status.HTTP_400_BAD_REQUEST)
+        if not role_id:
+            return Response({"error": "Invalid role ID"}, status=status.HTTP_400_BAD_REQUEST)
 
-        permission = ReportPermission.objects.get(id=pid)
-        serializer = ReportPermissionListSerializer(permission)
+        permissions = ReportPermission.objects.filter(role_id=role_id)
+        if not permissions.exists():
+            return Response({"error": "No report permissions found for this role"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = ReportPermissionListSerializer(permissions, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    except ReportPermission.DoesNotExist:
-        return Response({"error": "Report Permission not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    except Exception as e:
+        return Response({"error": "Something went wrong", "details": str(e)},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)

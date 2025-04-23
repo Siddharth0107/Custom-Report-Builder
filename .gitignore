@@ -8,6 +8,7 @@ env/
 *.log
 local_settings.py
 db.sqlite3
+settings.py
 
 # Node/Angular
 node_modules/
