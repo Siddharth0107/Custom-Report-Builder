@@ -60,12 +60,9 @@ export class AppComponent implements OnInit {
   save(product: any) {
     console.log("this",!this.isAnyColumnSelected);
     console.log("product",product);
-    
-    
-    // if (!this.isAnyColumnSelected(product)) return;
     product.readonly = true;
     product.isSaved = true;
-    product.ediBtnEnable = true;
+    product.ediBtnEnable = false;
     product.saveBtnEnable = false;
     this.showSubmit = false;
     console.log('Saved for:', product.name, product.selectedColumns);
@@ -90,7 +87,7 @@ export class AppComponent implements OnInit {
         console.error('Error submitting data:', error);
       }
     });
-    this.showSubmit = false;
+    this.showSubmit = true;
   }
 
   isAnyColumnSelected(product: any): boolean {
