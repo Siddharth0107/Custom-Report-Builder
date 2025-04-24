@@ -17,7 +17,9 @@ import { ReportService } from './service/report.service';
   providers: [ProductService]
 })
 
-export class AppComponent implements OnInit {  
+export class AppComponent implements OnInit {
+  ediBtnEnable:boolean=true;
+  saveBtnEnable:boolean=true;
   roles: any = [
     { id: 1, name: "Sales Person" },
     { id: 2, name: "Delivery Partner" },
@@ -25,8 +27,8 @@ export class AppComponent implements OnInit {
     { id: 4, name: "Accountant" },
     { id: 5, name: "Cashier" }
   ];
-  filteredRoles: any[] = []; 
-  roleValue={id:1,name:'Sales Person'};
+  filteredRoles: any[] = [];
+  roleValue={id:4,name:'Accountant'};
   products!: Product[];
   count = Array.from({ length: 10 });
   showSubmit = true;
@@ -42,36 +44,33 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.reportService.handleList().subscribe({
-      next:(response:any)=>{
-        console.log(typeof response);
-        
-        this.products = response.map((product: any) => ({
-          ...product,
-          selectedColumns: product.columnsList.map((col: string) => ({
-            column: col,
-            is_selected: false
-          })),
-          isSaved: false,
-        }));    
-        console.log("Response",response)
-        console.log("products",this.products)
+      next: (response: any) => {
+        console.log('Raw Response:', response);
+        const transformedReports = this.transformReportsByRole(response, this.roleValue.id);
+        console.log('Reports for Role:', this.roleValue.name, transformedReports);
+        this.products = transformedReports;
       },
-      error:(error:any)=>{
-        console.error("Error",error)
+      error: (error: any) => {
+        console.error("Error", error);
       }
-    })
-
-    this.products = this.transformReportsByRole(this.products, this.roleValue.id,this.products);
+    });
   }
+
 
   save(product: any) {
-    if (!this.isAnyColumnSelected(product)) return;
+    console.log("this",!this.isAnyColumnSelected);
+    console.log("product",product);
+    
+    
+    // if (!this.isAnyColumnSelected(product)) return;
     product.readonly = true;
     product.isSaved = true;
-    this.showSubmit = true;
+    product.ediBtnEnable = true;
+    product.saveBtnEnable = false;
+    this.showSubmit = false;
     console.log('Saved for:', product.name, product.selectedColumns);
   }
-  
+
 
   submit() {
     const selectedData = this.products.filter(product => product.isSaved).map(product => ({
@@ -85,7 +84,7 @@ export class AppComponent implements OnInit {
 
     this.reportService.submitReport(selectedData).subscribe({
       next: (response:any) => {
-        console.log('Submitted Successfully:', response);        
+        console.log('Submitted Successfully:', response);
       },
       error: (error:any) => {
         console.error('Error submitting data:', error);
@@ -98,48 +97,56 @@ export class AppComponent implements OnInit {
     return product.selectedColumns.some((col: any) => col.is_selected);
   }
 
-  // isAnyReportSaved(): boolean {
-  //   return this.products.some(product => product.isSaved)  
-  // } 
-
   edit(product: any) {
-    product.readonly = false;
+    product.ediBtnEnable = true;
+    product.saveBtnEnable = true;
   }
 
-  transformReportsByRole(dataFromAPI: any, selectedRoleId: number, products: any[]): any[] {
+  transformReportsByRole(roleBasedReports: any, selectedRoleId: number): any[] {
     const transformed: any[] = [];
-
-    const roleReports = dataFromAPI[selectedRoleId];
+    const roleReports = roleBasedReports[selectedRoleId];
     if (!roleReports) return [];
-  
-    for (const product of products) {
-      for (const reportId in roleReports) {
-        const report = roleReports[reportId];
-  
-        // Build a map of selected columns
-        const selectionMap = new Map(
-          report.selected_columns.map((item: any) => [item.column, item.is_selected])
-        );
-  
-        const selectedColumns = product.columnsList.map((col: string) => ({
-          column: col,
-          is_selected: selectionMap.get(col) || false,
-        }));
-  
-        transformed.push({
-          reportId,
-          name: report.name,
-          selectedColumns,
-          isSaved: false,
-        });
-      }
+
+    for (const key in roleReports) {
+      const report = roleReports[key];
+
+      const selectedColumns = report.columns.map((col: any) => ({
+        column: col.column,
+        is_selected: col.is_selected
+      }));
+
+      transformed.push({
+        reportId: key,
+        code: key,
+        name: report.report_name,
+        selectedColumns,
+        isSaved: false,
+        columns:roleReports[key].columns,
+      });
     }
-  
     return transformed;
   }
-   
+
 
   onRoleChange() {
-    this.products = this.transformReportsByRole(this.products, this.roleValue.id,this.products);
+    console.log("changed");
+
+    this.reportService.handleList().subscribe({
+      next: (response: any) => {
+        const transformed = this.transformReportsByRole(response, this.roleValue.id);
+        this.products = transformed;
+      },
+      error: (error: any) => {
+        console.error('Error changing role:', error);
+      }
+    });
   }
+
+  toggleColumnSelection(product: any, column: any) {
+    column.is_selected = !column.is_selected;
+    product.isSaved = false;
+    product.saveBtnEnable = true;
+    this.showSubmit = true;
+  }
+
 }

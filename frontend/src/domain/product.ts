@@ -15,4 +15,6 @@ export interface Product {
     isSaved:boolean;
     readonly:boolean;
     hasUnsavedChanges:boolean;
+    ediBtnEnable:boolean;
+    saveBtnEnable:boolean;
 }

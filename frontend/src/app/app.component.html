@@ -129,10 +129,9 @@
       [dropdown]="true"
       [suggestions]="filteredRoles"
       (completeMethod)="search($event)"
-      (change)="onRoleChange()"
+      (onSelect)="onRoleChange()"
     />
   </div>
-12{{products}}
   <div *ngIf="roleValue.id" class="table-container">
     <table class="custom-table">
       <thead>
@@ -144,28 +143,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let product of products">
-          <td>{{ product.id }}</td>
+        <tr *ngFor="let product of products; index as i; ">
+          <td>{{ i + 1 }}</td>
           <td>{{ product.name }}</td>
           <td>
             <div class="column-scroll">
               <div class="column-items">
                 <span class="spanDiv" *ngFor="let item of product.selectedColumns">
-                  <!-- <div *ngFor="let report of reports"> -->
-                    <!-- <h3>{{ report.name }} ({{ report.reportId }})</h3> -->
-                    <ul>
-                      <li *ngFor="let col of product.selectedColumns">
-                        <input type="checkbox" [checked]="col.is_selected" disabled /> {{ col.column }}
-                      </li>
-                    </ul>
-                  <!-- </div> -->
-                  <!-- {{ item.column }}
-                  <input
-                    class="input-class"
-                    type="checkbox"
-                    [(ngModel)]="item.is_selected"
-                    [disabled]="product.readonly"
-                  /> -->
+                  <span *ngFor="let col of product.selectedColumns">
+                    {{col.column}}
+                    <input class="input-class" type="checkbox" [checked]="col.is_selected" (change)="toggleColumnSelection(product, col)" [disabled]="!product.ediBtnEnable"/>
+                  </span>
                 </span>
               </div>
             </div>
@@ -176,11 +164,10 @@
                 label="Edit"
                 severity="info"
                 (click)="edit(product)"
-                [disabled]="!product.readonly"
+                [disabled]="product.ediBtnEnable"
               />
-              
               <p-button
-                [disabled]="!isAnyColumnSelected(product) || product.readonly"
+                [disabled]="!product.saveBtnEnable"
                 (click)="save(product)"
                 label="Save"
                 severity="success"
@@ -192,7 +179,7 @@
     </table>
     <div class="submit-wrapper">
       <p-button
-        [disabled]="!showSubmit"
+        [disabled]="showSubmit"
         severity="info"
         (click)="submit()"
         label="Submit"
