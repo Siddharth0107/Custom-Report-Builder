@@ -6,7 +6,7 @@ export class ProductService {
         return [
             {
                 id: '1',
-                code: 1,
+                report_id: 1,
                 name: 'Task Report',
                 description: 'Product Description',
                 image: 'bamboo-watch.jpg',
@@ -19,7 +19,7 @@ export class ProductService {
             },
             {
                 id: '2',
-                code: 2,
+                report_id: 2,
                 name: 'Lead Report',
                 description: 'Product Description',
                 image: 'black-watch.jpg',
@@ -32,7 +32,7 @@ export class ProductService {
             },
             {
                 id: '3',
-                code: 3,
+                report_id: 3,
                 name: 'Enquiry Report',
                 description: 'Product Description',
                 image: 'blue-band.jpg',
@@ -45,7 +45,7 @@ export class ProductService {
             },
             {
                 id: '4',
-                code: 4,
+                report_id: 4,
                 name: 'Quotation Report',
                 description: 'Product Description',
                 image: 'blue-t-shirt.jpg',
@@ -58,7 +58,7 @@ export class ProductService {
             },
             {
                 id: '5',
-                code: 5,
+                report_id: 5,
                 name: 'Sample Report',
                 description: 'Product Description',
                 image: 'bracelet.jpg',
@@ -71,7 +71,7 @@ export class ProductService {
             },
             {
                 id: '1005',
-                code: 'av2231fwg',
+                report_id: 'av2231fwg',
                 name: 'Brown Purse',
                 description: 'Product Description',
                 image: 'brown-purse.jpg',
@@ -83,7 +83,7 @@ export class ProductService {
             },
             {
                 id: '1006',
-                code: 'bib36pfvm',
+                report_id: 'bib36pfvm',
                 name: 'Chakra Bracelet',
                 description: 'Product Description',
                 image: 'chakra-bracelet.jpg',
@@ -95,7 +95,7 @@ export class ProductService {
             },
             {
                 id: '1007',
-                code: 'mbvjkgip5',
+                report_id: 'mbvjkgip5',
                 name: 'Galaxy Earrings',
                 description: 'Product Description',
                 image: 'galaxy-earrings.jpg',
@@ -107,7 +107,7 @@ export class ProductService {
             },
             {
                 id: '1008',
-                code: 'vbb124btr',
+                report_id: 'vbb124btr',
                 name: 'Game Controller',
                 description: 'Product Description',
                 image: 'game-controller.jpg',
@@ -119,7 +119,7 @@ export class ProductService {
             },
             {
                 id: '1009',
-                code: 'cm230f032',
+                report_id: 'cm230f032',
                 name: 'Gaming Set',
                 description: 'Product Description',
                 image: 'gaming-set.jpg',
@@ -131,7 +131,7 @@ export class ProductService {
             },
             {
                 id: '1010',
-                code: 'plb34234v',
+                report_id: 'plb34234v',
                 name: 'Gold Phone Case',
                 description: 'Product Description',
                 image: 'gold-phone-case.jpg',
@@ -143,7 +143,7 @@ export class ProductService {
             },
             {
                 id: '1011',
-                code: '4920nnc2d',
+                report_id: '4920nnc2d',
                 name: 'Green Earbuds',
                 description: 'Product Description',
                 image: 'green-earbuds.jpg',
@@ -155,7 +155,7 @@ export class ProductService {
             },
             {
                 id: '1012',
-                code: '250vm23cc',
+                report_id: '250vm23cc',
                 name: 'Green T-Shirt',
                 description: 'Product Description',
                 image: 'green-t-shirt.jpg',
@@ -167,7 +167,7 @@ export class ProductService {
             },
             {
                 id: '1013',
-                code: 'fldsmn31b',
+                report_id: 'fldsmn31b',
                 name: 'Grey T-Shirt',
                 description: 'Product Description',
                 image: 'grey-t-shirt.jpg',
@@ -179,7 +179,7 @@ export class ProductService {
             },
             {
                 id: '1014',
-                code: 'waas1x2as',
+                report_id: 'waas1x2as',
                 name: 'Headphones',
                 description: 'Product Description',
                 image: 'headphones.jpg',
@@ -191,7 +191,7 @@ export class ProductService {
             },
             {
                 id: '1015',
-                code: 'vb34btbg5',
+                report_id: 'vb34btbg5',
                 name: 'Light Green T-Shirt',
                 description: 'Product Description',
                 image: 'light-green-t-shirt.jpg',
@@ -203,7 +203,7 @@ export class ProductService {
             },
             {
                 id: '1016',
-                code: 'k8l6j58jl',
+                report_id: 'k8l6j58jl',
                 name: 'Lime Band',
                 description: 'Product Description',
                 image: 'lime-band.jpg',
@@ -215,7 +215,7 @@ export class ProductService {
             },
             {
                 id: '1017',
-                code: 'v435nn85n',
+                report_id: 'v435nn85n',
                 name: 'Mini Speakers',
                 description: 'Product Description',
                 image: 'mini-speakers.jpg',
@@ -227,7 +227,7 @@ export class ProductService {
             },
             {
                 id: '1018',
-                code: '09zx9c0zc',
+                report_id: '09zx9c0zc',
                 name: 'Painted Phone Case',
                 description: 'Product Description',
                 image: 'painted-phone-case.jpg',
@@ -239,7 +239,7 @@ export class ProductService {
             },
             {
                 id: '1019',
-                code: 'mnb5mb2m5',
+                report_id: 'mnb5mb2m5',
                 name: 'Pink Band',
                 description: 'Product Description',
                 image: 'pink-band.jpg',
@@ -251,7 +251,7 @@ export class ProductService {
             },
             {
                 id: '1020',
-                code: 'r23fwf2w3',
+                report_id: 'r23fwf2w3',
                 name: 'Pink Purse',
                 description: 'Product Description',
                 image: 'pink-purse.jpg',
@@ -263,7 +263,7 @@ export class ProductService {
             },
             {
                 id: '1021',
-                code: 'pxpzczo23',
+                report_id: 'pxpzczo23',
                 name: 'Purple Band',
                 description: 'Product Description',
                 image: 'purple-band.jpg',
@@ -275,7 +275,7 @@ export class ProductService {
             },
             {
                 id: '1022',
-                code: '2c42cb5cb',
+                report_id: '2c42cb5cb',
                 name: 'Purple Gemstone Necklace',
                 description: 'Product Description',
                 image: 'purple-gemstone-necklace.jpg',
@@ -287,7 +287,7 @@ export class ProductService {
             },
             {
                 id: '1023',
-                code: '5k43kkk23',
+                report_id: '5k43kkk23',
                 name: 'Purple T-Shirt',
                 description: 'Product Description',
                 image: 'purple-t-shirt.jpg',
@@ -299,7 +299,7 @@ export class ProductService {
             },
             {
                 id: '1024',
-                code: 'lm2tny2k4',
+                report_id: 'lm2tny2k4',
                 name: 'Shoes',
                 description: 'Product Description',
                 image: 'shoes.jpg',
@@ -311,7 +311,7 @@ export class ProductService {
             },
             {
                 id: '1025',
-                code: 'nbm5mv45n',
+                report_id: 'nbm5mv45n',
                 name: 'Sneakers',
                 description: 'Product Description',
                 image: 'sneakers.jpg',
@@ -323,7 +323,7 @@ export class ProductService {
             },
             {
                 id: '1026',
-                code: 'zx23zc42c',
+                report_id: 'zx23zc42c',
                 name: 'Teal T-Shirt',
                 description: 'Product Description',
                 image: 'teal-t-shirt.jpg',
@@ -335,7 +335,7 @@ export class ProductService {
             },
             {
                 id: '1027',
-                code: 'acvx872gc',
+                report_id: 'acvx872gc',
                 name: 'Yellow Earbuds',
                 description: 'Product Description',
                 image: 'yellow-earbuds.jpg',
@@ -347,7 +347,7 @@ export class ProductService {
             },
             {
                 id: '1028',
-                code: 'tx125ck42',
+                report_id: 'tx125ck42',
                 name: 'Yoga Mat',
                 description: 'Product Description',
                 image: 'yoga-mat.jpg',
@@ -359,7 +359,7 @@ export class ProductService {
             },
             {
                 id: '1029',
-                code: 'gwuby345v',
+                report_id: 'gwuby345v',
                 name: 'Yoga Set',
                 description: 'Product Description',
                 image: 'yoga-set.jpg',
@@ -376,7 +376,7 @@ export class ProductService {
         return [
             {
                 id: '1000',
-                code: 'f230fh0g3',
+                report_id: 'f230fh0g3',
                 name: 'Bamboo Watch',
                 description: 'Product Description',
                 image: 'bamboo-watch.jpg',
@@ -388,7 +388,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1000-0',
-                        productCode: 'f230fh0g3',
+                        productreport_id: 'f230fh0g3',
                         date: '2020-09-13',
                         amount: 65,
                         quantity: 1,
@@ -397,7 +397,7 @@ export class ProductService {
                     },
                     {
                         id: '1000-1',
-                        productCode: 'f230fh0g3',
+                        productreport_id: 'f230fh0g3',
                         date: '2020-05-14',
                         amount: 130,
                         quantity: 2,
@@ -406,7 +406,7 @@ export class ProductService {
                     },
                     {
                         id: '1000-2',
-                        productCode: 'f230fh0g3',
+                        productreport_id: 'f230fh0g3',
                         date: '2019-01-04',
                         amount: 65,
                         quantity: 1,
@@ -415,7 +415,7 @@ export class ProductService {
                     },
                     {
                         id: '1000-3',
-                        productCode: 'f230fh0g3',
+                        productreport_id: 'f230fh0g3',
                         date: '2020-09-13',
                         amount: 195,
                         quantity: 3,
@@ -426,7 +426,7 @@ export class ProductService {
             },
             {
                 id: '1001',
-                code: 'nvklal433',
+                report_id: 'nvklal433',
                 name: 'Black Watch',
                 description: 'Product Description',
                 image: 'black-watch.jpg',
@@ -438,7 +438,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1001-0',
-                        productCode: 'nvklal433',
+                        productreport_id: 'nvklal433',
                         date: '2020-05-14',
                         amount: 72,
                         quantity: 1,
@@ -447,7 +447,7 @@ export class ProductService {
                     },
                     {
                         id: '1001-1',
-                        productCode: 'nvklal433',
+                        productreport_id: 'nvklal433',
                         date: '2020-02-28',
                         amount: 144,
                         quantity: 2,
@@ -458,7 +458,7 @@ export class ProductService {
             },
             {
                 id: '1002',
-                code: 'zz21cz3c1',
+                report_id: 'zz21cz3c1',
                 name: 'Blue Band',
                 description: 'Product Description',
                 image: 'blue-band.jpg',
@@ -470,7 +470,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1002-0',
-                        productCode: 'zz21cz3c1',
+                        productreport_id: 'zz21cz3c1',
                         date: '2020-07-05',
                         amount: 79,
                         quantity: 1,
@@ -479,7 +479,7 @@ export class ProductService {
                     },
                     {
                         id: '1002-1',
-                        productCode: 'zz21cz3c1',
+                        productreport_id: 'zz21cz3c1',
                         date: '2020-02-06',
                         amount: 79,
                         quantity: 1,
@@ -490,7 +490,7 @@ export class ProductService {
             },
             {
                 id: '1003',
-                code: '244wgerg2',
+                report_id: '244wgerg2',
                 name: 'Blue T-Shirt',
                 description: 'Product Description',
                 image: 'blue-t-shirt.jpg',
@@ -503,7 +503,7 @@ export class ProductService {
             },
             {
                 id: '1004',
-                code: 'h456wer53',
+                report_id: 'h456wer53',
                 name: 'Bracelet',
                 description: 'Product Description',
                 image: 'bracelet.jpg',
@@ -515,7 +515,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1004-0',
-                        productCode: 'h456wer53',
+                        productreport_id: 'h456wer53',
                         date: '2020-09-05',
                         amount: 60,
                         quantity: 4,
@@ -524,7 +524,7 @@ export class ProductService {
                     },
                     {
                         id: '1004-1',
-                        productCode: 'h456wer53',
+                        productreport_id: 'h456wer53',
                         date: '2019-04-16',
                         amount: 2,
                         quantity: 30,
@@ -535,7 +535,7 @@ export class ProductService {
             },
             {
                 id: '1005',
-                code: 'av2231fwg',
+                report_id: 'av2231fwg',
                 name: 'Brown Purse',
                 description: 'Product Description',
                 image: 'brown-purse.jpg',
@@ -547,7 +547,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1005-0',
-                        productCode: 'av2231fwg',
+                        productreport_id: 'av2231fwg',
                         date: '2020-01-25',
                         amount: 120,
                         quantity: 1,
@@ -556,7 +556,7 @@ export class ProductService {
                     },
                     {
                         id: '1005-1',
-                        productCode: 'av2231fwg',
+                        productreport_id: 'av2231fwg',
                         date: '2019-03-12',
                         amount: 240,
                         quantity: 2,
@@ -565,7 +565,7 @@ export class ProductService {
                     },
                     {
                         id: '1005-2',
-                        productCode: 'av2231fwg',
+                        productreport_id: 'av2231fwg',
                         date: '2019-05-05',
                         amount: 120,
                         quantity: 1,
@@ -576,7 +576,7 @@ export class ProductService {
             },
             {
                 id: '1006',
-                code: 'bib36pfvm',
+                report_id: 'bib36pfvm',
                 name: 'Chakra Bracelet',
                 description: 'Product Description',
                 image: 'chakra-bracelet.jpg',
@@ -588,7 +588,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1006-0',
-                        productCode: 'bib36pfvm',
+                        productreport_id: 'bib36pfvm',
                         date: '2020-02-24',
                         amount: 32,
                         quantity: 1,
@@ -597,7 +597,7 @@ export class ProductService {
                     },
                     {
                         id: '1006-1',
-                        productCode: 'bib36pfvm',
+                        productreport_id: 'bib36pfvm',
                         date: '2020-01-14',
                         amount: 64,
                         quantity: 2,
@@ -608,7 +608,7 @@ export class ProductService {
             },
             {
                 id: '1007',
-                code: 'mbvjkgip5',
+                report_id: 'mbvjkgip5',
                 name: 'Galaxy Earrings',
                 description: 'Product Description',
                 image: 'galaxy-earrings.jpg',
@@ -620,7 +620,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1007-0',
-                        productCode: 'mbvjkgip5',
+                        productreport_id: 'mbvjkgip5',
                         date: '2020-06-19',
                         amount: 34,
                         quantity: 1,
@@ -631,7 +631,7 @@ export class ProductService {
             },
             {
                 id: '1008',
-                code: 'vbb124btr',
+                report_id: 'vbb124btr',
                 name: 'Game Controller',
                 description: 'Product Description',
                 image: 'game-controller.jpg',
@@ -643,7 +643,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1008-0',
-                        productCode: 'vbb124btr',
+                        productreport_id: 'vbb124btr',
                         date: '2020-01-05',
                         amount: 99,
                         quantity: 1,
@@ -652,7 +652,7 @@ export class ProductService {
                     },
                     {
                         id: '1008-1',
-                        productCode: 'vbb124btr',
+                        productreport_id: 'vbb124btr',
                         date: '2020-01-19',
                         amount: 198,
                         quantity: 2,
@@ -663,7 +663,7 @@ export class ProductService {
             },
             {
                 id: '1009',
-                code: 'cm230f032',
+                report_id: 'cm230f032',
                 name: 'Gaming Set',
                 description: 'Product Description',
                 image: 'gaming-set.jpg',
@@ -675,7 +675,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1009-0',
-                        productCode: 'cm230f032',
+                        productreport_id: 'cm230f032',
                         date: '2020-06-24',
                         amount: 299,
                         quantity: 1,
@@ -684,7 +684,7 @@ export class ProductService {
                     },
                     {
                         id: '1009-1',
-                        productCode: 'cm230f032',
+                        productreport_id: 'cm230f032',
                         date: '2020-05-11',
                         amount: 299,
                         quantity: 1,
@@ -693,7 +693,7 @@ export class ProductService {
                     },
                     {
                         id: '1009-2',
-                        productCode: 'cm230f032',
+                        productreport_id: 'cm230f032',
                         date: '2019-02-07',
                         amount: 299,
                         quantity: 1,
@@ -702,7 +702,7 @@ export class ProductService {
                     },
                     {
                         id: '1009-3',
-                        productCode: 'cm230f032',
+                        productreport_id: 'cm230f032',
                         date: '2020-04-26',
                         amount: 299,
                         quantity: 1,
@@ -713,7 +713,7 @@ export class ProductService {
             },
             {
                 id: '1010',
-                code: 'plb34234v',
+                report_id: 'plb34234v',
                 name: 'Gold Phone Case',
                 description: 'Product Description',
                 image: 'gold-phone-case.jpg',
@@ -725,7 +725,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1010-0',
-                        productCode: 'plb34234v',
+                        productreport_id: 'plb34234v',
                         date: '2020-02-04',
                         amount: 24,
                         quantity: 1,
@@ -734,7 +734,7 @@ export class ProductService {
                     },
                     {
                         id: '1010-1',
-                        productCode: 'plb34234v',
+                        productreport_id: 'plb34234v',
                         date: '2020-05-05',
                         amount: 48,
                         quantity: 2,
@@ -745,7 +745,7 @@ export class ProductService {
             },
             {
                 id: '1011',
-                code: '4920nnc2d',
+                report_id: '4920nnc2d',
                 name: 'Green Earbuds',
                 description: 'Product Description',
                 image: 'green-earbuds.jpg',
@@ -757,7 +757,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1011-0',
-                        productCode: '4920nnc2d',
+                        productreport_id: '4920nnc2d',
                         date: '2020-06-01',
                         amount: 89,
                         quantity: 1,
@@ -768,7 +768,7 @@ export class ProductService {
             },
             {
                 id: '1012',
-                code: '250vm23cc',
+                report_id: '250vm23cc',
                 name: 'Green T-Shirt',
                 description: 'Product Description',
                 image: 'green-t-shirt.jpg',
@@ -780,7 +780,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1012-0',
-                        productCode: '250vm23cc',
+                        productreport_id: '250vm23cc',
                         date: '2020-02-05',
                         amount: 49,
                         quantity: 1,
@@ -789,7 +789,7 @@ export class ProductService {
                     },
                     {
                         id: '1012-1',
-                        productCode: '250vm23cc',
+                        productreport_id: '250vm23cc',
                         date: '2020-02-15',
                         amount: 49,
                         quantity: 1,
@@ -800,7 +800,7 @@ export class ProductService {
             },
             {
                 id: '1013',
-                code: 'fldsmn31b',
+                report_id: 'fldsmn31b',
                 name: 'Grey T-Shirt',
                 description: 'Product Description',
                 image: 'grey-t-shirt.jpg',
@@ -812,7 +812,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1013-0',
-                        productCode: 'fldsmn31b',
+                        productreport_id: 'fldsmn31b',
                         date: '2020-04-01',
                         amount: 48,
                         quantity: 1,
@@ -823,7 +823,7 @@ export class ProductService {
             },
             {
                 id: '1014',
-                code: 'waas1x2as',
+                report_id: 'waas1x2as',
                 name: 'Headphones',
                 description: 'Product Description',
                 image: 'headphones.jpg',
@@ -835,7 +835,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1014-0',
-                        productCode: 'waas1x2as',
+                        productreport_id: 'waas1x2as',
                         date: '2020-05-15',
                         amount: 175,
                         quantity: 1,
@@ -844,7 +844,7 @@ export class ProductService {
                     },
                     {
                         id: '1014-1',
-                        productCode: 'waas1x2as',
+                        productreport_id: 'waas1x2as',
                         date: '2020-01-02',
                         amount: 175,
                         quantity: 1,
@@ -855,7 +855,7 @@ export class ProductService {
             },
             {
                 id: '1015',
-                code: 'vb34btbg5',
+                report_id: 'vb34btbg5',
                 name: 'Light Green T-Shirt',
                 description: 'Product Description',
                 image: 'light-green-t-shirt.jpg',
@@ -867,7 +867,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1015-0',
-                        productCode: 'vb34btbg5',
+                        productreport_id: 'vb34btbg5',
                         date: '2020-07-02',
                         amount: 98,
                         quantity: 2,
@@ -878,7 +878,7 @@ export class ProductService {
             },
             {
                 id: '1016',
-                code: 'k8l6j58jl',
+                report_id: 'k8l6j58jl',
                 name: 'Lime Band',
                 description: 'Product Description',
                 image: 'lime-band.jpg',
@@ -891,7 +891,7 @@ export class ProductService {
             },
             {
                 id: '1017',
-                code: 'v435nn85n',
+                report_id: 'v435nn85n',
                 name: 'Mini Speakers',
                 description: 'Product Description',
                 image: 'mini-speakers.jpg',
@@ -903,7 +903,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1017-0',
-                        productCode: 'v435nn85n',
+                        productreport_id: 'v435nn85n',
                         date: '2020-07-12',
                         amount: 85,
                         quantity: 1,
@@ -914,7 +914,7 @@ export class ProductService {
             },
             {
                 id: '1018',
-                code: '09zx9c0zc',
+                report_id: '09zx9c0zc',
                 name: 'Painted Phone Case',
                 description: 'Product Description',
                 image: 'painted-phone-case.jpg',
@@ -926,7 +926,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1018-0',
-                        productCode: '09zx9c0zc',
+                        productreport_id: '09zx9c0zc',
                         date: '2020-07-01',
                         amount: 56,
                         quantity: 1,
@@ -935,7 +935,7 @@ export class ProductService {
                     },
                     {
                         id: '1018-1',
-                        productCode: '09zx9c0zc',
+                        productreport_id: '09zx9c0zc',
                         date: '2020-05-02',
                         amount: 56,
                         quantity: 1,
@@ -946,7 +946,7 @@ export class ProductService {
             },
             {
                 id: '1019',
-                code: 'mnb5mb2m5',
+                report_id: 'mnb5mb2m5',
                 name: 'Pink Band',
                 description: 'Product Description',
                 image: 'pink-band.jpg',
@@ -959,7 +959,7 @@ export class ProductService {
             },
             {
                 id: '1020',
-                code: 'r23fwf2w3',
+                report_id: 'r23fwf2w3',
                 name: 'Pink Purse',
                 description: 'Product Description',
                 image: 'pink-purse.jpg',
@@ -971,7 +971,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1020-0',
-                        productCode: 'r23fwf2w3',
+                        productreport_id: 'r23fwf2w3',
                         date: '2020-05-29',
                         amount: 110,
                         quantity: 1,
@@ -980,7 +980,7 @@ export class ProductService {
                     },
                     {
                         id: '1020-1',
-                        productCode: 'r23fwf2w3',
+                        productreport_id: 'r23fwf2w3',
                         date: '2020-02-11',
                         amount: 220,
                         quantity: 2,
@@ -991,7 +991,7 @@ export class ProductService {
             },
             {
                 id: '1021',
-                code: 'pxpzczo23',
+                report_id: 'pxpzczo23',
                 name: 'Purple Band',
                 description: 'Product Description',
                 image: 'purple-band.jpg',
@@ -1003,7 +1003,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1021-0',
-                        productCode: 'pxpzczo23',
+                        productreport_id: 'pxpzczo23',
                         date: '2020-02-02',
                         amount: 79,
                         quantity: 1,
@@ -1014,7 +1014,7 @@ export class ProductService {
             },
             {
                 id: '1022',
-                code: '2c42cb5cb',
+                report_id: '2c42cb5cb',
                 name: 'Purple Gemstone Necklace',
                 description: 'Product Description',
                 image: 'purple-gemstone-necklace.jpg',
@@ -1026,7 +1026,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1022-0',
-                        productCode: '2c42cb5cb',
+                        productreport_id: '2c42cb5cb',
                         date: '2020-06-29',
                         amount: 45,
                         quantity: 1,
@@ -1035,7 +1035,7 @@ export class ProductService {
                     },
                     {
                         id: '1022-1',
-                        productCode: '2c42cb5cb',
+                        productreport_id: '2c42cb5cb',
                         date: '2020-02-11',
                         amount: 135,
                         quantity: 3,
@@ -1046,7 +1046,7 @@ export class ProductService {
             },
             {
                 id: '1023',
-                code: '5k43kkk23',
+                report_id: '5k43kkk23',
                 name: 'Purple T-Shirt',
                 description: 'Product Description',
                 image: 'purple-t-shirt.jpg',
@@ -1058,7 +1058,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1023-0',
-                        productCode: '5k43kkk23',
+                        productreport_id: '5k43kkk23',
                         date: '2020-04-15',
                         amount: 49,
                         quantity: 1,
@@ -1069,7 +1069,7 @@ export class ProductService {
             },
             {
                 id: '1024',
-                code: 'lm2tny2k4',
+                report_id: 'lm2tny2k4',
                 name: 'Shoes',
                 description: 'Product Description',
                 image: 'shoes.jpg',
@@ -1082,7 +1082,7 @@ export class ProductService {
             },
             {
                 id: '1025',
-                code: 'nbm5mv45n',
+                report_id: 'nbm5mv45n',
                 name: 'Sneakers',
                 description: 'Product Description',
                 image: 'sneakers.jpg',
@@ -1094,7 +1094,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1025-0',
-                        productCode: 'nbm5mv45n',
+                        productreport_id: 'nbm5mv45n',
                         date: '2020-02-19',
                         amount: 78,
                         quantity: 1,
@@ -1103,7 +1103,7 @@ export class ProductService {
                     },
                     {
                         id: '1025-1',
-                        productCode: 'nbm5mv45n',
+                        productreport_id: 'nbm5mv45n',
                         date: '2020-05-21',
                         amount: 78,
                         quantity: 1,
@@ -1114,7 +1114,7 @@ export class ProductService {
             },
             {
                 id: '1026',
-                code: 'zx23zc42c',
+                report_id: 'zx23zc42c',
                 name: 'Teal T-Shirt',
                 description: 'Product Description',
                 image: 'teal-t-shirt.jpg',
@@ -1126,7 +1126,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1026-0',
-                        productCode: 'zx23zc42c',
+                        productreport_id: 'zx23zc42c',
                         date: '2020-04-24',
                         amount: 98,
                         quantity: 2,
@@ -1137,7 +1137,7 @@ export class ProductService {
             },
             {
                 id: '1027',
-                code: 'acvx872gc',
+                report_id: 'acvx872gc',
                 name: 'Yellow Earbuds',
                 description: 'Product Description',
                 image: 'yellow-earbuds.jpg',
@@ -1149,7 +1149,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1027-0',
-                        productCode: 'acvx872gc',
+                        productreport_id: 'acvx872gc',
                         date: '2020-01-29',
                         amount: 89,
                         quantity: 1,
@@ -1158,7 +1158,7 @@ export class ProductService {
                     },
                     {
                         id: '1027-1',
-                        productCode: 'acvx872gc',
+                        productreport_id: 'acvx872gc',
                         date: '2020-06-11',
                         amount: 89,
                         quantity: 1,
@@ -1169,7 +1169,7 @@ export class ProductService {
             },
             {
                 id: '1028',
-                code: 'tx125ck42',
+                report_id: 'tx125ck42',
                 name: 'Yoga Mat',
                 description: 'Product Description',
                 image: 'yoga-mat.jpg',
@@ -1182,7 +1182,7 @@ export class ProductService {
             },
             {
                 id: '1029',
-                code: 'gwuby345v',
+                report_id: 'gwuby345v',
                 name: 'Yoga Set',
                 description: 'Product Description',
                 image: 'yoga-set.jpg',
@@ -1194,7 +1194,7 @@ export class ProductService {
                 orders: [
                     {
                         id: '1029-0',
-                        productCode: 'gwuby345v',
+                        productreport_id: 'gwuby345v',
                         date: '2020-02-14',
                         amount: 4,
                         quantity: 80,

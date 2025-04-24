@@ -1,1 +1,39 @@
-<p>report-builder works!</p>
+<p-dialog
+  header="Select Columns"
+  (onHide)="close()"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '50rem' }"
+>
+
+  <div
+    *ngIf="data?.all_fields && data.all_fields.length > 0; else noFields"
+    class="checkbox-grid"
+  >
+    <div
+      *ngFor="let field of data.all_fields"
+      class="flex justify-center items-center"
+    >
+      <label class="w-full flex items-center gap-4">
+        <input
+          class="h-[20px] w-[20px]"
+          type="checkbox"
+          [checked]="isSelected(field)"
+          (change)="toggleField(field)"
+        />
+        {{ field }}
+      </label>
+    </div>
+  </div>
+
+  <ng-template #noFields>
+    <p>No columns available.</p>
+  </ng-template>
+
+  <div class="flex items-center gap-4 my-4">
+    <label for="Report Name">Report Name</label>
+    <input type="text" pInputText [(ngModel)]="reportName" />
+  </div>
+
+  <p-button label="Submit" (click)="createTemplate(data)" />
+</p-dialog>

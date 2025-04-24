@@ -1,7 +1,7 @@
 
 export interface Product {
     id?: string;
-    code?: string;
+    reportId?: string;
     name?: string;
     description?: string;
     price?: number;
@@ -17,4 +17,6 @@ export interface Product {
     hasUnsavedChanges:boolean;
     ediBtnEnable:boolean;
     saveBtnEnable:boolean;
+    all_fields:string[];
+    dialogVisible:boolean;
 }

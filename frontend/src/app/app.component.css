@@ -1,0 +1,128 @@
+  .table-container {
+    width: 100%;
+    overflow-x: hidden;
+    margin-top: 20px;
+  }
+
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+
+  .custom-table th {
+    background-color: #333;
+    color: #fff;
+  }
+
+  .column-scroll {
+    overflow-x: auto;
+  }
+  .column-scroll-container {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .column-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .column-items {
+    white-space: nowrap;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .column-items span {
+    margin-right: 12px;
+  }
+
+  .column-chip {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+
+  .column-chip input[type="checkbox"] {
+    margin-left: 6px;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .edit-btn {
+    background-color: #007bff;
+  }
+
+  .save-btn {
+    background-color: #28a745;
+  }
+
+  .submit-wrapper {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .submit-wrapper button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .w-1_6 {
+    width: 10%;
+  }
+  .w-1_2 {
+    width: 70%;
+  }
+
+  .center {
+    text-align: center;
+    text-decoration: underline;
+  }
+
+  .dropdown-class {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .input-class {
+    height: 20px;
+    width: 20px;
+  }
+
+  .spanDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .column-items {
+    display: grid;
+    grid-template-columns: repeat(5,minmax(150px,1fr));
+    gap: 8px;
+  }
+    .column-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  } 
