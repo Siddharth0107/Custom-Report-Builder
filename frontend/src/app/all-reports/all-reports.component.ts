@@ -1,25 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Product } from '../domain/product';
-import { ProductService } from '../service/productservice';
-import { RouterModule, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { Product } from '../../domain/product';
+import { ReportService } from '../service/report.service';
+import { Router, RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
-import { AutoCompleteModule } from 'primeng/autocomplete';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { ReportService } from './service/report.service';
-import { TabsModule } from 'primeng/tabs';
+import { ColumnDialog } from '../report-builder/report-builder.component';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrl: 'app.component.css',
-  standalone: true,
-  imports: [TabsModule, ButtonModule, FormsModule, CommonModule, TableModule, RouterModule, AutoCompleteModule], // <-- Add CommonModule here
-  providers: [ProductService]
+  selector: 'app-all-reports',
+  imports: [ColumnDialog, ButtonModule, FormsModule, CommonModule, TableModule, RouterModule],
+  templateUrl: './all-reports.component.html',
+  styleUrl: './all-reports.component.css'
 })
+export class AllReportsComponent {
 
-export class AppComponent implements OnInit {
   dialogVisible: boolean = false;
   selectedProduct: any = null;
   columnData: any = {};
@@ -33,10 +29,6 @@ export class AppComponent implements OnInit {
     { id: 5, name: "Cashier" }
   ];
 
-  tabs = [
-    { route: 'reports', label: 'Reports', icon: 'pi pi-home' ,pathMatch:'full'},
-    { route: 'templates', label: 'Templates', icon: 'pi pi-chart-line' },
-  ];
 
   filteredRoles: any[] = [];
   products!: Product[];
@@ -72,53 +64,24 @@ export class AppComponent implements OnInit {
     }
   }
 
-  save(product: any) {
-    product.ediBtnEnable = false;
-    product.saveBtnEnable = true;
-    this.showSubmit = false;
-  }
-
-  submit() {
-    const selectedData = this.products.map(product => ({
-      report_name: product.parent_report_name,
-      report_id: product.reportId,
-      alldata: product,
-    }));
-    this.showSubmit = true;
-  }
-
-  edit(product: any) {
-    product.ediBtnEnable = true;
-    product.saveBtnEnable = false;
-  }
-
   transformReportsByRole(roleBasedReports: any, columnData: any): any[] {
     const transformed: any[] = [];
     const roleReports = roleBasedReports;
 
     if (!roleReports) return [];
-
     for (const key in roleReports) {
       const report = roleReports[key];
-
-
-
       transformed.push({
         reportId: +key,
         parent_report_name: report.report_name,
         saveBtnEnable: true,
         columns: roleReports[key].columns,
         dialogVisible: false,
-        // all_fields: matchingColumnData ? matchingColumnData.columnsList : [],
+        isDisabled:false,
       });
     }
     return transformed;
   }
-
-  // onRoleChange() {
-  //   const transformed = this.transformReportsByRole(this.overAllData, this.roleValue.id, this.columnData);
-  //   this.products = transformed;
-  // }
 
   isColumnSelected(selectedColumns: any[], colName: string): boolean {
     const found = selectedColumns.find(col => col.column === colName);
@@ -144,10 +107,4 @@ export class AppComponent implements OnInit {
   closeDialog(product: any) {
     product.dialogVisible = false;
   }
-  // Handle tab selection
-  onTabChange(selectedTab: string) {
-    this.selectedTab = selectedTab;
-    this.router.navigate([selectedTab]); // Navigate to the selected tab's route
-  }
-
 }

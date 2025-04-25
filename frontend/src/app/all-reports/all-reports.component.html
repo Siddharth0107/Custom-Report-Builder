@@ -1,0 +1,29 @@
+<h1 class="my-4 center text-3xl">Custom Report Builder</h1>
+
+<table class="custom-table">
+    <thead>
+      <tr>
+        <th class="w-1_6">Sr No.</th>
+        <th class="w-1_6">Report Name</th>
+        <th class="w-1_6">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ product.parent_report_name }}</td>
+        <td>
+          <div class="actions">
+            <p-button label="Create Template" (click)="openDialog(product)" />
+            <ColumnDialog
+              *ngIf="product.dialogVisible"
+              [data]="product"
+              [visible]="product.dialogVisible"
+              (onClose)="closeDialog(product)"
+            >
+            </ColumnDialog>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>

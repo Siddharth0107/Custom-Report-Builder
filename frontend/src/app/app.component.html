@@ -1,52 +1,19 @@
 <main>
-  <h1 class="center">Custom Report Builder</h1>
-
-  <!-- <div class="dropdown-class">
-    <h3 class="center">Select Role:</h3>
-    <p-autocomplete
-      [(ngModel)]="roleValue"
-      field="name"
-      [dropdown]="true"
-      [suggestions]="filteredRoles"
-      (completeMethod)="search($event)"
-      (onSelect)="onRoleChange()"
-    />
-  </div> -->
-  <div class="table-container">
-    <table class="custom-table">
-      <thead>
-        <tr>
-          <th class="w-1_6">Sr No.</th>
-          <th class="w-1_6">Report Name</th>
-          <th class="w-1_6">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let product of products; index as i">
-          <td>{{ i + 1 }}</td>
-          <td>{{ product.name }}</td>
-          <td>
-            <div class="actions">
-              <p-button label="Create Template" (click)="openDialog(product)" />
-              <ColumnDialog
-                *ngIf="product.dialogVisible"
-                [data]="product"
-                [visible]="product.dialogVisible"
-                (onClose)="closeDialog(product)"
-              >
-              </ColumnDialog>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="submit-wrapper">
-      <p-button
-        [disabled]="showSubmit"
-        severity="info"
-        (click)="submit()"
-        label="Submit"
-      />
-    </div>
+  <div class="card">
+    <p-tabs value="reports">
+      <p-tablist>
+        @for(tab of tabs; track tab.route){
+        <p-tab
+          [value]="tab.route"
+          [routerLink]="tab.route"
+          class="flex items-center !gap-2 text-inherit"
+        >
+          <i [class]="tab.icon"></i>
+          <span>{{ tab.label }}</span>
+        </p-tab>
+        }
+      </p-tablist>
+    </p-tabs>
+    <router-outlet></router-outlet>
   </div>
 </main>

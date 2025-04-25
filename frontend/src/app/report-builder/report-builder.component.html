@@ -7,11 +7,11 @@
 >
 
   <div
-    *ngIf="data?.all_fields && data.all_fields.length > 0; else noFields"
+    *ngIf="data?.columns && data.columns.length > 0; else noFields"
     class="checkbox-grid"
   >
     <div
-      *ngFor="let field of data.all_fields"
+      *ngFor="let field of data.columns"
       class="flex justify-center items-center"
     >
       <label class="w-full flex items-center gap-4">
@@ -35,5 +35,5 @@
     <input type="text" pInputText [(ngModel)]="reportName" />
   </div>
 
-  <p-button label="Submit" (click)="createTemplate(data)" />
+  <p-button label="Submit" [disabled]="!data.isDisabled" (click)="createTemplate(data)" />
 </p-dialog>

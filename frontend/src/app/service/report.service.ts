@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 export class ReportService {
 
   private getAllReportsWithColumnsUrl = 'http://localhost:8000/api/get-reports/'; // Replace with your Django URL
-  // private initialListUrl = 'http://localhost:8000/api/all_permissions/';
+  private createTemplateUrl = 'http://localhost:8000/api/create-template/';
+  private getAllTemplatesUrl = 'http://localhost:8000/api/create-template/';
 
   constructor(private http: HttpClient) {}
 
@@ -17,7 +18,11 @@ export class ReportService {
     return this.http.get(this.getAllReportsWithColumnsUrl);
   }
 
-  // handleList():Observable<any>{
-  //   return this.http.get(this.initialListUrl);
-  // }
+  createTemplate(data:any):Observable<any>{
+    return this.http.post(this.createTemplateUrl,data);
+  }
+
+  getAllTemplates():Observable<any>{
+    return this.http.get(this.getAllTemplatesUrl);
+  }
 }
