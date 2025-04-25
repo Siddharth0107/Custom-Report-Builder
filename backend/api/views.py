@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import ReportPermission,Reports,ReportColumns,RoleAndReportRelation,ReportColumnPermission,ReportTemplates,TemplateColumns
 
-from .serializers import ReportPermissionSerializer
+from .serializers import ReportPermissionSerializer,ReportTemplatesSerializer
 from .serializers import ReportPermissionListSerializer
 from django.db import DatabaseError,transaction
 import logging
@@ -197,12 +197,16 @@ def get_role_report_permissions(request):
 
 
 
+# -------------second approach -------------------
+# report lsiting
 @api_view(['GET'])
 def get_all_reports(request):
     try:
         report_data = Reports.objects.all().values('id','report_name','template_count')
     
-        return Response(list(report_data),status=status.HTTP_200_OK)
+        return Response({"message":"Report data fetched successfully",
+                         "data":list(report_data),
+                         "status":'Success'})
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -239,25 +243,13 @@ def get_all_reports_with_columns(request):
 
         for col in report_columns:
             result[col.report_id]["columns"].append(col.column_name)
-
-        return Response(result, status=status.HTTP_200_OK)
+            return Response({"message":"Report data fetched successfully",
+                         "data":result,
+                         "status":'Success'})   
 
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
-"""
-{
-  "parent_report_id": 1,
-  "template_name": "Important Tasks Report",
-  "columns": [
-    "task_id",
-    "transaction_date",
-    "priority",
-    "assigned_to"
-  ]
-}
-
-"""
 @api_view(['POST'])
 def create_report_template(request):
     try:
@@ -291,3 +283,36 @@ def create_report_template(request):
         return Response({"error": "Parent report not found"}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# list templates with columns
+@api_view(['GET'])
+def get_templates(request):
+    try:
+        templates = ReportTemplates.objects.select_related('parent_report').all()
+        serializer = ReportTemplatesSerializer(templates, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+
+@api_view(['PUT'])
+def update_template(request,template_id):
+    try:
+          data = request.data
+          template_name = data.get('name')
+          new_columns = data.get('columns', [])
+          template = ReportTemplates.objects.filter(id=template_id).first()
+          if not template:
+            return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
+          with transaction.atomic():
+                if template_name:
+                    template.name = template_name
+                    template.save()
+                if new_columns:
+                    TemplateColumns.objects.filter(template_id=template_id).delete()
+                    TemplateColumns.objects.bulk_create([
+                        TemplateColumns(template_id=template_id, column_name=col) for col in new_columns
+                    ])
+                return Response({"message": "Template updated successfully"}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({'error':str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)

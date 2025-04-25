@@ -36,11 +36,11 @@ class ReportColumnPermission(models.Model):
 
 class ReportTemplates(models.Model):
     name = models.CharField(max_length=200)
-    parent_report_id = models.IntegerField()
+    parent_report = models.ForeignKey(Reports,on_delete=models.CASCADE,related_name='report_templates')
     timestamp = models.DateTimeField(auto_now_add=True)
 
 class TemplateColumns(models.Model):
     # report_id = models.IntegerField()
-    template_id = models.IntegerField()
+    template = models.ForeignKey(ReportTemplates,on_delete=models.CASCADE,related_name='template')
     column_name = models.CharField(max_length=200,default='default')
     timestamp = models.DateTimeField(auto_now_add=True)
