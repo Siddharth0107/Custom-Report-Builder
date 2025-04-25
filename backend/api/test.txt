@@ -110,5 +110,49 @@ python manage.py migrate
 #         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+sql queries
 
+table name : api_reports
+insert into report_builder.api_reports values (1,'Task Report','2025-04-24 14:35:20.123456');
+insert into report_builder.api_reports values (2,'Lead Report','2025-04-24 14:35:20.123456');
+insert into report_builder.api_reports values (3,'Enquiry Report','2025-04-24 14:35:20.123456');
+insert into report_builder.api_reports values (4,'Quotation Report','2025-04-24 14:35:20.123456');
+insert into report_builder.api_reports values (5,'Sample Report','2025-04-24 14:35:20.123456');
+
+
+table name : api_reportcolumns
+insert into report_builder.api_reportcolumns values (1,1,'Task Name','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (2,1,'Task Id','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (3,1,'Assigned To','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (4,1,'Assigned By','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (5,1,'Due Date','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (6,1,'Start Date','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (7,1,'Reporting Person','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (8,1,'Task Description','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (9,2,'Lead Name','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (10,2,'Lead Generator','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (11,2,'Lead Number','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (12,2,'Lead For','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (13,2,'Lead Description','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (14,3,'Enquiry Related To','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (15,3,'Enquiry Date','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (16,3,'Follow Up Person','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (17,3,'Enquiry For','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (18,3,'Enquiry Description','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (19,4,'Quotation ID','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (20,4,'Transaction Date','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (21,4,'Sales Order No','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (22,4,'Sales Order Date','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (23,4,'Organization Name','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (24,4,'Organization Description','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (25,4,'Assigned To','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (26,4,'Valid Until','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (27,4,'Open Activities','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (28,4,'Closed Activities','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (29,5,'Sample Order ID','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (30,5,'Transaction Date','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (31,5,'Sales Order No','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (32,5,'Sales Order Date','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (33,5,'Company Name','2025-04-24 18:41:00 ');
+insert into report_builder.api_reportcolumns values (34,5,'Status','2025-04-24 18:41:00 ');
 
