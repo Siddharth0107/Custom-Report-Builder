@@ -16,7 +16,6 @@ import { ColumnDialog } from '../report-builder/report-builder.component';
 })
 export class AllReportsComponent {
 
-  dialogVisible: boolean = false;
   selectedProduct: any = null;
   columnData: any = {};
   ediBtnEnable: boolean = true;
@@ -36,7 +35,7 @@ export class AllReportsComponent {
   overAllData: any = [];
   selectedTab: string = '';
 
-  constructor(private reportService: ReportService, private router:Router) { }
+  constructor(private reportService: ReportService, private router: Router) { }
 
   search(event: any) {
     const query = event.query.toLowerCase();
@@ -50,10 +49,8 @@ export class AllReportsComponent {
       this.reportService.getAllReportsWithColumns().subscribe({
         next: (response: any) => {
           this.overAllData = response;
-          const transformedReports = this.transformReportsByRole(response, this.columnData);
+          const transformedReports = this.transformReportsByRole(response.data);
           this.products = transformedReports;
-          console.log(this.products);
-
         },
         error: (error: any) => {
           console.error("Error fetching reports", error);
@@ -64,20 +61,19 @@ export class AllReportsComponent {
     }
   }
 
-  transformReportsByRole(roleBasedReports: any, columnData: any): any[] {
+  transformReportsByRole(roleReports: any): any[] {
     const transformed: any[] = [];
-    const roleReports = roleBasedReports;
 
     if (!roleReports) return [];
     for (const key in roleReports) {
       const report = roleReports[key];
       transformed.push({
-        reportId: +key,
+        reportId: report.id,
         parent_report_name: report.report_name,
         saveBtnEnable: true,
-        columns: roleReports[key].columns,
+        columns: roleReports[key].report_columns,
         dialogVisible: false,
-        isDisabled:false,
+        isDisabled: false,
       });
     }
     return transformed;

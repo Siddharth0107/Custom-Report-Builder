@@ -10,7 +10,7 @@ import {routes} from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideClientHydration(),
+    // provideClientHydration(),
     provideHttpClient(),
     provideAnimations(),
     providePrimeNG({

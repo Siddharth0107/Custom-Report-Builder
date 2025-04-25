@@ -10,7 +10,9 @@ export class ReportService {
 
   private getAllReportsWithColumnsUrl = 'http://localhost:8000/api/get-reports/'; // Replace with your Django URL
   private createTemplateUrl = 'http://localhost:8000/api/create-template/';
-  private getAllTemplatesUrl = 'http://localhost:8000/api/create-template/';
+  private updateTemplateUrl = 'http://localhost:8000/api/update-template/';
+  private getAllTemplatesUrl = 'http://localhost:8000/api/get-templates/';
+  private deleteTemplatesUrl = 'http://localhost:8000/api/delete-template/';
 
   constructor(private http: HttpClient) {}
 
@@ -22,7 +24,18 @@ export class ReportService {
     return this.http.post(this.createTemplateUrl,data);
   }
 
+  updateTemplate(data:any):Observable<any>{
+    return this.http.put(this.updateTemplateUrl,data);
+  }
+
   getAllTemplates():Observable<any>{
     return this.http.get(this.getAllTemplatesUrl);
+  }
+
+  deleteTemplate(id:any):Observable<any>{
+    const options = {
+      body: { template_id: id }
+    };
+    return this.http.delete(this.deleteTemplatesUrl,options);
   }
 }

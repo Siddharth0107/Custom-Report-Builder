@@ -1,5 +1,5 @@
 <p-dialog
-  header="Select Columns"
+  header="Select columns"
   (onHide)="close()"
   [modal]="true"
   [(visible)]="visible"
@@ -7,22 +7,41 @@
 >
 
   <div
-    *ngIf="data?.columns && data.columns.length > 0; else noFields"
+    *ngIf="data?.columns || data?.template; else noFields"
     class="checkbox-grid"
   >
-    <div
-      *ngFor="let field of data.columns"
-      class="flex justify-center items-center"
-    >
-      <label class="w-full flex items-center gap-4">
-        <input
-          class="h-[20px] w-[20px]"
-          type="checkbox"
-          [checked]="isSelected(field)"
-          (change)="toggleField(field)"
-        />
-        {{ field }}
-      </label>
+    <div class="checkbox-grid" *ngIf="data.columns && data.columns.length > 0">
+      <div
+        *ngFor="let field of data.columns"
+        class="flex justify-center items-center"
+      >
+        <label class="w-full flex items-center gap-4">
+          <input
+            class="h-[20px] w-[20px]"
+            type="checkbox"
+            [checked]="isSelected('create',field)" 
+            (change)="toggleField(field)"
+          />
+          {{ field.column_name }}
+        </label>
+      </div>
+    </div>
+
+    <div class="checkbox-grid" *ngIf="data?.template && data.template.length > 0">
+      <div
+        *ngFor="let field of data.parent_report.report_columns"
+        class="flex justify-center items-center"
+      >
+        <label class="w-full flex items-center gap-4">
+          <input
+            class="h-[20px] w-[20px]"
+            type="checkbox"
+            [checked]="isSelected('edit',field.column_name)"
+            (change)="toggleField(field)"
+          />
+          {{ field.column_name }}
+        </label>
+      </div>
     </div>
   </div>
 
@@ -32,8 +51,13 @@
 
   <div class="flex items-center gap-4 my-4">
     <label for="Report Name">Report Name</label>
-    <input type="text" pInputText [(ngModel)]="reportName" />
+    <!-- {{reportNameToUse}} -->
+    <input type="text" pInputText [(ngModel)]="reportNameToUse" />
   </div>
 
-  <p-button label="Submit" [disabled]="!data.isDisabled" (click)="createTemplate(data)" />
+  <p-button
+    label="Submit"
+    (click)="createUpdateTemplate(data)"
+    />
+    <!-- [disabled]="!data.isDisabled" -->
 </p-dialog>
