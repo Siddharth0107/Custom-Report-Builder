@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import ReportPermission,Reports,ReportColumns,RoleAndReportRelation,ReportColumnPermission,ReportTemplates,TemplateColumns
 
-from .serializers import ReportPermissionSerializer,ReportTemplatesSerializer
+from .serializers import ReportPermissionSerializer,ReportTemplatesSerializer,ReportSerializer
 from .serializers import ReportPermissionListSerializer
 from django.db import DatabaseError,transaction
 import logging
@@ -209,8 +209,7 @@ def get_all_reports(request):
                          "status":'Success'})
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
+# columns listing by report id
 @api_view(['GET'])
 def get_report_columns(request,report_id):
     if not report_id:
@@ -225,31 +224,19 @@ def get_report_columns(request,report_id):
         },status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+# report with its columns
 @api_view(['GET'])
 def get_all_reports_with_columns(request):
     try:
-        reports = Reports.objects.all()
-        report_columns = ReportColumns.objects.all()
-
-        result = defaultdict(dict)
-
-        for report in reports:
-            result[report.id] = {
-                "report_name": report.report_name,
-                "template_count": report.template_count,
-                "columns": []
-            }
-
-        for col in report_columns:
-            result[col.report_id]["columns"].append(col.column_name)
-            return Response({"message":"Report data fetched successfully",
-                         "data":result,
+        reports = Reports.objects.prefetch_related('report_columns')
+        serializer = ReportSerializer(reports,many=True)
+        return Response({"message":"Report data fetched successfully",
+                         "data":serializer.data,
                          "status":'Success'})   
 
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
+# create template
 @api_view(['POST'])
 def create_report_template(request):
     try:
@@ -296,12 +283,13 @@ def get_templates(request):
     
 
 @api_view(['PUT'])
-def update_template(request,template_id):
+def update_template(request):
     try:
           data = request.data
+          templateId = data.get('template_id')
           template_name = data.get('name')
           new_columns = data.get('columns', [])
-          template = ReportTemplates.objects.filter(id=template_id).first()
+          template = ReportTemplates.objects.filter(id=templateId).first()
           if not template:
             return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
           with transaction.atomic():
@@ -309,10 +297,36 @@ def update_template(request,template_id):
                     template.name = template_name
                     template.save()
                 if new_columns:
-                    TemplateColumns.objects.filter(template_id=template_id).delete()
+                    TemplateColumns.objects.filter(template_id=templateId).delete()
                     TemplateColumns.objects.bulk_create([
-                        TemplateColumns(template_id=template_id, column_name=col) for col in new_columns
+                        TemplateColumns(template_id=templateId, column_name=col) for col in new_columns
                     ])
                 return Response({"message": "Template updated successfully"}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({'error':str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+# delete template
+@api_view(['DELETE'])
+def delete_template(request):
+    try:
+        data = request.data
+        templateId = data.get('template_id')
+        template = ReportTemplates.objects.get(id=templateId)
+        report = template.parent_report
+
+        with transaction.atomic():
+            TemplateColumns.objects.filter(template_id=template.id).delete()
+            template.delete()
+
+            # Decrease template_count in parent report
+            if report.template_count > 0:
+                report.template_count -= 1
+                report.save()
+
+        return Response({"message": "Template deleted successfully"}, status=status.HTTP_200_OK)
+    except ReportTemplates.DoesNotExist:
+        return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -20,7 +20,7 @@ class Reports(models.Model):
     template_count = models.IntegerField(default=0)
 
 class ReportColumns(models.Model):
-    report_id = models.IntegerField()
+    report_id = models.ForeignKey(Reports,on_delete=models.CASCADE,related_name='report_columns')
     column_name = models.CharField(max_length=200)
     
 class RoleAndReportRelation(models.Model):

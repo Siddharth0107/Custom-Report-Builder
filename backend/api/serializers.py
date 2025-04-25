@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ReportPermission,TemplateColumns,ReportTemplates,Reports
+from .models import ReportPermission,TemplateColumns,ReportTemplates,Reports,ReportColumns
 class ColumnSerializer(serializers.Serializer):
     column = serializers.CharField()
     is_selected = serializers.BooleanField()
@@ -17,10 +17,18 @@ class ReportPermissionListSerializer(serializers.ModelSerializer):
         model = ReportPermission
         fields = ['report_id', 'report_name', 'columns']
 
+class ReportColumnSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReportColumns
+        fields = ['column_name']
+
 class ReportSerializer(serializers.ModelSerializer):
+    report_columns = ReportColumnSerializer(many=True)
     class Meta:
         model = Reports
-        fields = ['id','report_name']
+        fields = ['id','report_name','report_columns']
+
+
     
 class ReportTemplateColumnSerializer(serializers.ModelSerializer):
     class Meta:
