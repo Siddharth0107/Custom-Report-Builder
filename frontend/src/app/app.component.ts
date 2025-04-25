@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
     { id: 5, name: "Cashier" }
   ];
   filteredRoles: any[] = [];
-  roleValue = { id: 4, name: 'Accountant' };
+  // roleValue = { id: 4, name: 'Accountant' };
   products!: Product[];
   showSubmit = true;
   overAllData: any = [];
@@ -49,10 +49,10 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     try {
       this.columnData = await this.productService.getProductsMini();
-      this.reportService.handleList().subscribe({
+      this.reportService.getAllReportsWithColumns().subscribe({
         next: (response: any) => {
           this.overAllData = response;
-          const transformedReports = this.transformReportsByRole(response, this.roleValue.id, this.columnData);
+          const transformedReports = this.transformReportsByRole(response, this.columnData);
           this.products = transformedReports;
         },
         error: (error: any) => {
@@ -73,20 +73,20 @@ export class AppComponent implements OnInit {
   submit() {
     const selectedData = this.products.filter(product => product.saveBtnEnable).map(product => ({
       report_name: product.name,
-      role: this.roleValue,
+      // role: this.roleValue,
       report_id: product.reportId,
       all_fields: product.selectedColumns,
       alldata: product,
     }));
 
-    this.reportService.submitReport(selectedData).subscribe({
-      next: (response: any) => {
-        console.log('Submitted Successfully:', response);
-      },
-      error: (error: any) => {
-        console.error('Error submitting data:', error);
-      }
-    });
+    // this.reportService.submitReport(selectedData).subscribe({
+    //   next: (response: any) => {
+    //     console.log('Submitted Successfully:', response);
+    //   },
+    //   error: (error: any) => {
+    //     console.error('Error submitting data:', error);
+    //   }
+    // });
     this.showSubmit = true;
   }
 
@@ -95,9 +95,9 @@ export class AppComponent implements OnInit {
     product.saveBtnEnable = false;
   }
 
-  transformReportsByRole(roleBasedReports: any, selectedRoleId: number, columnData: any): any[] {
+  transformReportsByRole(roleBasedReports: any, columnData: any): any[] {
     const transformed: any[] = [];
-    const roleReports = roleBasedReports[selectedRoleId];
+    const roleReports = roleBasedReports;
 
     if (!roleReports) return [];
 
@@ -128,10 +128,10 @@ export class AppComponent implements OnInit {
     return transformed;
   }
 
-  onRoleChange() {
-    const transformed = this.transformReportsByRole(this.overAllData, this.roleValue.id, this.columnData);
-    this.products = transformed;
-  }
+  // onRoleChange() {
+  //   const transformed = this.transformReportsByRole(this.overAllData, this.roleValue.id, this.columnData);
+  //   this.products = transformed;
+  // }
 
   isColumnSelected(selectedColumns: any[], colName: string): boolean {
     const found = selectedColumns.find(col => col.column === colName);
