@@ -24,10 +24,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of reportData.rows; index as i">
+      <tr *ngFor="let item of reportData.data; index as i">
         <td>{{ i + 1 }}</td>
         <td *ngFor="let column of reportData.columns">
-          {{ item[column] }}
+          {{ item[column.toLowerCase().replace(' ','_')] }}
         </td>
       </tr>
     </tbody>

@@ -22,7 +22,7 @@
             [checked]="isSelected('create',field)" 
             (change)="toggleField(field)"
           />
-          {{ field.column_name }}
+          {{ field.label }}
         </label>
       </div>
     </div>
@@ -39,7 +39,7 @@
             [checked]="isSelected('edit',field.column_name)"
             (change)="toggleField(field)"
           />
-          {{ field.column_name }}
+          {{ field.label }}
         </label>
       </div>
     </div>

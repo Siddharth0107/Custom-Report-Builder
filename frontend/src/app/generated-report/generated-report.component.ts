@@ -26,7 +26,7 @@ export class GeneratedReportComponent {
   }
 
   downloadExcel(): void {
-    const originalData = this.reportData.rows;
+    const originalData = this.reportData.data;
     const columns = this.reportData.columns || [];
 
     // Dynamically map data based on column names

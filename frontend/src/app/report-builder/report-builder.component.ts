@@ -63,7 +63,7 @@ export class ColumnDialog implements OnInit {
 
     const fieldWithLabel = {
       column_name: field.column_name.toLowerCase().replace(' ', '_'),
-      label: field.column_name
+      label: field.label
     };
 
     // Check if an object with the same db_column_name is already in the Set
@@ -138,7 +138,7 @@ export class ColumnDialog implements OnInit {
         product.selected_fields = Array.from(this.selectedFields).map(
           (item: any) => ({
             ...item,
-            abel: item.label
+            label: item.label
           })
         );
         if (product.name == "") {
