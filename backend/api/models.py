@@ -44,6 +44,8 @@ class TemplateColumns(models.Model):
     # report_id = models.IntegerField()
     template = models.ForeignKey(ReportTemplates,on_delete=models.CASCADE,related_name='template')
     column_name = models.CharField(max_length=200,default='default')
+    label = models.CharField(max_length=200,default='label')
+    
     timestamp = models.DateTimeField(auto_now_add=True)
 
 

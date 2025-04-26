@@ -33,7 +33,7 @@ class ReportSerializer(serializers.ModelSerializer):
 class ReportTemplateColumnSerializer(serializers.ModelSerializer):
     class Meta:
         model = TemplateColumns
-        fields = ['column_name']
+        fields = ['column_name','label']
 
 class ReportTemplatesSerializer(serializers.ModelSerializer):
     parent_report = ReportSerializer()
