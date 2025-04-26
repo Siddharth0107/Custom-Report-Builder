@@ -20,9 +20,11 @@ class Reports(models.Model):
     report_name = models.CharField(max_length=200)
     template_count = models.IntegerField(default=0,validators=[MinValueValidator(0)])
 
+
 class ReportColumns(models.Model):
     report_id = models.ForeignKey(Reports,on_delete=models.CASCADE,related_name='report_columns')
     column_name = models.CharField(max_length=200)
+    label = models.CharField(max_length=200,default=None)
     
 class RoleAndReportRelation(models.Model):
     role_id = models.IntegerField()
