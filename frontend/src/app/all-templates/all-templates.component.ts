@@ -5,7 +5,6 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { ColumnDialog } from './../report-builder/report-builder.component'
 
-
 @Component({
   selector: 'app-all-templates',
   imports: [ButtonModule, ColumnDialog, CommonModule],
@@ -56,6 +55,6 @@ export class AllTemplatesComponent implements OnInit {
 
   closeDialog(template: any) {
     template.dialogVisible = false;
-    // this.handleTemplateListing();
+    this.handleTemplateListing();
   }
 }

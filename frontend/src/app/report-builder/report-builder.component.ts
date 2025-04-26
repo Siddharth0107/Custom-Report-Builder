@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { ReportService } from './../service/report.service'
-import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'ColumnDialog',
@@ -29,6 +28,7 @@ export class ColumnDialog implements OnInit {
     if (this.data?.selected_fields) {
       this.selectedFields = new Set(this.data.selected_fields);
     } else if (this.data?.template) {
+      console.log(this.data.template)
       this.selectedFields = new Set(this.data.template);
     } else {
       this.selectedFields = new Set();
@@ -45,16 +45,27 @@ export class ColumnDialog implements OnInit {
     return false;
   }
 
-  toggleField(field: string): void {
+  toggleField(field: any): void {
+    console.log(field)
     console.log(this.selectedFields.has(field));
-    
-    if (this.selectedFields.has(field)) {
+    // debugger
+    const exists = Array.from(this.selectedFields).some(item => item.column_name === field.column_name);
+    console.log(exists);
+    if (exists) {
       this.selectedFields.delete(field);
+      for (let item of this.selectedFields){
+        if(item.column_name === field.column_name){
+          this.selectedFields.delete(item);
+          console.log(`Deleted : ${field.column_name}`);
+          break;
+        }
+      }
     } else {
       this.selectedFields.add(field);
     }
+    console.log(this.selectedFields);
     this.data.selected_fields = Array.from(this.selectedFields);
-    console.log(this.data.selected_fields); 
+    console.log(this.data.selected_fields);
   }
 
   close(): void {
@@ -97,7 +108,8 @@ export class ColumnDialog implements OnInit {
           error: (error: any) => {
             console.log(error);
           }
-        })      }
+        })
+      }
     } catch (error: any) {
       console.log(error);
     } finally {
