@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import JSONField  
+from django.core.validators import MinValueValidator
 
 class ReportPermission(models.Model):
     role_id = models.IntegerField()
@@ -17,7 +18,7 @@ class Roles(models.Model):
 
 class Reports(models.Model):
     report_name = models.CharField(max_length=200)
-    template_count = models.IntegerField(default=0)
+    template_count = models.IntegerField(default=0,validators=[MinValueValidator(0)])
 
 class ReportColumns(models.Model):
     report_id = models.ForeignKey(Reports,on_delete=models.CASCADE,related_name='report_columns')
@@ -44,3 +45,5 @@ class TemplateColumns(models.Model):
     template = models.ForeignKey(ReportTemplates,on_delete=models.CASCADE,related_name='template')
     column_name = models.CharField(max_length=200,default='default')
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
