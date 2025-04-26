@@ -9,7 +9,7 @@ import { ButtonModule } from 'primeng/button';
   standalone: true,
   imports: [ButtonModule, CommonModule],
   templateUrl: './generated-report.component.html',
-  styleUrl: './generated-report.component.css'
+  styleUrls: ['./generated-report.component.css']
 })
 export class GeneratedReportComponent {
   reportData: any = {};
@@ -17,7 +17,7 @@ export class GeneratedReportComponent {
   constructor() { }
 
   ngOnInit(): void {
-    this.reportData = history.state?.reportData;
+    this.reportData = history.state?.report_data;
     if (!this.reportData) {
       console.warn('No data found in state!');
     } else {
@@ -26,20 +26,24 @@ export class GeneratedReportComponent {
   }
 
   downloadExcel(): void {
-    const originalData = this.reportData.data;
+    const originalData = this.reportData.rows;
+    const columns = this.reportData.columns || [];
 
-    const formattedData = originalData.map((item: any) => ({
-      'Task Name': item.task_name,
-      'Assigned To': item.assigned_to,
-      'Assigned By': item.assigned_by,
-    }));
+    // Dynamically map data based on column names
+    const formattedData = originalData.map((item: any) => {
+      const formattedItem: any = {};
+      columns.forEach((column: string) => {
+        formattedItem[column] = item[column];
+      });
+      return formattedItem;
+    });
 
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(formattedData);
     const workbook: XLSX.WorkBook = {
       Sheets: { 'Report': worksheet },
       SheetNames: ['Report']
     };
-    
+
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const fileName = `${this.reportData.report_name || 'template report'}.xlsx`;
     const blob: Blob = new Blob([excelBuffer], { type: 'application/octet-stream' });

@@ -13,6 +13,7 @@ export class ReportService {
   private updateTemplateUrl = 'http://localhost:8000/api/update-template/';
   private getAllTemplatesUrl = 'http://localhost:8000/api/get-templates/';
   private deleteTemplatesUrl = 'http://localhost:8000/api/delete-template/';
+  private createSubReportUrl = 'http://localhost:8000/api/create-sub-report/';
 
   constructor(private http: HttpClient) {}
 
@@ -37,5 +38,9 @@ export class ReportService {
       body: { template_id: id }
     };
     return this.http.delete(this.deleteTemplatesUrl,options);
+  }
+
+  createSubReport(payload:any):Observable<any>{
+    return this.http.post(this.createSubReportUrl,payload);
   }
 }

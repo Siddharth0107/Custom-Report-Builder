@@ -1,6 +1,6 @@
 <main class="container mx-auto">
   <h1 class="my-4 text-center text-3xl">
-    Generated Report for the {{ reportData.parent_report_name }}
+    Generated Report for the {{ reportData.template_name }}
   </h1>
 
   <div class="flex justify-end mb-4">
@@ -18,17 +18,17 @@
     <thead>
       <tr>
         <th class="w-1_6">Sr No.</th>
-        <th class="w-1_6">Task Name</th>
-        <th class="w-1_6">Assigned To</th>
-        <th class="w-1_6">Assigned By</th>
+        <th *ngFor="let column of reportData.columns" class="w-1_6">
+          {{ column }}
+        </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of reportData.data; index as i">
+      <tr *ngFor="let item of reportData.rows; index as i">
         <td>{{ i + 1 }}</td>
-        <td>{{ item.task_name }}</td>
-        <td>{{ item.assigned_to }}</td>
-        <td>{{ item.assigned_by }}</td>
+        <td *ngFor="let column of reportData.columns">
+          {{ item[column] }}
+        </td>
       </tr>
     </tbody>
   </table>
