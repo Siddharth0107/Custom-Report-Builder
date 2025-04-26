@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Product } from '../domain/product';
 import { ProductService } from '../service/productservice';
 import { RouterModule, Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
@@ -8,7 +7,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { ReportService } from './service/report.service';
-import { TabsModule } from 'primeng/tabs';
+import { TabsModule } from 'primeng/tabs';;
 
 @Component({
   selector: 'app-root',

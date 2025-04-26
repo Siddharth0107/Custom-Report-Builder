@@ -1,6 +1,9 @@
 <main class="container mx-auto">
   <h1 class="my-4 text-center text-3xl">All Templates</h1>
 
+  <!-- Confirm Dialog Modal -->
+  <p-confirmDialog></p-confirmDialog>
+
   <table class="custom-table">
     <thead>
       <tr>
@@ -21,17 +24,18 @@
               icon="pi pi-plus"
               severity="success"
               (click)="createReportFromTemplate(template.id)"
-            />
+            ></p-button>
             <p-button
               severity="info"
               (click)="openDialog(template)"
               icon="pi pi-pencil"
-            />
+            ></p-button>
             <p-button
               icon="pi pi-trash"
               severity="danger"
-              (click)="deleteTemplate(template.id)"
-            />
+              (click)="confirmDeleteTemplate(template.id)"
+            ></p-button>
+
             <ColumnDialog
               *ngIf="template.dialogVisible"
               [data]="template"

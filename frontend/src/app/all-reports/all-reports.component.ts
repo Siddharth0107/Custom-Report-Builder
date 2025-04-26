@@ -28,7 +28,6 @@ export class AllReportsComponent {
     { id: 5, name: "Cashier" }
   ];
 
-
   filteredRoles: any[] = [];
   products!: Product[];
   showSubmit = true;
