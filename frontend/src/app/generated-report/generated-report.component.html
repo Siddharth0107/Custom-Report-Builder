@@ -1,0 +1,35 @@
+<main class="container mx-auto">
+  <h1 class="my-4 text-center text-3xl">
+    Generated Report for the {{ reportData.parent_report_name }}
+  </h1>
+
+  <div class="flex justify-end mb-4">
+    <button
+      pButton
+      type="button"
+      label="Download Excel"
+      icon="pi pi-download"
+      class="p-button-success"
+      (click)="downloadExcel()"
+    ></button>
+  </div>
+
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th class="w-1_6">Sr No.</th>
+        <th class="w-1_6">Task Name</th>
+        <th class="w-1_6">Assigned To</th>
+        <th class="w-1_6">Assigned By</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of reportData.data; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ item.task_name }}</td>
+        <td>{{ item.assigned_to }}</td>
+        <td>{{ item.assigned_by }}</td>
+      </tr>
+    </tbody>
+  </table>
+</main>

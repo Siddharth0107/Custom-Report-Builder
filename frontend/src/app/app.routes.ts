@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { AllTemplatesComponent } from './all-templates/all-templates.component';
 import { AllReportsComponent } from './all-reports/all-reports.component';
+import { GeneratedReportComponent } from './generated-report/generated-report.component';
 
 export const routes: Routes = [
     {
@@ -14,5 +14,9 @@ export const routes: Routes = [
         component: AllTemplatesComponent,
         title: 'All Templates'
     },
-
+    {
+        path:'generated-report',
+        component:GeneratedReportComponent,
+        title:"Generated Report",
+    }
 ];

@@ -1,35 +1,46 @@
-<h1 class="my-4 text-center text-3xl">All Templates</h1>
+<main class="container mx-auto">
+  <h1 class="my-4 text-center text-3xl">All Templates</h1>
 
-<table class="custom-table">
-  <thead>
-    <tr>
-      <th class="w-1_6">Sr No.</th>
-      <th class="w-1_6">Parent Report Name</th>
-      <th class="w-1_6">Template Name</th>
-      <th class="w-1_6">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let template of templates; index as i">
-      <td>{{ i + 1 }}</td>
-      <td>{{ template.parent_report.report_name }}</td>
-      <td>{{ template.name }}</td>
-      <td>
-        <div class="flex justify-center items-center gap-4">
-          <p-button
-            label="Edit"
-            severity="info"
-            (click)="openDialog(template)"
-          />
-          <p-button label="Delete" severity="danger" (click)="deleteTemplate(template.id)" />
-          <ColumnDialog
-            *ngIf="template.dialogVisible"
-            [data]="template"
-            [visible]="template.dialogVisible"
-            (onClose)="closeDialog(template)"
-          ></ColumnDialog>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th class="w-1_6">Sr No.</th>
+        <th class="w-1_6">Parent Report Name</th>
+        <th class="w-1_6">Template Name</th>
+        <th class="w-1_6">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let template of templates; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ template.parent_report.report_name }}</td>
+        <td>{{ template.name }}</td>
+        <td>
+          <div class="flex justify-center items-center gap-4">
+            <p-button
+              icon="pi pi-plus"
+              severity="success"
+              (click)="createReportFromTemplate(template.id)"
+            />
+            <p-button
+              severity="info"
+              (click)="openDialog(template)"
+              icon="pi pi-pencil"
+            />
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              (click)="deleteTemplate(template.id)"
+            />
+            <ColumnDialog
+              *ngIf="template.dialogVisible"
+              [data]="template"
+              [visible]="template.dialogVisible"
+              (onClose)="closeDialog(template)"
+            ></ColumnDialog>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</main>

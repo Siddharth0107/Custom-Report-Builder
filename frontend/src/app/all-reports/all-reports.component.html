@@ -1,6 +1,7 @@
-<h1 class="my-4 text-center text-3xl">Custom Report Builder</h1>
+<main class="container mx-auto">
+  <h1 class="my-4 text-center text-3xl">Custom Report Builder</h1>
 
-<table class="custom-table">
+  <table class="custom-table">
     <thead>
       <tr>
         <th class="w-1_6">Sr No.</th>
@@ -14,7 +15,7 @@
         <td>{{ product.parent_report_name }}</td>
         <td>
           <div class="actions">
-            <p-button label="Create Template" (click)="openDialog(product)" />
+            <p-button icon="pi pi-plus" (click)="openDialog(product)" />
             <ColumnDialog
               *ngIf="product.dialogVisible"
               [data]="product"
@@ -27,3 +28,4 @@
       </tr>
     </tbody>
   </table>
+</main>

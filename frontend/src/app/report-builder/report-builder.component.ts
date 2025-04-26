@@ -46,11 +46,8 @@ export class ColumnDialog implements OnInit {
   }
 
   toggleField(field: any): void {
-    console.log(field)
-    console.log(this.selectedFields.has(field));
     // debugger
     const exists = Array.from(this.selectedFields).some(item => item.column_name === field.column_name);
-    console.log(exists);
     if (exists) {
       this.selectedFields.delete(field);
       for (let item of this.selectedFields){
