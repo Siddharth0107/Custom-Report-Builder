@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import get_all_reports,get_templates,get_report_columns,get_all_reports_with_columns,create_report_template,update_template,delete_template
+from .views import get_all_reports,get_templates,get_report_columns,get_all_reports_with_columns,create_report_template,update_template,delete_template,get_template_report_data
 
 urlpatterns = [
     # path('report_permissions/', set_report_permissions),
@@ -13,5 +13,7 @@ urlpatterns = [
     path('create-template/', create_report_template),
     path('get-templates/', get_templates),
     path('update-template/',update_template),
-    path('delete-template/',delete_template)
+    path('delete-template/',delete_template),
+    path('create-sub-report/',get_template_report_data)
+    
 ]

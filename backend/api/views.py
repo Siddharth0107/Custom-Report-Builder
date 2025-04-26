@@ -376,8 +376,7 @@ def create_report_template(request):
             report.save()
 
         return Response({
-            "message": "Template created successfully.",
-            "template_id": template.id
+            "message": "Template created successfully."
         }, status=status.HTTP_201_CREATED)
 
     except Exception as e:
@@ -560,5 +559,87 @@ def delete_template(request):
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
-    
-    
+
+@api_view(['GET'])
+def get_template_report_data(request, ):
+    try:
+        data = request.data
+        templateId = data.get('template_id')
+        # Get the template and its selected columns
+        template = ReportTemplates.objects.select_related('parent_report').get(id=templateId)
+   
+        selected_columns = list(
+            TemplateColumns.objects.filter(template_id=templateId)
+            .values_list('column_name', flat=True)
+        )
+
+        # Dummy full report using original column names
+        task_report_data = {
+            "columns": [
+                "Task Name", "Task Id", "Assigned To", "Assigned By",
+                "Due Date", "Start Date", "Reporting Person", "Task Description"
+            ],
+            "rows": [
+                {
+                    "Task Name": "Design Homepage",
+                    "Task Id": "T001",
+                    "Assigned To": "Alice",
+                    "Assigned By": "Manager A",
+                    "Due Date": "2025-05-01",
+                    "Start Date": "2025-04-20",
+                    "Reporting Person": "Lead Designer",
+                    "Task Description": "Create responsive homepage design"
+                },
+                {
+                    "Task Name": "Database Backup",
+                    "Task Id": "T002",
+                    "Assigned To": "Bob",
+                    "Assigned By": "Manager B",
+                    "Due Date": "2025-04-30",
+                    "Start Date": "2025-04-21",
+                    "Reporting Person": "DevOps Lead",
+                    "Task Description": "Schedule daily backups for production DB"
+                },
+                {
+                    "Task Name": "API Integration",
+                    "Task Id": "T003",
+                    "Assigned To": "Charlie",
+                    "Assigned By": "Manager A",
+                    "Due Date": "2025-05-03",
+                    "Start Date": "2025-04-22",
+                    "Reporting Person": "Backend Lead",
+                    "Task Description": "Integrate third-party payment API"
+                }
+            ]
+        }
+
+        # Ensure only valid columns from report are used
+        valid_column_names = set(task_report_data["columns"])
+        filtered_columns = [col for col in selected_columns if col in valid_column_names]
+
+        # Check if any valid columns matched
+        if not filtered_columns:
+            return Response({"error": "No Columns Found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Filter rows to only include selected columns
+        filtered_rows = [
+            {key: row[key] for key in filtered_columns if key in row}
+            for row in task_report_data["rows"]
+        ]
+
+        # Check if any rows available after filtering
+        if not filtered_rows or all(len(row) == 0 for row in filtered_rows):
+            return Response({"error": "No record Found"}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response({
+            "template_id": template.id,
+            "template_name": template.name,
+            "report_id": template.parent_report.id,
+            "columns": filtered_columns,
+            "rows": filtered_rows
+        })
+
+    except ReportTemplates.DoesNotExist:
+        return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
