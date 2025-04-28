@@ -48,29 +48,29 @@ table_name : [api_outerfilters]
 
 USE report_builder;
 
-INSERT INTO Employees (id, report_id, filter_name, filter_label, filter_exists_in_report_columns)
+INSERT INTO api_reportfilters (id, report_id, filter_name, filter_label, exist_in_report)
 VALUES
     (1, '1', 'from_to_date', 'From-To-Date', false),
-    (2, '1', 'assign_to', 'Assign To', true),
-    (3, '1', 'assign_by', 'Assign By', true),
+    (2, '1', 'assigned_to', 'Assign To', true),
+    (3, '1', 'assigned_by', 'Assign By', true),
     (4, '1', 'task_type', 'Task Type', true),
     (5, '1', 'priority', 'Priority', true),
     (6, '1', 'status', 'Status', true),
     (7, '2', 'from_to_date', 'From-To-Date', false),
-    (8, '2', 'lead_source', 'Lead Source', true);
-    (9, '2', 'lead_lost_reason', 'Lead Lost Reason', false);
+    (8, '2', 'lead_source', 'Lead Source', true),
+    (9, '2', 'lead_lost_reason', 'Lead Lost Reason', false),
     (10, '2', 'status', 'Status', true),
     (11, '3', 'from_to_date', 'From-To-Date', false),
-    (12, '3', 'company', 'Company', true),
+    (12, '3', 'company_name', 'Company', true),
     (13, '3', 'enquiry_lost_reason', 'Enquiry Lost Reason', true),
-    (14, '3', 'assign_to', 'Assign To', true),
+    (14, '3', 'assigned_to', 'Assign To', true),
     (15, '3', 'status', 'Status', true),
     (16, '4', 'from_to_date', 'From-To-Date', false),
-    (17, '4', 'company', 'Company', true),
+    (17, '4', 'company_name', 'Company', true),
     (18, '4', 'status', 'Status', true),
-    (19, '4', 'assign_to', 'Assign To', true),
+    (19, '4', 'assigned_to', 'Assign To', true),
     (20, '5', 'report_type', 'Report Type', false),
     (21, '5', 'from_to_date', 'From-To-Date', false),
-    (22, '5', 'company', 'Company', true),
+    (22, '5', 'company_name', 'Company', true),
     (23, '5', 'item_type', 'Item Type', false),
-    (24, '5', 'status', 'Status', true),
+    (24, '5', 'status', 'Status', true)
