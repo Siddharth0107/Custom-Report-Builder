@@ -28,6 +28,164 @@ export class AllReportsComponent {
     { id: 5, name: "Cashier" }
   ];
 
+  allOuterFilers: any = {
+    "1": [
+      {
+        "id": 1,
+        "filter_name": "from_to_date",
+        "filter_label": "From-To-Date",
+        "filter_exists_in_report_columns": false
+      },
+      {
+        "id": 2,
+        "filter_name": "assign_to",
+        "filter_label": "Assign To",
+        "filter_exists_in_report_columns": true
+      },
+      {
+        "id": 3,
+        "filter_name": "assign_by",
+        "filter_label": "Assign By",
+        "filter_exists_in_report_columns": true
+      },
+      {
+        "id": 4,
+        "filter_name": "task_type",
+        "filter_label": "Task Type",
+        "filter_exists_in_report_columns": true
+      },
+      {
+        "id": 5,
+        "filter_name": "priority",
+        "filter_label": "Priority",
+        "filter_exists_in_report_columns": true
+      },
+      {
+        "id": 6,
+        "filter_name": "status",
+        "filter_label": "Status",
+        "filter_exists_in_report_columns": true
+      }
+    ],
+    "2": [
+      {
+        "id": 7,
+        "filter_name": "from_to_date",
+        "filter_label": "From-To-Date",
+        "filter_exists_in_report_columns": false
+      },
+      {
+        "id": 8,
+        "filter_name": "lead_source",
+        "filter_label": "Lead Source",
+        "filter_exists_in_report_columns": true
+      },
+      {
+        "id": 9,
+        "filter_name": "lead_lost_reason",
+        "filter_label": "Lead Lost Reason",
+        "filter_exists_in_report_columns": false
+      },
+      {
+        "id": 10,
+        "filter_name": "status",
+        "filter_label": "Status",
+        "filter_exists_in_report_columns": true
+      }
+    ],
+    "3": [
+      {
+        "id": 11,
+        "filter_name": "from_to_date",
+        "filter_label": "From-To-Date",
+        "filter_exists_in_report_columns": false
+      },
+      {
+        "id": 12,
+        "filter_name": "company",
+        "filter_label": "Company",
+        "filter_exists_in_report_columns": true
+      },
+      {
+        "id": 13,
+        "filter_name": "enquiry_lost_reason",
+        "filter_label": "Enquiry Lost Reason",
+        "filter_exists_in_report_columns": true
+      },
+      {
+        "id": 14,
+        "filter_name": "assign_to",
+        "filter_label": "Assign To",
+        "filter_exists_in_report_columns": true
+      },
+      {
+        "id": 15,
+        "filter_name": "status",
+        "filter_label": "Status",
+        "filter_exists_in_report_columns": true
+      }
+    ],
+    "4": [
+      {
+        "id": 16,
+        "filter_name": "from_to_date",
+        "filter_label": "From-To-Date",
+        "filter_exists_in_report_columns": false
+      },
+      {
+        "id": 17,
+        "filter_name": "company",
+        "filter_label": "Company",
+        "filter_exists_in_report_columns": true
+      },
+      {
+        "id": 18,
+        "filter_name": "status",
+        "filter_label": "Status",
+        "filter_exists_in_report_columns": true
+      },
+      {
+        "id": 19,
+        "filter_name": "assign_to",
+        "filter_label": "Assign To",
+        "filter_exists_in_report_columns": true
+      }
+    ],
+    "5": [
+      {
+        "id": 20,
+        "filter_name": "report_type",
+        "filter_label": "Report Type",
+        "filter_exists_in_report_columns": false
+      },
+      {
+        "id": 21,
+        "filter_name": "from_to_date",
+        "filter_label": "From-To-Date",
+        "filter_exists_in_report_columns": false
+      },
+      {
+        "id": 22,
+        "filter_name": "company",
+        "filter_label": "Company",
+        "filter_exists_in_report_columns": true
+      },
+      {
+        "id": 23,
+        "filter_name": "item_type",
+        "filter_label": "Item Type",
+        "filter_exists_in_report_columns": false
+      },
+      {
+        "id": 24,
+        "filter_name": "status",
+        "filter_label": "Status",
+        "filter_exists_in_report_columns": true
+      }
+    ]
+  }
+
+
   filteredRoles: any[] = [];
   products!: Product[];
   showSubmit = true;
@@ -48,8 +206,9 @@ export class AllReportsComponent {
       this.reportService.getAllReportsWithColumns().subscribe({
         next: (response: any) => {
           this.overAllData = response;
-          const transformedReports = this.transformReportsByRole(response.data);
+          const transformedReports = this.transformReportsByRole(response.data, this.allOuterFilers);
           this.products = transformedReports;
+          console.log(transformedReports);
         },
         error: (error: any) => {
           console.error("Error fetching reports", error);
@@ -60,17 +219,19 @@ export class AllReportsComponent {
     }
   }
 
-  transformReportsByRole(roleReports: any): any[] {
+  transformReportsByRole(roleReports: any,allOuterFilers:any): any[] {
     const transformed: any[] = [];
-
+    
     if (!roleReports) return [];
     for (const key in roleReports) {
       const report = roleReports[key];
+      const outerFilter = allOuterFilers[report.id]
       transformed.push({
         reportId: report.id,
         parent_report_name: report.report_name,
         saveBtnEnable: true,
         columns: roleReports[key].report_columns,
+        outer_filters: outerFilter,
         dialogVisible: false,
         isDisabled: false,
       });

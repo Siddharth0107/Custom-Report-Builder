@@ -1,33 +1,54 @@
 <p-dialog
-  header="Select columns"
+  [header]="
+    data.parent_report_name
+      ? 'Create Template from : ' + data.parent_report_name
+      : data.name
+  "
   (onHide)="close()"
   [modal]="true"
   [(visible)]="visible"
   [style]="{ width: '50rem' }"
 >
+  <div *ngIf="data?.columns || data?.template; else noFields" class="">
+    <div *ngIf="data.columns && data.columns.length > 0" class="flex gap-8">
+      <div class="w-1/2">
+        <h3 class="font-semibold mb-2">Report Columns</h3>
+        <div *ngFor="let field of data.columns" class="block">
+          <label class="w-full flex items-center gap-4 my-2">
+            <input
+              class="h-[20px] w-[20px]"
+              type="checkbox"
+              [checked]="isSelected('create', field)"
+              (change)="toggleField(field)"
+            />
+            {{ field.label }}
+          </label>
+        </div>
+      </div>
 
-  <div
-    *ngIf="data?.columns || data?.template; else noFields"
-    class="checkbox-grid"
-  >
-    <div class="checkbox-grid" *ngIf="data.columns && data.columns.length > 0">
-      <div
-        *ngFor="let field of data.columns"
-        class="flex justify-center items-center"
-      >
-        <label class="w-full flex items-center gap-4">
-          <input
-            class="h-[20px] w-[20px]"
-            type="checkbox"
-            [checked]="isSelected('create',field)" 
-            (change)="toggleField(field)"
-          />
-          {{ field.label }}
-        </label>
+      <div class="w-1/2">
+        <h3 class="font-semibold mb-2">Outer Filters</h3>
+        <div
+          *ngFor="let filter of data.outer_filters; index as idx"
+          class="block"
+        >
+          <label class="w-full flex items-center gap-4 my-2">
+            <input
+              class="h-[20px] w-[20px]"
+              type="checkbox"
+              [checked]="filter.selected"
+              [disabled]="filter.filter_exists_in_report_columns"
+            />
+            {{ filter.filter_label }}
+          </label>
+        </div>
       </div>
     </div>
 
-    <div class="checkbox-grid" *ngIf="data?.template && data.template.length > 0">
+    <div
+      class="checkbox-grid"
+      *ngIf="data?.template && data.template.length > 0"
+    >
       <div
         *ngFor="let field of data.parent_report.report_columns"
         class="flex justify-center items-center"
@@ -36,7 +57,7 @@
           <input
             class="h-[20px] w-[20px]"
             type="checkbox"
-            [checked]="isSelected('edit',field.column_name)"
+            [checked]="isSelected('edit', field.column_name)"
             (change)="toggleField(field)"
           />
           {{ field.label }}
@@ -54,8 +75,5 @@
     <input type="text" pInputText [(ngModel)]="reportNameToUse" />
   </div>
 
-  <p-button
-    label="Submit"
-    (click)="createUpdateTemplate(data)"
-    />
+  <p-button label="Submit" (click)="createUpdateTemplate(data)" />
 </p-dialog>

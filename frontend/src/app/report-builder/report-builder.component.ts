@@ -25,6 +25,7 @@ export class ColumnDialog implements OnInit {
   reportName: string = '';
 
   ngOnInit(): void {
+    console.log(this.data.outer_filters)
     if (this.data?.selected_fields) {
       this.selectedFields = new Set(this.data.selected_fields);
     } else if (this.data?.template) {
@@ -44,46 +45,60 @@ export class ColumnDialog implements OnInit {
     return false;
   }
 
-  toggleField(field: any): void {
-    // debugger
-    // const exists = Array.from(this.selectedFields).some(item => item.column_name === field.column_name);
-    // if (exists) {
-    //   this.selectedFields.delete(field);
-    //   for (let item of this.selectedFields) {
-    //     if (item.column_name === field.column_name) {
-    //       this.selectedFields.delete(item);
-    //       console.log(`Deleted : ${field.column_name}`);
-    //       break;
-    //     }
-    //   }
-    // } else {
-    //   this.selectedFields.add(field);
-    // }
-    // this.data.selected_fields = Array.from(this.selectedFields);
+  // toggleField(field: any): void {
+  //   const fieldWithLabel = {
+  //     column_name: field.column_name.toLowerCase().replace(' ', '_'),
+  //     label: field.label
+  //   };
+  //   let existing = Array.from(this.selectedFields).find(
+  //     (f: any) => f.column_name === fieldWithLabel.column_name
+  //   );
 
+  //   if (existing) {
+  //     this.selectedFields.delete(existing);
+  //     console.log('Removed existing:');
+  //   } else {
+  //     this.selectedFields.add(fieldWithLabel);
+  //     console.log('Added new:');
+  //   }
+
+  //   console.log(this.selectedFields);
+  //   this.data.selected_fields = Array.from(this.selectedFields);
+  // }
+
+
+  toggleField(field: any): void {
     const fieldWithLabel = {
       column_name: field.column_name.toLowerCase().replace(' ', '_'),
       label: field.label
     };
 
-    // Check if an object with the same db_column_name is already in the Set
     let existing = Array.from(this.selectedFields).find(
       (f: any) => f.column_name === fieldWithLabel.column_name
     );
 
-    console.log(this.selectedFields);
-    console.log(existing);
-    console.log(fieldWithLabel);
-    
     if (existing) {
       this.selectedFields.delete(existing);
-      console.log('Removed existing:');
+      // 🧹 Remove matching outer filter selection if needed
+      const matchingFilter = this.data.outer_filters?.find(
+        (f: any) => f.filter_name === fieldWithLabel.column_name
+      );
+      if (matchingFilter) {
+        matchingFilter.selected = false;
+      }
+
     } else {
       this.selectedFields.add(fieldWithLabel);
-      console.log('Added new:');
+
+      // ✅ Auto-select matching outer filter if exists
+      const matchingFilter = this.data.outer_filters?.find(
+        (f: any) => f.filter_name === fieldWithLabel.column_name
+      );
+      if (matchingFilter) {
+        matchingFilter.selected = true;
+      }
     }
 
-    console.log(this.selectedFields);
     this.data.selected_fields = Array.from(this.selectedFields);
   }
 
