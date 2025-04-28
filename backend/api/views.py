@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Reports,ReportColumns,ReportTemplates,TemplateColumns
+from .models import Reports,ReportColumns,ReportTemplates,TemplateColumns,TemplateFilters
 from .serializers import ReportTemplatesSerializer,ReportSerializer
 from django.db import transaction
 from collections import defaultdict
@@ -74,6 +74,7 @@ def create_report_template(request):
         parent_report_id = data.get('parent_report_id')
         template_name = data.get('template_name', '').strip()
         selected_columns = data.get('columns', [])
+        template_filters = data.get('report_filters',[])
 
         # Validate required fields
         if not parent_report_id or not template_name or not selected_columns:
@@ -156,6 +157,17 @@ def create_report_template(request):
                 for col in selected_columns if col.get('column_name') and col.get('label')
             ]
             TemplateColumns.objects.bulk_create(template_columns)
+            
+            template_filters = [
+            TemplateFilters(
+                    template=template,
+                    filter_name=col['filter_name'],
+                    filter_label=col['filter_label']
+                )
+                for col in template_filters if col.get('filter_name') and col.get('filter_label')
+            ]
+            TemplateFilters.objects.bulk_create(template_filters)
+            
 
             # Increase template count
             report.template_count += 1
@@ -187,6 +199,7 @@ def update_template(request):
         template_id = data.get('template_id')
         template_name = data.get('name', '').strip()
         selected_columns = data.get('columns', [])
+        template_filters = data.get('report_filters',[])
 
         # Validate required fields
         if not template_id or not template_name or not selected_columns:
@@ -262,6 +275,8 @@ def update_template(request):
 
             # Update columns
             TemplateColumns.objects.filter(template_id=template_id).delete()
+            TemplateFilters.objects.filter(template_id=template_id).delete()
+            
             new_template_columns = [
                 TemplateColumns(
                     template_id=template_id,
@@ -271,6 +286,16 @@ def update_template(request):
                 for col in selected_columns if col.get('column_name') and col.get('label')
             ]
             TemplateColumns.objects.bulk_create(new_template_columns)
+            
+            new_template_filter = [
+                TemplateFilters(
+                    template_id=template_id,
+                    filter_name=col['filter_name'],
+                    filter_label=col['filter_label']
+                )
+                for col in template_filters if col.get('filter_name') and col.get('filter_label')
+            ]
+            TemplateFilters.objects.bulk_create(new_template_filter)
 
         return Response({"message": "Template updated successfully."}, status=status.HTTP_200_OK)
 
@@ -292,6 +317,7 @@ def delete_template(request):
             }, status=status.HTTP_400_BAD_REQUEST)
         with transaction.atomic():
             TemplateColumns.objects.filter(template_id=template.id).delete()
+            TemplateFilters.objects.filter(template_id=template.id).delete()
             template.delete()
 
             if report.template_count > 0:
@@ -341,7 +367,6 @@ def get_template_report_data(request):
             "template_name": template.name,
             "report_name": template.parent_report.report_name,
             "columns": [col['label'] for col in selected_columns],
-            'test':labels,
             "data": filtered_rows
         }, status=status.HTTP_200_OK)
 

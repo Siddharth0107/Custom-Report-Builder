@@ -134,6 +134,7 @@ export class ColumnDialog implements OnInit {
           parent_report_id: product.reportId,
           template_name: product.generated_report_name,
           columns: product.selected_fields,
+          report_filters : product.report_filters
         };
 
         console.log(product.selected_fields);

@@ -27,7 +27,8 @@
       <tr *ngFor="let item of reportData.data; index as i">
         <td>{{ i + 1 }}</td>
         <td *ngFor="let column of reportData.columns">
-          {{ item[column.toLowerCase().replace(' ','_')] }}
+          {{ item[column.toLowerCase().replaceAll(' ','_')] }}
+
         </td>
       </tr>
     </tbody>

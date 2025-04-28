@@ -22,7 +22,7 @@ class Reports(models.Model):
 
 
 class ReportColumns(models.Model):
-    report_id = models.ForeignKey(Reports,on_delete=models.CASCADE,related_name='report_columns')
+    report = models.ForeignKey(Reports,on_delete=models.CASCADE,related_name='report_columns')
     column_name = models.CharField(max_length=200)
     label = models.CharField(max_length=200,default=None)
     
@@ -32,8 +32,8 @@ class RoleAndReportRelation(models.Model):
 
 class ReportColumnPermission(models.Model):
     role = models.ForeignKey(Roles, on_delete=models.CASCADE)
-    report = models.ForeignKey(Reports, on_delete=models.CASCADE)
-    column = models.ForeignKey(ReportColumns, on_delete=models.CASCADE)
+    # report = models.ForeignKey(Reports, on_delete=models.CASCADE)
+    # column = models.ForeignKey(ReportColumns, on_delete=models.CASCADE)
     is_selected = models.BooleanField(default=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -47,7 +47,16 @@ class TemplateColumns(models.Model):
     template = models.ForeignKey(ReportTemplates,on_delete=models.CASCADE,related_name='template')
     column_name = models.CharField(max_length=200,default='default')
     label = models.CharField(max_length=200,default='label')
-    
     timestamp = models.DateTimeField(auto_now_add=True)
 
+class ReportFilters(models.Model):
+    report = models.ForeignKey(Reports,on_delete=models.CASCADE,related_name='report_filters')
+    filter_name = models.CharField(max_length=255)
+    filter_label = models.CharField(max_length=255)
+    exist_in_report = models.BooleanField()
+    # timestamp = models.DateTimeField(auto_now_add=True)
 
+class TemplateFilters(models.Model):
+    template = models.ForeignKey(ReportTemplates,on_delete=models.CASCADE,related_name='template_filter')
+    filter_name = models.CharField(max_length=255)
+    filter_label = models.CharField(max_length=255)
