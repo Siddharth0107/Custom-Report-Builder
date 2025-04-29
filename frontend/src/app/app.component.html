@@ -1,6 +1,6 @@
 <main>
   <div class="card">
-    <p-tabs value="reports">
+    <p-tabs [value]="activeTab">
       <p-tablist>
         @for(tab of tabs; track tab.route){
         <p-tab

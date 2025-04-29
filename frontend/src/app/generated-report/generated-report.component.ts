@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import * as XLSX from 'xlsx';
-import * as fs from 'file-saver';
+import fs from 'file-saver';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 
@@ -20,8 +20,6 @@ export class GeneratedReportComponent {
     this.reportData = history.state?.report_data;
     if (!this.reportData) {
       console.warn('No data found in state!');
-    } else {
-      console.log('Received report data:', this.reportData);
     }
   }
 

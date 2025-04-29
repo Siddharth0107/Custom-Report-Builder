@@ -26,11 +26,12 @@ export class ColumnDialog implements OnInit {
   reportName: string = '';
 
   ngOnInit(): void {
-    console.log(this.data.outer_filters)
     if (this.data?.selected_fields) {
       this.selectedFields = new Set(this.data.selected_fields);
+      this.selectedFilters = new Set(this.data.selected_filters);
     } else if (this.data?.template) {
       this.selectedFields = new Set(this.data.template);
+      this.selectedFilters = new Set(this.data.template_filter);
     } else {
       this.selectedFields = new Set();
       this.selectedFilters = new Set();
@@ -47,14 +48,15 @@ export class ColumnDialog implements OnInit {
     return false;
   }
 
-  isFilterSelected(action: string, filter: string): boolean {
+  isFilterSelected(action: string, filter: any): boolean {
     if (action === 'create') {
       return this.selectedFilters.has(filter); // Check if the field is in the Set (for 'create' action)
     } else if (action === 'edit') {
       const reportFilters = Array.from(this.selectedFilters).map(item => item.filter_name);
-      return reportFilters.includes(filter);
+      return reportFilters.includes(filter.filter_name);
+    } else {
+      return false;
     }
-    return false;
   }
 
   toggleField(field: any): void {
@@ -66,32 +68,49 @@ export class ColumnDialog implements OnInit {
     let existing = Array.from(this.selectedFields).find(
       (f: any) => f.column_name === fieldWithLabel.column_name
     );
-
     if (existing) {
       this.selectedFields.delete(existing);
-      // Remove the matching filter from selectedFilters
-      const matchingFilter = this.data.outer_filters?.find(
-        (f: any) => f.filter_name === fieldWithLabel.column_name
-      );
-      if (matchingFilter) {
-        this.selectedFilters.delete(matchingFilter);  // Remove from selectedFilters
+      if (this.data.outer_filters) {
+        const matchingFilter = this.data.outer_filters?.find(
+          (f: any) => f.filter_name === fieldWithLabel.column_name
+        );
+        if (matchingFilter) {
+          this.selectedFilters.delete(matchingFilter);
+        }
+      } else {
+        const matchingFilter = this.data.parent_report.report_filters?.find(
+          (f: any) => {
+            // console.log('Checking filter:', f);
+            return f.filter_name === fieldWithLabel.column_name;
+          }
+        );
+        if (matchingFilter) {
+          this.selectedFilters.delete(matchingFilter);
+        }
       }
     } else {
       this.selectedFields.add(fieldWithLabel);
-  
-      // Add the matching filter to selectedFilters
-      const matchingFilter = this.data.outer_filters?.find(
-        (f: any) => f.filter_name === fieldWithLabel.column_name
-      );
-      if (matchingFilter) {
-        this.selectedFilters.add(matchingFilter);  // Add to selectedFilters
+      if (this.data.outer_filters) {
+        const matchingFilter = this.data.outer_filters?.find(
+          (f: any) => f.filter_name === fieldWithLabel.column_name
+        );
+        if (matchingFilter) {
+          this.selectedFilters.add(matchingFilter);
+        }
+      } else {
+        const matchingFilter = this.data.parent_report.report_filters?.find(
+          (f: any) => f.filter_name == fieldWithLabel.column_name
+        );
+        if (matchingFilter) {
+          this.selectedFilters.add(matchingFilter);
+        }
       }
     }
     this.data.selected_fields = Array.from(this.selectedFields);
     this.data.selected_filters = Array.from(this.selectedFilters).map((item: any) => ({
       filter_name: item.filter_name,
       filter_label: item.filter_label
-    }));  
+    }));
   }
 
   close(): void {
@@ -103,8 +122,6 @@ export class ColumnDialog implements OnInit {
     try {
       if (product.columns) {
         product.generated_report_name = this.reportNameToUse;
-        console.log(this.selectedFields);
-
         product.selected_fields = Array.from(this.selectedFields).map(
           (item: any) => ({
             ...item,
@@ -126,14 +143,11 @@ export class ColumnDialog implements OnInit {
           parent_report_id: product.reportId,
           template_name: product.generated_report_name,
           columns: product.selected_fields,
-          report_filters : product.selected_filters
+          report_filters: product.selected_filters
         };
-
-        console.log(product.selected_fields);
-        // debugger
+        
         this.reportService.createTemplate(payload).subscribe({
           next: (response: any) => {
-            console.log(response);
             this.visible = false;
           },
           error: (error: any) => {
@@ -158,13 +172,21 @@ export class ColumnDialog implements OnInit {
           alert("Atleast select 1 column")
           return
         }
-        console.log(product.selected_fields);
+
+        product.selected_filters = Array.from(this.selectedFilters).map(
+          (item: any) => ({
+            filter_name: item.filter_name,
+            filter_label: item.filter_label,
+          })
+        )
 
         const payload = {
           template_id: product.id,
           name: product.name,
           columns: product.selected_fields,
+          report_filters: product.selected_filters,
         }
+
         this.reportService.updateTemplate(payload).subscribe({
           next: (response: any) => {
             console.log(response);
@@ -194,5 +216,4 @@ export class ColumnDialog implements OnInit {
       this.reportName = value;
     }
   }
-
 }

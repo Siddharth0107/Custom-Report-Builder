@@ -45,23 +45,40 @@
       </div>
     </div>
 
-    <div
-      class="checkbox-grid"
-      *ngIf="data?.template && data.template.length > 0"
-    >
-      <div
-        *ngFor="let field of data.parent_report.report_columns"
-        class="flex justify-center items-center"
-      >
-        <label class="w-full flex items-center gap-4">
-          <input
-            class="h-[20px] w-[20px]"
-            type="checkbox"
-            [checked]="isSelected('edit', field.column_name)"
-            (change)="toggleField(field)"
-          />
-          {{ field.label }}
-        </label>
+    <div class="flex gap-8" *ngIf="data?.template && data.template.length > 0">
+      <div class="w-1/2">
+        <h3 class="font-semibold mb-2">Report Columns</h3>
+        <div
+          *ngFor="let field of data.parent_report.report_columns"
+          class="block"
+        >
+          <label class="w-full flex items-center gap-4 my-2">
+            <input
+              class="h-[20px] w-[20px]"
+              type="checkbox"
+              [checked]="isSelected('edit', field.column_name)"
+              (change)="toggleField(field)"
+            />
+            {{ field.label }}
+          </label>
+        </div>
+      </div>
+      <div class="w-1/2">
+        <h3 class="font-semibold mb-2">Outer Filters</h3>
+        <div
+          *ngFor="let filter of data.parent_report.report_filters; index as idx"
+          class="block"
+        >
+          <label class="w-full flex items-center gap-4 my-2">
+            <input
+              class="h-[20px] w-[20px]"
+              type="checkbox"
+              [checked]="isFilterSelected('edit', filter)"
+              [disabled]="filter.exist_in_report"
+            />
+            {{ filter.filter_label }}
+          </label>
+        </div>
       </div>
     </div>
   </div>
