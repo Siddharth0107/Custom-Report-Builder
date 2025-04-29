@@ -1,6 +1,21 @@
 <main class="container mx-auto my-5">
-    <h1 class="text-3xl font-semibold">Select Outer Filters for the Report</h1>
-    <div class="my-3">
-        
+  <h1 class="text-3xl font-semibold">Select Outer Filters for the Report</h1>
+
+  <div class="my-3">
+    <div class="card flex items-center gap-3 my-3">
+      <div *ngFor="let key of objectKeys(reportData)">
+        <label for="multiple-ac-1" class="font-bold mb-2 block">
+          {{ getLabelName(key) }}
+        </label>
+        <p-autocomplete
+          [(ngModel)]="dropdownValues[key]"
+          [dropdown]="true"
+          [suggestions]="filteredOptions[key]"
+          (completeMethod)="filterSuggestions($event, key)"
+        />
+      </div>
     </div>
+  </div>
+
+  <p-button label="Submit" (click)="createSubReport()" />
 </main>

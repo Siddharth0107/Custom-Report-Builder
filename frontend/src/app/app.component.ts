@@ -23,6 +23,7 @@ export class AppComponent {
     { route: 'reports', label: 'Reports', icon: 'pi pi-home', pathMatch: 'full' },
     { route: 'templates', label: 'Templates', icon: 'pi pi-list' },
     { route: 'outer-filter-view', label: 'Report View', icon: 'pi pi-chart-line' },
+    { route: 'generated-report', label: 'Generated Report', icon: 'pi pi-book' },
   ];
   constructor(private router: Router) {
     this.router.events

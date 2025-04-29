@@ -14,33 +14,38 @@ export class ReportService {
   private getAllTemplatesUrl = 'http://localhost:8000/api/get-templates/';
   private deleteTemplatesUrl = 'http://localhost:8000/api/delete-template/';
   private createSubReportUrl = 'http://localhost:8000/api/create-sub-report/';
+  private showFilterViewUrl = 'http://localhost:8000/api/get-filter-values/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAllReportsWithColumns(): Observable<any> {
     return this.http.get(this.getAllReportsWithColumnsUrl);
   }
 
-  createTemplate(data:any):Observable<any>{
-    return this.http.post(this.createTemplateUrl,data);
+  createTemplate(data: any): Observable<any> {
+    return this.http.post(this.createTemplateUrl, data);
   }
 
-  updateTemplate(data:any):Observable<any>{
-    return this.http.put(this.updateTemplateUrl,data);
+  updateTemplate(data: any): Observable<any> {
+    return this.http.put(this.updateTemplateUrl, data);
   }
 
-  getAllTemplates():Observable<any>{
+  getAllTemplates(): Observable<any> {
     return this.http.get(this.getAllTemplatesUrl);
   }
 
-  deleteTemplate(id:any):Observable<any>{
+  deleteTemplate(id: any): Observable<any> {
     const options = {
       body: { template_id: id }
     };
-    return this.http.delete(this.deleteTemplatesUrl,options);
+    return this.http.delete(this.deleteTemplatesUrl, options);
   }
 
-  createSubReport(payload:any):Observable<any>{
-    return this.http.post(this.createSubReportUrl,payload);
+  createSubReport(payload: any): Observable<any> {
+    return this.http.post(this.createSubReportUrl, payload);
+  }
+
+  showFilterView(payload: any): Observable<any> {
+    return this.http.post(this.showFilterViewUrl, payload);
   }
 }

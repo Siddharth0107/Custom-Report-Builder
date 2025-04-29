@@ -80,7 +80,7 @@ export class AllTemplatesComponent implements OnInit {
   }
 
   createReportFromTemplate(id: number) {
-    this.reportService.createSubReport({ template_id: id }).subscribe({
+    this.reportService.showFilterView({ template_id: id }).subscribe({
       next: (response: any) => {
         this.reportData = response;
         this.router.navigate(['./outer-filter-view'], {

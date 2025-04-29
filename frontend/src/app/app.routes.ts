@@ -20,9 +20,9 @@ export const routes: Routes = [
         component:OuterFilterViewComponent,
         title:"Report View",
     },
-    // {
-    //     path:'generated-report',
-    //     component:GeneratedReportComponent,
-    //     title:"Generated Report",
-    // }
+    {
+        path:'generated-report',
+        component:GeneratedReportComponent,
+        title:"Generated Report",
+    }
 ];

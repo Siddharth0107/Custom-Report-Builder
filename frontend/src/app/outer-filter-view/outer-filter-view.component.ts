@@ -1,18 +1,78 @@
 import { Component } from '@angular/core';
+import { ReportService } from '../service/report.service';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-outer-filter-view',
-  imports: [],
+  imports: [AutoCompleteModule, FormsModule, CommonModule, ButtonModule],
   templateUrl: './outer-filter-view.component.html',
   styleUrl: './outer-filter-view.component.css'
 })
 export class OuterFilterViewComponent {
+  filterData: any = {}
   reportData: any = {}
-  constructor() { }
+  dropdownValues: { [key: string]: string } = {};
+  suggestions: any = [];
+
+  constructor(private reportService: ReportService, private router: Router) { }
   ngOnInit(): void {
-    this.reportData = history.state?.report_data;
-    if (!this.reportData) {
-      console.warn('No data found in state!');
+    this.filterData = history.state?.report_data;
+    this.reportService.showFilterView({ template_id: 52 }).subscribe({
+      next: (response: any) => {
+        this.reportData = response.Data;
+      },
+      error: (error: any) => {
+        console.error(error);
+      }
+    });
+  }
+
+  filterFields(event: any) {
+    const query = event.query.toLowerCase();
+    this.suggestions = this.reportData.filter((option: string) =>
+      option.toLowerCase().includes(query)
+    );
+  }
+
+  objectKeys = Object.keys;
+
+  filteredOptions: { [key: string]: string[] } = {};
+
+  filterSuggestions(event: any, key: string) {
+    const query = event.query.toLowerCase();
+    this.filteredOptions[key] = this.reportData[key].filter((item: string) =>
+      item.toLowerCase().includes(query)
+    );
+  }
+
+  getLabelName(key: string) {
+    key = key.replaceAll('_', ' ')
+    key = key.charAt(0).toUpperCase() + key.slice(1);
+    return key
+  }
+
+  async createSubReport() {
+    const payload = {
+      template_id: 50,
+      filters: this.dropdownValues
     }
+
+    this.reportService.createSubReport(payload).subscribe({
+      next: (response: any) => {
+        console.log(response)
+        this.router.navigate(['/generated-report'], {
+          state: {
+            report_data: response
+          }
+        });
+      },
+      error: (error: any) => {
+        console.log(error)
+      }
+    })
   }
 }

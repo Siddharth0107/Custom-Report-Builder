@@ -3,6 +3,7 @@ import * as XLSX from 'xlsx';
 import fs from 'file-saver';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-generated-report',
@@ -14,12 +15,13 @@ import { ButtonModule } from 'primeng/button';
 export class GeneratedReportComponent {
   reportData: any = {};
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
-    this.reportData = history.state?.report_data;
+    this.reportData = history.state.report_data;
     if (!this.reportData) {
-      console.warn('No data found in state!');
+      // console.warn('No data found in state!');
+      this.router.navigate(['/templates'])
     }
   }
 
