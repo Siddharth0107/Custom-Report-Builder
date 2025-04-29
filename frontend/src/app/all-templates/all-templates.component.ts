@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { ColumnDialog } from '../report-builder/report-builder.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { OuterFilterViewData, Templates } from '../../types/reportTypes';
 
 @Component({
   selector: 'app-all-templates',
@@ -16,14 +17,26 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
   providers: [ConfirmationService]
 })
 export class AllTemplatesComponent implements OnInit {
-  templates: any = [];
-  reportData: any = {};
+  templates: Templates[] = [{
+    id: 0,
+    name: '',
+    parent_report: {
+      id: 0,
+      report_name: '',
+      report_columns: [],
+      report_filters: [],
+    },
+    template: [],
+    template_filter: [],
+    dialogVisible:false,
+  }];
+  reportData: OuterFilterViewData = {};
 
   constructor(
     private reportService: ReportService,
     private router: Router,
     private confirmationService: ConfirmationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.handleTemplateListing();
@@ -63,29 +76,31 @@ export class AllTemplatesComponent implements OnInit {
       icon: 'pi pi-trash',
       acceptLabel: 'Yes',
       rejectLabel: 'No',
-      closeOnEscape:false,
+      closeOnEscape: false,
       accept: () => {
         this.deleteTemplate(id);
       }
     });
-  }  
+  }
 
-  openDialog(template: any) {
+  openDialog(template: Templates) {
     template.dialogVisible = true;
   }
 
-  closeDialog(template: any) {
+  closeDialog(template: Templates) {
     template.dialogVisible = false;
     this.handleTemplateListing();
   }
 
   createReportFromTemplate(id: number) {
+    console.log(id)
     this.reportService.showFilterView({ template_id: id }).subscribe({
       next: (response: any) => {
         this.reportData = response;
         this.router.navigate(['./outer-filter-view'], {
           state: {
-            report_data: this.reportData
+            report_data: this.reportData,
+            id: id,
           }
         });
       },

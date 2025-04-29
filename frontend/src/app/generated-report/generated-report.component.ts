@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import * as XLSX from 'xlsx';
 import fs from 'file-saver';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { Router } from '@angular/router';
+import { ReportData } from '../../types/reportTypes';
 
 @Component({
   selector: 'app-generated-report',
@@ -13,15 +13,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./generated-report.component.css']
 })
 export class GeneratedReportComponent {
-  reportData: any = {};
+  reportData: ReportData = {
+    template_id: 0,
+    report_name: '',
+    template_name: '',
+    columns: [],
+    data: [],
+  };
 
-  constructor(private router:Router) { }
+  constructor(private location: Location) { }
 
   ngOnInit(): void {
     this.reportData = history.state.report_data;
     if (!this.reportData) {
-      // console.warn('No data found in state!');
-      this.router.navigate(['/templates'])
+      this.location.back();
     }
   }
 
@@ -29,9 +34,8 @@ export class GeneratedReportComponent {
     const originalData = this.reportData.data;
     const columns = this.reportData.columns || [];
 
-    // Dynamically map data based on column names
-    const formattedData = originalData.map((item: any) => {
-      const formattedItem: any = {};
+    const formattedData = originalData.map((item: {[key: string]: string}) => {
+      const formattedItem: { [key: string]: string } = {};
       columns.forEach((column: string) => {
         formattedItem[column] = item[column];
       });

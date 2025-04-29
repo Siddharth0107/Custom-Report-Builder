@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { ReportService } from '../service/report.service';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
+import { OuterFilterViewData } from '../../types/reportTypes';
 
 @Component({
   selector: 'app-outer-filter-view',
@@ -13,15 +14,20 @@ import { Router } from '@angular/router';
   styleUrl: './outer-filter-view.component.css'
 })
 export class OuterFilterViewComponent {
-  filterData: any = {}
-  reportData: any = {}
+  templateId: number = 0;
+    reportData: OuterFilterViewData = {}
   dropdownValues: { [key: string]: string } = {};
   suggestions: any = [];
 
-  constructor(private reportService: ReportService, private router: Router) { }
+  constructor(private location: Location, private reportService: ReportService, private router: Router) { }
   ngOnInit(): void {
-    this.filterData = history.state?.report_data;
-    this.reportService.showFilterView({ template_id: 52 }).subscribe({
+    this.templateId = history.state.id;
+    this.reportData = history.state.report_data;
+    if (!this.templateId) {
+      this.location.back();
+      return
+    }
+    this.reportService.showFilterView({ template_id: this.templateId }).subscribe({
       next: (response: any) => {
         this.reportData = response.Data;
       },
@@ -33,10 +39,12 @@ export class OuterFilterViewComponent {
 
   filterFields(event: any) {
     const query = event.query.toLowerCase();
-    this.suggestions = this.reportData.filter((option: string) =>
+    const options = this.reportData['assigned_to'] || [];
+    this.suggestions = options.filter((option: string) =>
       option.toLowerCase().includes(query)
     );
   }
+  
 
   objectKeys = Object.keys;
 
@@ -57,7 +65,7 @@ export class OuterFilterViewComponent {
 
   async createSubReport() {
     const payload = {
-      template_id: 50,
+      template_id: this.templateId,
       filters: this.dropdownValues
     }
 
