@@ -10,20 +10,20 @@ import logging
 import os
 import json
 import re
-
+from django.forms.models import model_to_dict
 
 logger = logging.getLogger(__name__)
 
 def is_valid_template_name(name: str) -> bool:
     """
     Validates the template name.
-    - Must start with a letter (A-Z or a-z)
+    - Must start with a letter (A-Z or a-z or 0-9)
     - Can contain letters, digits, spaces, underscores, and hyphens
     - No special characters like / @ # ! etc
     """
     if not name:
         return False
-    pattern = r'^[A-Za-z][A-Za-z0-9 _-]*$'
+    pattern = r'^[A-Za-z0-9][A-Za-z0-9 _-]*$'
     return bool(re.match(pattern, name))
 
 # report lsiting
@@ -69,14 +69,17 @@ def get_all_reports_with_columns(request):
  
 @api_view(['POST'])
 def create_report_template(request):
+    
     try:
         data = request.data
         parent_report_id = data.get('parent_report_id')
         template_name = data.get('template_name', '').strip()
         selected_columns = data.get('columns', [])
         template_filters = data.get('report_filters',[])
-
-        # Validate required fields
+        if not is_valid_template_name(template_name):
+          return Response({
+            "error": "Template name must start with a letter or digits and can only contain letters, numbers, spaces, underscores (_) or hyphens (-)."
+        }, status=status.HTTP_400_BAD_REQUEST)
         if not parent_report_id or not template_name or not selected_columns:
             return Response({"error": "Missing required fields."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -91,55 +94,53 @@ def create_report_template(request):
         if not selected_db_columns:
             return Response({"error": "No valid columns selected."}, status=status.HTTP_400_BAD_REQUEST)
 
-        if not is_valid_template_name(template_name):
-          return Response({
-            "error": "Template name must start with a letter and can only contain letters, numbers, spaces, underscores (_) or hyphens (-)."
-        }, status=status.HTTP_400_BAD_REQUEST)
         # Fetch parent report
         try:
             report = Reports.objects.get(id=parent_report_id)
         except Reports.DoesNotExist:
             return Response({"error": "Parent report not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+        
 
-        if report.template_count >= 5:
-            return Response({"error": "Max 5 subreports allowed."}, status=status.HTTP_403_FORBIDDEN)
+        # if report.template_count >= 5:
+        #     return Response({"error": "Max 5 subreports allowed."}, status=status.HTTP_403_FORBIDDEN)
 
         # Check for template name uniqueness under this report
-        if ReportTemplates.objects.filter(name=template_name, parent_report_id=parent_report_id).exists():
-            return Response({
-                "error": f"A template with the name '{template_name}' already exists for this report."
-            }, status=status.HTTP_400_BAD_REQUEST)
+        # if ReportTemplates.objects.filter(name=template_name, parent_report_id=parent_report_id).exists():
+        #     return Response({
+        #         "error": f"A template with the name '{template_name}' already exists for this report."
+        #     }, status=status.HTTP_400_BAD_REQUEST)
 
         # Validate selected columns against report's main columns
         valid_db_columns = set(
             ReportColumns.objects.filter(report_id=parent_report_id).values_list('column_name', flat=True)
         )
 
-        invalid_columns = selected_db_columns - valid_db_columns
-        if invalid_columns:
-            return Response({
-                "error": "Some selected columns are invalid for this report.",
-                "invalid_columns": list(invalid_columns)
-            }, status=status.HTTP_400_BAD_REQUEST)
+        # invalid_columns = selected_db_columns - valid_db_columns
+        # if invalid_columns:
+        #     return Response({
+        #         "error": "Some selected columns are invalid for this report.",
+        #         "invalid_columns": list(invalid_columns)
+        #     }, status=status.HTTP_400_BAD_REQUEST)
 
         # Prevent templates with ALL columns selected
-        if selected_db_columns == valid_db_columns:
-            return Response({
-                "error": "You cannot create a subreport with all columns selected. Please select a subset."
-            }, status=status.HTTP_400_BAD_REQUEST)
+        # if selected_db_columns == valid_db_columns:
+        #     return Response({
+        #         "error": "You cannot create a subreport with all columns selected. Please select a subset."
+        #     }, status=status.HTTP_400_BAD_REQUEST)
 
-        # Check for duplicate template (column set match)
+
         existing_templates = ReportTemplates.objects.filter(parent_report_id=parent_report_id)
-        for template in existing_templates:
-            existing_template_columns = set(
-                TemplateColumns.objects.filter(template_id=template.id).values_list('column_name', flat=True)
-            )
-            if existing_template_columns == selected_db_columns:
-                return Response({
-                    "error": "A subreport with the exact same columns already exists.",
-                    "template_id": template.id,
-                    "template_name": template.name
-                }, status=status.HTTP_409_CONFLICT)
+        # for template in existing_templates:
+        #     existing_template_columns = set(
+        #         TemplateColumns.objects.filter(template_id=template.id).values_list('column_name', flat=True)
+        #     )
+        #     if existing_template_columns == selected_db_columns:
+        #         return Response({
+        #             "error": "A subreport with the exact same columns already exists.",
+        #             "template_id": template.id,
+        #             "template_name": template.name
+        #         }, status=status.HTTP_409_CONFLICT)
 
         # Create Template and TemplateColumns
         with transaction.atomic():
@@ -157,7 +158,6 @@ def create_report_template(request):
                 for col in selected_columns if col.get('column_name') and col.get('label')
             ]
             TemplateColumns.objects.bulk_create(template_columns)
-            
             template_filters = [
             TemplateFilters(
                     template=template,
@@ -167,9 +167,6 @@ def create_report_template(request):
                 for col in template_filters if col.get('filter_name') and col.get('filter_label')
             ]
             TemplateFilters.objects.bulk_create(template_filters)
-            
-
-            # Increase template count
             report.template_count += 1
             report.save()
 
@@ -229,45 +226,45 @@ def update_template(request):
 
             parent_report_id = template.parent_report_id
 
-            # Check name uniqueness (excluding current template)
-            if ReportTemplates.objects.filter(
-                name=template_name,
-                parent_report_id=parent_report_id
-            ).exclude(id=template.id).exists():
-                return Response({
-                    "error": f"A template with the name '{template_name}' already exists for this report."
-                }, status=status.HTTP_400_BAD_REQUEST)
+            # # Check name uniqueness (excluding current template)
+            # if ReportTemplates.objects.filter(
+            #     name=template_name,
+            #     parent_report_id=parent_report_id
+            # ).exclude(id=template.id).exists():
+            #     return Response({
+            #         "error": f"A template with the name '{template_name}' already exists for this report."
+            #     }, status=status.HTTP_400_BAD_REQUEST)
 
             # Validate columns against report main columns
             valid_db_columns = set(
                 ReportColumns.objects.filter(report_id=parent_report_id).values_list('column_name', flat=True)
             )
 
-            invalid_columns = selected_db_columns - valid_db_columns
-            if invalid_columns:
-                return Response({
-                    "error": "Some selected columns are invalid for this report.",
-                    "invalid_columns": list(invalid_columns)
-                }, status=status.HTTP_400_BAD_REQUEST)
+            # invalid_columns = selected_db_columns - valid_db_columns
+            # if invalid_columns:
+            #     return Response({
+            #         "error": "Some selected columns are invalid for this report.",
+            #         "invalid_columns": list(invalid_columns)
+            #     }, status=status.HTTP_400_BAD_REQUEST)
 
             # Prevent selecting all columns
-            if selected_db_columns == valid_db_columns:
-                return Response({
-                    "error": "Cannot create a template with all columns selected. Please choose a subset."
-                }, status=status.HTTP_400_BAD_REQUEST)
+            # if selected_db_columns == valid_db_columns:
+            #     return Response({
+            #         "error": "Cannot create a template with all columns selected. Please choose a subset."
+            #     }, status=status.HTTP_400_BAD_REQUEST)
 
             # Check for duplicate templates (columns match)
-            existing_templates = ReportTemplates.objects.filter(parent_report_id=parent_report_id).exclude(id=template.id)
-            for t in existing_templates:
-                existing_cols = set(
-                    TemplateColumns.objects.filter(template_id=t.id).values_list('column_name', flat=True)
-                )
-                if existing_cols == selected_db_columns:
-                    return Response({
-                        "error": "A template with the same column selection already exists.",
-                        "template_id": t.id,
-                        "template_name": t.name
-                    }, status=status.HTTP_409_CONFLICT)
+            # existing_templates = ReportTemplates.objects.filter(parent_report_id=parent_report_id).exclude(id=template.id)
+            # for t in existing_templates:
+            #     existing_cols = set(
+            #         TemplateColumns.objects.filter(template_id=t.id).values_list('column_name', flat=True)
+            #     )
+            #     if existing_cols == selected_db_columns:
+            #         return Response({
+            #             "error": "A template with the same column selection already exists.",
+            #             "template_id": t.id,
+            #             "template_name": t.name
+            #         }, status=status.HTTP_409_CONFLICT)
 
             # Update template name
             template.name = template_name
@@ -340,28 +337,97 @@ def load_task_report():
     except Exception as e:
         print(f"Error loading task report: {e}")
         return None
+@api_view(['POST'])
+def get_filter_options(request):
+    try:
+      
+        report_data = load_task_report()
+        if not report_data:
+            return Response({'message': 'Report data not found'}, status=404)
+        data = request.data
+        # report_id = int(data.get('report_id'))
+        template_id = int(data.get('template_id')) 
+        
+        template_report = ReportTemplates.objects.get(id=template_id)
+        template_report_data = model_to_dict(template_report)
+        report_id = template_report_data['parent_report']
+ 
+        if report_data.get('id') != report_id:
+            return Response({'message': 'Report not found'}, status=404)
+      
+        selected_filters = TemplateFilters.objects.filter(template_id=template_id)
+
+        selected_columns = selected_filters.values_list('filter_name', flat=True)
+
+        filters = {}
+
+        for row in report_data['rows']:
+            for field, value in row.items():
+                if field in selected_columns:
+                    filters.setdefault(field, set()).add(value)
+
+        filters = {k: list(v) for k, v in filters.items()}
+
+        return Response({'Data': filters})
+
+    except Exception as e:
+        return Response({'message': str(e)}, status=500)
+
+# @api_view(['GET'])
+# def get_template_report_data(request):
+#     try:
+#         data = request.data
+#         template_id = data.get('template_id')
+
+#         template = ReportTemplates.objects.select_related('parent_report').get(id=template_id)
+
+#         selected_columns = list(
+#             TemplateColumns.objects.filter(template_id=template_id)
+#             .values('column_name', 'label')
+#         )
+#         column_names = [col['column_name'] for col in selected_columns]
+#         labels = {col['column_name']: col['label'] for col in selected_columns}
+#         full_data = load_task_report() 
+#         filtered_rows = [
+#             {key: row.get(key, None) for key in column_names if key in row}
+#             for row in full_data["rows"]
+#         ]
+#         if not filtered_rows or all(len(row) == 0 for row in filtered_rows):
+#             return Response({"error": "No record Found"}, status=status.HTTP_404_NOT_FOUND)
+#         return Response({
+#             "template_id": template.id,
+#             "template_name": template.name,
+#             "report_name": template.parent_report.report_name,
+#             "columns": [col['label'] for col in selected_columns],
+#             "data": filtered_rows
+#         }, status=status.HTTP_200_OK)
+
+#     except ReportTemplates.DoesNotExist:
+#         return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
+#     except Exception as e:
+#         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['POST'])
 def get_template_report_data(request):
     try:
         data = request.data
         template_id = data.get('template_id')
-
+        selected_filters = data.get('filters', {})  
         template = ReportTemplates.objects.select_related('parent_report').get(id=template_id)
-
         selected_columns = list(
             TemplateColumns.objects.filter(template_id=template_id)
             .values('column_name', 'label')
         )
         column_names = [col['column_name'] for col in selected_columns]
         labels = {col['column_name']: col['label'] for col in selected_columns}
-        full_data = load_task_report() 
+        full_data = load_task_report()
         filtered_rows = [
             {key: row.get(key, None) for key in column_names if key in row}
             for row in full_data["rows"]
+            if all(row.get(field) == value for field, value in selected_filters.items())
         ]
-        if not filtered_rows or all(len(row) == 0 for row in filtered_rows):
-            return Response({"error": "No record Found"}, status=status.HTTP_404_NOT_FOUND)
+        if not filtered_rows:
+            return Response({"error": "No records found for the given filters"}, status=status.HTTP_404_NOT_FOUND)
         return Response({
             "template_id": template.id,
             "template_name": template.name,

@@ -8,10 +8,6 @@
         },
         {
             "column_name": "task_id",
-            "task_title":"AES Title",
-            "task_type":"Trading",
-            "source_transaction_no":"123",
-            "transaction_date":"01-02-2025",
             "label": "Task Id"
         },
         {
@@ -52,7 +48,9 @@
             "due_date": "2025-08-05",
             "start_date": "2025-04-10",
             "reporting_person": "Team Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Set up CI/CD",
@@ -66,7 +64,9 @@
             "due_date": "2025-06-05",
             "start_date": "2025-05-30",
             "reporting_person": "DevOps Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Set up CI/CD",
@@ -80,7 +80,9 @@
             "due_date": "2025-08-05",
             "start_date": "2025-04-26",
             "reporting_person": "Project Manager",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Write Documentation",
@@ -94,7 +96,10 @@
             "due_date": "2025-08-23",
             "start_date": "2025-06-21",
             "reporting_person": "Team Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Cancelled",
+
+            "priority":"Low"
         },
         {
             "task_name": "API Integration",
@@ -108,7 +113,10 @@
             "due_date": "2025-06-03",
             "start_date": "2025-05-01",
             "reporting_person": "QA Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Cancelled",
+
+            "priority":"Low"
         },
         {
             "task_name": "Create Wireframes",
@@ -122,7 +130,10 @@
             "due_date": "2025-05-02",
             "start_date": "2025-04-04",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Cancelled",
+
+            "priority":"Low"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -136,7 +147,10 @@
             "due_date": "2025-04-28",
             "start_date": "2025-07-07",
             "reporting_person": "Project Manager",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Cancelled",
+
+            "priority":"Low"
         },
         {
             "task_name": "Performance Testing",
@@ -150,7 +164,10 @@
             "due_date": "2025-07-30",
             "start_date": "2025-06-18",
             "reporting_person": "QA Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"Cancelled",
+
+            "priority":"Low"
         },
         {
             "task_name": "Create Wireframes",
@@ -164,7 +181,10 @@
             "due_date": "2025-05-06",
             "start_date": "2025-04-02",
             "reporting_person": "Team Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Cancelled",
+
+            "priority":"Low"
         },
         {
             "task_name": "Security Audit",
@@ -178,7 +198,10 @@
             "due_date": "2025-07-11",
             "start_date": "2025-04-24",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Cancelled",
+
+            "priority":"Low"
         },
         {
             "task_name": "Performance Testing",
@@ -192,7 +215,10 @@
             "due_date": "2025-05-09",
             "start_date": "2025-07-16",
             "reporting_person": "QA Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Cancelled",
+
+            "priority":"Low"
         },
         {
             "task_name": "Design Homepage",
@@ -206,7 +232,10 @@
             "due_date": "2025-08-04",
             "start_date": "2025-05-24",
             "reporting_person": "Project Manager",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Cancelled",
+
+            "priority":"Low"
         },
         {
             "task_name": "Database Backup",
@@ -220,7 +249,10 @@
             "due_date": "2025-05-01",
             "start_date": "2025-05-02",
             "reporting_person": "QA Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Cancelled",
+
+            "priority":"Low"
         },
         {
             "task_name": "Content Writing",
@@ -234,7 +266,10 @@
             "due_date": "2025-05-16",
             "start_date": "2025-05-01",
             "reporting_person": "Project Manager",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Cancelled",
+
+            "priority":"Low"
         },
         {
             "task_name": "Write Documentation",
@@ -248,7 +283,9 @@
             "due_date": "2025-05-08",
             "start_date": "2025-07-08",
             "reporting_person": "QA Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"In Progress",
+            "priority":"Low"
         },
         {
             "task_name": "Performance Testing",
@@ -262,7 +299,9 @@
             "due_date": "2025-08-18",
             "start_date": "2025-06-13",
             "reporting_person": "DevOps Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"In Progress",
+            "priority":"Low"
         },
         {
             "task_name": "API Integration",
@@ -276,7 +315,9 @@
             "due_date": "2025-08-18",
             "start_date": "2025-04-19",
             "reporting_person": "DevOps Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"In Progress",
+            "priority":"Low"
         },
         {
             "task_name": "Optimize Database",
@@ -290,7 +331,9 @@
             "due_date": "2025-08-14",
             "start_date": "2025-04-17",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"In Progress",
+            "priority":"Low"
         },
         {
             "task_name": "Bug Fixing",
@@ -304,7 +347,9 @@
             "due_date": "2025-05-28",
             "start_date": "2025-03-29",
             "reporting_person": "DevOps Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"In Progress",
+            "priority":"Low"
         },
         {
             "task_name": "Content Writing",
@@ -318,7 +363,9 @@
             "due_date": "2025-08-07",
             "start_date": "2025-04-14",
             "reporting_person": "DevOps Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"In Progress",
+            "priority":"Low"
         },
         {
             "task_name": "Bug Fixing",
@@ -332,7 +379,9 @@
             "due_date": "2025-08-21",
             "start_date": "2025-04-14",
             "reporting_person": "DevOps Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"In Progress",
+            "priority":"Low"
         },
         {
             "task_name": "Write Documentation",
@@ -346,7 +395,9 @@
             "due_date": "2025-08-17",
             "start_date": "2025-04-01",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"In Progress",
+            "priority":"Low"
         },
         {
             "task_name": "Database Backup",
@@ -360,7 +411,9 @@
             "due_date": "2025-04-27",
             "start_date": "2025-07-17",
             "reporting_person": "QA Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Create Wireframes",
@@ -374,7 +427,9 @@
             "due_date": "2025-07-29",
             "start_date": "2025-06-16",
             "reporting_person": "Project Manager",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Security Audit",
@@ -388,7 +443,9 @@
             "due_date": "2025-04-28",
             "start_date": "2025-04-19",
             "reporting_person": "Team Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Database Backup",
@@ -402,7 +459,9 @@
             "due_date": "2025-07-20",
             "start_date": "2025-07-10",
             "reporting_person": "QA Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Bug Fixing",
@@ -416,7 +475,9 @@
             "due_date": "2025-08-12",
             "start_date": "2025-06-13",
             "reporting_person": "Team Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Database Backup",
@@ -430,7 +491,9 @@
             "due_date": "2025-04-29",
             "start_date": "2025-05-25",
             "reporting_person": "QA Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Write Documentation",
@@ -444,7 +507,9 @@
             "due_date": "2025-08-12",
             "start_date": "2025-04-01",
             "reporting_person": "QA Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Performance Testing",
@@ -458,7 +523,9 @@
             "due_date": "2025-04-30",
             "start_date": "2025-06-12",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Set up CI/CD",
@@ -472,7 +539,9 @@
             "due_date": "2025-06-12",
             "start_date": "2025-04-17",
             "reporting_person": "Team Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Bug Fixing",
@@ -486,7 +555,9 @@
             "due_date": "2025-07-13",
             "start_date": "2025-04-19",
             "reporting_person": "Project Manager",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Create Wireframes",
@@ -500,7 +571,9 @@
             "due_date": "2025-08-07",
             "start_date": "2025-04-21",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "API Integration",
@@ -514,7 +587,9 @@
             "due_date": "2025-05-19",
             "start_date": "2025-05-15",
             "reporting_person": "Team Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -528,7 +603,9 @@
             "due_date": "2025-06-04",
             "start_date": "2025-05-14",
             "reporting_person": "QA Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Bug Fixing",
@@ -542,7 +619,9 @@
             "due_date": "2025-05-25",
             "start_date": "2025-07-07",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Performance Testing",
@@ -556,7 +635,9 @@
             "due_date": "2025-05-19",
             "start_date": "2025-04-22",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Create Wireframes",
@@ -570,7 +651,9 @@
             "due_date": "2025-07-23",
             "start_date": "2025-05-09",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -584,7 +667,9 @@
             "due_date": "2025-06-17",
             "start_date": "2025-04-16",
             "reporting_person": "Team Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -598,7 +683,9 @@
             "due_date": "2025-06-01",
             "start_date": "2025-06-21",
             "reporting_person": "Team Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Create Wireframes",
@@ -612,7 +699,9 @@
             "due_date": "2025-08-07",
             "start_date": "2025-05-08",
             "reporting_person": "Team Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Content Writing",
@@ -626,7 +715,9 @@
             "due_date": "2025-05-15",
             "start_date": "2025-05-07",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Content Writing",
@@ -640,7 +731,9 @@
             "due_date": "2025-04-30",
             "start_date": "2025-05-22",
             "reporting_person": "QA Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Design Homepage",
@@ -654,7 +747,9 @@
             "due_date": "2025-05-31",
             "start_date": "2025-05-24",
             "reporting_person": "DevOps Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Write Documentation",
@@ -668,7 +763,9 @@
             "due_date": "2025-08-23",
             "start_date": "2025-05-14",
             "reporting_person": "Team Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -682,7 +779,9 @@
             "due_date": "2025-06-03",
             "start_date": "2025-05-04",
             "reporting_person": "Team Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Performance Testing",
@@ -696,7 +795,9 @@
             "due_date": "2025-08-23",
             "start_date": "2025-05-05",
             "reporting_person": "Project Manager",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "API Integration",
@@ -710,7 +811,9 @@
             "due_date": "2025-05-12",
             "start_date": "2025-05-26",
             "reporting_person": "DevOps Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Design Homepage",
@@ -724,7 +827,9 @@
             "due_date": "2025-08-01",
             "start_date": "2025-05-07",
             "reporting_person": "DevOps Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Bug Fixing",
@@ -738,7 +843,9 @@
             "due_date": "2025-08-11",
             "start_date": "2025-05-03",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Security Audit",
@@ -752,7 +859,9 @@
             "due_date": "2025-08-21",
             "start_date": "2025-04-08",
             "reporting_person": "QA Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Design Homepage",
@@ -766,7 +875,9 @@
             "due_date": "2025-05-22",
             "start_date": "2025-05-05",
             "reporting_person": "Team Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Write Documentation",
@@ -780,7 +891,9 @@
             "due_date": "2025-05-28",
             "start_date": "2025-06-13",
             "reporting_person": "DevOps Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Security Audit",
@@ -794,7 +907,9 @@
             "due_date": "2025-07-06",
             "start_date": "2025-05-21",
             "reporting_person": "DevOps Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Design Homepage",
@@ -808,7 +923,9 @@
             "due_date": "2025-08-06",
             "start_date": "2025-04-12",
             "reporting_person": "DevOps Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Design Homepage",
@@ -822,7 +939,9 @@
             "due_date": "2025-06-24",
             "start_date": "2025-04-15",
             "reporting_person": "Team Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Optimize Database",
@@ -836,7 +955,9 @@
             "due_date": "2025-05-26",
             "start_date": "2025-06-11",
             "reporting_person": "DevOps Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Optimize Database",
@@ -850,7 +971,9 @@
             "due_date": "2025-06-05",
             "start_date": "2025-05-25",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Bug Fixing",
@@ -864,7 +987,9 @@
             "due_date": "2025-06-29",
             "start_date": "2025-04-10",
             "reporting_person": "Team Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Create Wireframes",
@@ -878,7 +1003,9 @@
             "due_date": "2025-05-18",
             "start_date": "2025-07-05",
             "reporting_person": "Team Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Set up CI/CD",
@@ -892,7 +1019,9 @@
             "due_date": "2025-04-27",
             "start_date": "2025-05-14",
             "reporting_person": "DevOps Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"In Progress",
+            "priority":"Medium"
         },
         {
             "task_name": "Optimize Database",
@@ -906,7 +1035,9 @@
             "due_date": "2025-06-09",
             "start_date": "2025-06-27",
             "reporting_person": "DevOps Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "Database Backup",
@@ -920,7 +1051,9 @@
             "due_date": "2025-05-17",
             "start_date": "2025-06-25",
             "reporting_person": "QA Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "API Integration",
@@ -934,7 +1067,9 @@
             "due_date": "2025-06-02",
             "start_date": "2025-04-05",
             "reporting_person": "Team Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "Security Audit",
@@ -948,7 +1083,9 @@
             "due_date": "2025-06-12",
             "start_date": "2025-06-14",
             "reporting_person": "QA Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "Security Audit",
@@ -962,7 +1099,9 @@
             "due_date": "2025-05-13",
             "start_date": "2025-04-14",
             "reporting_person": "Project Manager",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "Bug Fixing",
@@ -976,7 +1115,9 @@
             "due_date": "2025-07-24",
             "start_date": "2025-05-08",
             "reporting_person": "Project Manager",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "Content Writing",
@@ -990,7 +1131,9 @@
             "due_date": "2025-05-28",
             "start_date": "2025-07-08",
             "reporting_person": "QA Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "Security Audit",
@@ -1004,7 +1147,9 @@
             "due_date": "2025-06-02",
             "start_date": "2025-05-30",
             "reporting_person": "QA Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "Create Wireframes",
@@ -1018,7 +1163,9 @@
             "due_date": "2025-06-29",
             "start_date": "2025-04-07",
             "reporting_person": "Project Manager",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "Bug Fixing",
@@ -1032,7 +1179,9 @@
             "due_date": "2025-08-19",
             "start_date": "2025-06-03",
             "reporting_person": "Team Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "Bug Fixing",
@@ -1046,7 +1195,9 @@
             "due_date": "2025-08-04",
             "start_date": "2025-07-12",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "Content Writing",
@@ -1060,7 +1211,9 @@
             "due_date": "2025-04-28",
             "start_date": "2025-05-31",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "API Integration",
@@ -1074,7 +1227,9 @@
             "due_date": "2025-05-23",
             "start_date": "2025-07-23",
             "reporting_person": "Team Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "Content Writing",
@@ -1088,7 +1243,9 @@
             "due_date": "2025-08-13",
             "start_date": "2025-07-15",
             "reporting_person": "Team Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "API Integration",
@@ -1102,7 +1259,9 @@
             "due_date": "2025-06-29",
             "start_date": "2025-06-05",
             "reporting_person": "Team Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"New",
+            "priority":"Medium"
         },
         {
             "task_name": "Optimize Database",
@@ -1116,7 +1275,9 @@
             "due_date": "2025-06-19",
             "start_date": "2025-05-07",
             "reporting_person": "QA Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Bug Fixing",
@@ -1130,7 +1291,9 @@
             "due_date": "2025-05-26",
             "start_date": "2025-04-29",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Database Backup",
@@ -1144,7 +1307,9 @@
             "due_date": "2025-06-24",
             "start_date": "2025-05-17",
             "reporting_person": "QA Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Set up CI/CD",
@@ -1158,7 +1323,9 @@
             "due_date": "2025-04-27",
             "start_date": "2025-04-30",
             "reporting_person": "QA Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Create Wireframes",
@@ -1172,7 +1339,9 @@
             "due_date": "2025-08-01",
             "start_date": "2025-06-15",
             "reporting_person": "Project Manager",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Database Backup",
@@ -1186,7 +1355,9 @@
             "due_date": "2025-06-04",
             "start_date": "2025-07-09",
             "reporting_person": "Team Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Create Wireframes",
@@ -1200,7 +1371,9 @@
             "due_date": "2025-08-02",
             "start_date": "2025-04-10",
             "reporting_person": "Project Manager",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Performance Testing",
@@ -1214,7 +1387,9 @@
             "due_date": "2025-07-04",
             "start_date": "2025-07-14",
             "reporting_person": "Project Manager",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Bug Fixing",
@@ -1228,7 +1403,9 @@
             "due_date": "2025-07-14",
             "start_date": "2025-04-14",
             "reporting_person": "Team Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Performance Testing",
@@ -1242,7 +1419,9 @@
             "due_date": "2025-06-28",
             "start_date": "2025-04-12",
             "reporting_person": "Project Manager",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -1256,7 +1435,9 @@
             "due_date": "2025-06-14",
             "start_date": "2025-05-20",
             "reporting_person": "Project Manager",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Security Audit",
@@ -1270,7 +1451,9 @@
             "due_date": "2025-08-16",
             "start_date": "2025-06-13",
             "reporting_person": "QA Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Set up CI/CD",
@@ -1284,7 +1467,9 @@
             "due_date": "2025-06-05",
             "start_date": "2025-05-15",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "API Integration",
@@ -1298,7 +1483,9 @@
             "due_date": "2025-08-09",
             "start_date": "2025-04-25",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Performance Testing",
@@ -1312,7 +1499,9 @@
             "due_date": "2025-08-12",
             "start_date": "2025-04-08",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Design Homepage",
@@ -1326,7 +1515,9 @@
             "due_date": "2025-08-20",
             "start_date": "2025-05-24",
             "reporting_person": "Team Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Set up CI/CD",
@@ -1340,7 +1531,9 @@
             "due_date": "2025-08-18",
             "start_date": "2025-06-11",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Security Audit",
@@ -1354,7 +1547,9 @@
             "due_date": "2025-05-19",
             "start_date": "2025-05-25",
             "reporting_person": "Project Manager",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Set up CI/CD",
@@ -1368,7 +1563,9 @@
             "due_date": "2025-05-26",
             "start_date": "2025-07-06",
             "reporting_person": "Project Manager",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Database Backup",
@@ -1382,7 +1579,9 @@
             "due_date": "2025-05-04",
             "start_date": "2025-06-11",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Create Wireframes",
@@ -1396,7 +1595,9 @@
             "due_date": "2025-08-11",
             "start_date": "2025-05-11",
             "reporting_person": "DevOps Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Performance Testing",
@@ -1410,7 +1611,9 @@
             "due_date": "2025-05-10",
             "start_date": "2025-07-10",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Set up CI/CD",
@@ -1424,7 +1627,9 @@
             "due_date": "2025-08-16",
             "start_date": "2025-07-10",
             "reporting_person": "Project Manager",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Design Homepage",
@@ -1438,7 +1643,9 @@
             "due_date": "2025-07-24",
             "start_date": "2025-04-01",
             "reporting_person": "Project Manager",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -1452,7 +1659,9 @@
             "due_date": "2025-07-06",
             "start_date": "2025-04-17",
             "reporting_person": "QA Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Security Audit",
@@ -1466,7 +1675,9 @@
             "due_date": "2025-05-25",
             "start_date": "2025-04-13",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Bug Fixing",
@@ -1480,7 +1691,9 @@
             "due_date": "2025-07-13",
             "start_date": "2025-05-29",
             "reporting_person": "Team Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Create Wireframes",
@@ -1494,7 +1707,9 @@
             "due_date": "2025-07-14",
             "start_date": "2025-05-21",
             "reporting_person": "Team Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Design Homepage",
@@ -1508,7 +1723,9 @@
             "due_date": "2025-05-02",
             "start_date": "2025-04-14",
             "reporting_person": "Team Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Design Homepage",
@@ -1522,7 +1739,9 @@
             "due_date": "2025-06-25",
             "start_date": "2025-06-17",
             "reporting_person": "Project Manager",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Optimize Database",
@@ -1536,7 +1755,9 @@
             "due_date": "2025-05-12",
             "start_date": "2025-06-14",
             "reporting_person": "DevOps Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Database Backup",
@@ -1550,7 +1771,9 @@
             "due_date": "2025-05-07",
             "start_date": "2025-04-28",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -1564,7 +1787,9 @@
             "due_date": "2025-06-19",
             "start_date": "2025-07-09",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Create Wireframes",
@@ -1578,7 +1803,9 @@
             "due_date": "2025-07-23",
             "start_date": "2025-04-13",
             "reporting_person": "Team Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Content Writing",
@@ -1592,7 +1819,9 @@
             "due_date": "2025-06-03",
             "start_date": "2025-05-08",
             "reporting_person": "DevOps Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Performance Testing",
@@ -1606,7 +1835,9 @@
             "due_date": "2025-08-15",
             "start_date": "2025-06-24",
             "reporting_person": "Project Manager",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Performance Testing",
@@ -1620,7 +1851,9 @@
             "due_date": "2025-08-03",
             "start_date": "2025-05-29",
             "reporting_person": "DevOps Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Design Homepage",
@@ -1634,7 +1867,9 @@
             "due_date": "2025-06-30",
             "start_date": "2025-06-23",
             "reporting_person": "DevOps Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Performance Testing",
@@ -1648,7 +1883,9 @@
             "due_date": "2025-08-02",
             "start_date": "2025-05-02",
             "reporting_person": "Team Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Optimize Database",
@@ -1662,7 +1899,9 @@
             "due_date": "2025-06-29",
             "start_date": "2025-07-17",
             "reporting_person": "DevOps Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -1676,7 +1915,9 @@
             "due_date": "2025-07-29",
             "start_date": "2025-04-09",
             "reporting_person": "Project Manager",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Performance Testing",
@@ -1690,7 +1931,9 @@
             "due_date": "2025-07-24",
             "start_date": "2025-05-04",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Security Audit",
@@ -1704,7 +1947,9 @@
             "due_date": "2025-08-07",
             "start_date": "2025-05-14",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Content Writing",
@@ -1718,7 +1963,9 @@
             "due_date": "2025-06-20",
             "start_date": "2025-06-24",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Database Backup",
@@ -1732,7 +1979,9 @@
             "due_date": "2025-06-04",
             "start_date": "2025-04-01",
             "reporting_person": "DevOps Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Security Audit",
@@ -1746,7 +1995,9 @@
             "due_date": "2025-07-08",
             "start_date": "2025-05-16",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Content Writing",
@@ -1760,7 +2011,9 @@
             "due_date": "2025-05-19",
             "start_date": "2025-07-05",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Resolved",
+            "priority":"Medium"
         },
         {
             "task_name": "Security Audit",
@@ -1774,7 +2027,9 @@
             "due_date": "2025-06-03",
             "start_date": "2025-05-23",
             "reporting_person": "DevOps Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Resolved",
+            "priority":"Low"
         },
         {
             "task_name": "Design Homepage",
@@ -1788,7 +2043,9 @@
             "due_date": "2025-05-15",
             "start_date": "2025-03-30",
             "reporting_person": "Team Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Write Documentation",
@@ -1802,7 +2059,9 @@
             "due_date": "2025-06-12",
             "start_date": "2025-06-04",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Security Audit",
@@ -1816,7 +2075,9 @@
             "due_date": "2025-08-22",
             "start_date": "2025-05-16",
             "reporting_person": "DevOps Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Bug Fixing",
@@ -1830,7 +2091,9 @@
             "due_date": "2025-06-25",
             "start_date": "2025-06-14",
             "reporting_person": "Team Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Create Wireframes",
@@ -1844,7 +2107,9 @@
             "due_date": "2025-08-21",
             "start_date": "2025-06-05",
             "reporting_person": "Project Manager",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Design Homepage",
@@ -1858,7 +2123,9 @@
             "due_date": "2025-06-15",
             "start_date": "2025-04-18",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Set up CI/CD",
@@ -1872,7 +2139,9 @@
             "due_date": "2025-07-07",
             "start_date": "2025-06-07",
             "reporting_person": "QA Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Design Homepage",
@@ -1886,7 +2155,9 @@
             "due_date": "2025-05-01",
             "start_date": "2025-05-26",
             "reporting_person": "Project Manager",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Security Audit",
@@ -1900,7 +2171,9 @@
             "due_date": "2025-05-10",
             "start_date": "2025-05-06",
             "reporting_person": "DevOps Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Database Backup",
@@ -1914,7 +2187,9 @@
             "due_date": "2025-07-12",
             "start_date": "2025-04-26",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Database Backup",
@@ -1928,7 +2203,9 @@
             "due_date": "2025-08-05",
             "start_date": "2025-07-12",
             "reporting_person": "DevOps Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Content Writing",
@@ -1942,7 +2219,9 @@
             "due_date": "2025-06-02",
             "start_date": "2025-06-20",
             "reporting_person": "DevOps Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Write Documentation",
@@ -1956,7 +2235,9 @@
             "due_date": "2025-08-20",
             "start_date": "2025-07-01",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Set up CI/CD",
@@ -1970,7 +2251,9 @@
             "due_date": "2025-07-26",
             "start_date": "2025-07-17",
             "reporting_person": "Team Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Optimize Database",
@@ -1984,7 +2267,9 @@
             "due_date": "2025-06-22",
             "start_date": "2025-04-28",
             "reporting_person": "DevOps Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Design Homepage",
@@ -1998,7 +2283,9 @@
             "due_date": "2025-08-04",
             "start_date": "2025-06-21",
             "reporting_person": "QA Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Content Writing",
@@ -2012,7 +2299,9 @@
             "due_date": "2025-07-22",
             "start_date": "2025-06-18",
             "reporting_person": "Team Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "API Integration",
@@ -2026,7 +2315,9 @@
             "due_date": "2025-05-22",
             "start_date": "2025-07-02",
             "reporting_person": "Project Manager",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "API Integration",
@@ -2040,7 +2331,9 @@
             "due_date": "2025-06-07",
             "start_date": "2025-04-20",
             "reporting_person": "QA Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Design Homepage",
@@ -2054,7 +2347,9 @@
             "due_date": "2025-08-22",
             "start_date": "2025-06-04",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Design Homepage",
@@ -2068,7 +2363,9 @@
             "due_date": "2025-08-06",
             "start_date": "2025-05-27",
             "reporting_person": "Team Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Set up CI/CD",
@@ -2082,7 +2379,9 @@
             "due_date": "2025-06-13",
             "start_date": "2025-04-28",
             "reporting_person": "QA Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Optimize Database",
@@ -2096,7 +2395,9 @@
             "due_date": "2025-06-24",
             "start_date": "2025-05-05",
             "reporting_person": "QA Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Resolved",
+            "priority":"High"
         },
         {
             "task_name": "Content Writing",
@@ -2110,7 +2411,9 @@
             "due_date": "2025-07-15",
             "start_date": "2025-06-07",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Completed",
+            "priority":"High"
         },
         {
             "task_name": "Bug Fixing",
@@ -2124,7 +2427,9 @@
             "due_date": "2025-05-24",
             "start_date": "2025-07-12",
             "reporting_person": "QA Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"Completed",
+            "priority":"High"
         },
         {
             "task_name": "Create Wireframes",
@@ -2138,7 +2443,9 @@
             "due_date": "2025-07-22",
             "start_date": "2025-04-13",
             "reporting_person": "Team Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Completed",
+            "priority":"High"
         },
         {
             "task_name": "Database Backup",
@@ -2152,7 +2459,9 @@
             "due_date": "2025-08-23",
             "start_date": "2025-04-07",
             "reporting_person": "Team Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Completed",
+            "priority":"High"
         },
         {
             "task_name": "Database Backup",
@@ -2166,7 +2475,9 @@
             "due_date": "2025-05-12",
             "start_date": "2025-07-18",
             "reporting_person": "QA Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Completed",
+            "priority":"High"
         },
         {
             "task_name": "Bug Fixing",
@@ -2180,7 +2491,9 @@
             "due_date": "2025-05-28",
             "start_date": "2025-04-26",
             "reporting_person": "Team Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Completed",
+            "priority":"High"
         },
         {
             "task_name": "Design Homepage",
@@ -2194,7 +2507,9 @@
             "due_date": "2025-08-06",
             "start_date": "2025-06-12",
             "reporting_person": "Team Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Completed",
+            "priority":"High"
         },
         {
             "task_name": "Set up CI/CD",
@@ -2208,7 +2523,9 @@
             "due_date": "2025-07-12",
             "start_date": "2025-06-26",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Completed",
+            "priority":"High"
         },
         {
             "task_name": "Set up CI/CD",
@@ -2222,7 +2539,9 @@
             "due_date": "2025-06-20",
             "start_date": "2025-07-17",
             "reporting_person": "Project Manager",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Completed",
+            "priority":"High"
         },
         {
             "task_name": "API Integration",
@@ -2236,7 +2555,9 @@
             "due_date": "2025-06-08",
             "start_date": "2025-07-23",
             "reporting_person": "Team Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Completed",
+            "priority":"High"
         },
         {
             "task_name": "Set up CI/CD",
@@ -2250,7 +2571,9 @@
             "due_date": "2025-07-17",
             "start_date": "2025-04-16",
             "reporting_person": "DevOps Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Completed",
+            "priority":"High"
         },
         {
             "task_name": "API Integration",
@@ -2264,7 +2587,9 @@
             "due_date": "2025-08-15",
             "start_date": "2025-06-12",
             "reporting_person": "DevOps Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Completed",
+            "priority":"High"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -2278,7 +2603,9 @@
             "due_date": "2025-07-25",
             "start_date": "2025-06-02",
             "reporting_person": "Team Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Completed",
+            "priority":"High"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -2292,7 +2619,9 @@
             "due_date": "2025-05-17",
             "start_date": "2025-03-29",
             "reporting_person": "QA Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Write Documentation",
@@ -2306,7 +2635,9 @@
             "due_date": "2025-07-28",
             "start_date": "2025-05-19",
             "reporting_person": "QA Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Write Documentation",
@@ -2320,7 +2651,9 @@
             "due_date": "2025-08-10",
             "start_date": "2025-06-30",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Content Writing",
@@ -2334,7 +2667,9 @@
             "due_date": "2025-06-03",
             "start_date": "2025-04-29",
             "reporting_person": "Project Manager",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Write Documentation",
@@ -2348,7 +2683,9 @@
             "due_date": "2025-07-26",
             "start_date": "2025-05-05",
             "reporting_person": "Project Manager",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Performance Testing",
@@ -2362,7 +2699,9 @@
             "due_date": "2025-05-23",
             "start_date": "2025-05-17",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Bug Fixing",
@@ -2376,7 +2715,9 @@
             "due_date": "2025-07-17",
             "start_date": "2025-05-14",
             "reporting_person": "Team Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Create Wireframes",
@@ -2390,7 +2731,9 @@
             "due_date": "2025-05-11",
             "start_date": "2025-05-20",
             "reporting_person": "DevOps Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Create Wireframes",
@@ -2404,7 +2747,9 @@
             "due_date": "2025-06-12",
             "start_date": "2025-06-19",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Write Documentation",
@@ -2418,7 +2763,9 @@
             "due_date": "2025-07-04",
             "start_date": "2025-03-28",
             "reporting_person": "Project Manager",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "API Integration",
@@ -2432,7 +2779,9 @@
             "due_date": "2025-07-16",
             "start_date": "2025-04-24",
             "reporting_person": "Project Manager",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Design Homepage",
@@ -2446,7 +2795,9 @@
             "due_date": "2025-06-01",
             "start_date": "2025-07-24",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Create Wireframes",
@@ -2460,7 +2811,9 @@
             "due_date": "2025-07-21",
             "start_date": "2025-06-28",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Create Wireframes",
@@ -2474,7 +2827,9 @@
             "due_date": "2025-06-17",
             "start_date": "2025-04-30",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Set up CI/CD",
@@ -2488,7 +2843,9 @@
             "due_date": "2025-05-27",
             "start_date": "2025-06-29",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Performance Testing",
@@ -2502,7 +2859,9 @@
             "due_date": "2025-08-16",
             "start_date": "2025-07-21",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"New",
+            "priority":"High"
         },
         {
             "task_name": "Create Wireframes",
@@ -2516,7 +2875,9 @@
             "due_date": "2025-05-03",
             "start_date": "2025-06-10",
             "reporting_person": "DevOps Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Cancelled",
+                 "priority":"High"
         },
         {
             "task_name": "Performance Testing",
@@ -2530,7 +2891,9 @@
             "due_date": "2025-07-19",
             "start_date": "2025-04-15",
             "reporting_person": "DevOps Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"Cancelled",
+                 "priority":"High"
         },
         {
             "task_name": "Create Wireframes",
@@ -2544,7 +2907,9 @@
             "due_date": "2025-08-19",
             "start_date": "2025-05-01",
             "reporting_person": "DevOps Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Cancelled",
+                 "priority":"High"
         },
         {
             "task_name": "Database Backup",
@@ -2558,7 +2923,9 @@
             "due_date": "2025-05-12",
             "start_date": "2025-04-25",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Cancelled",
+                 "priority":"High"
         },
         {
             "task_name": "Design Homepage",
@@ -2572,7 +2939,9 @@
             "due_date": "2025-07-15",
             "start_date": "2025-05-05",
             "reporting_person": "Team Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"Cancelled",
+                 "priority":"High"
         },
         {
             "task_name": "Bug Fixing",
@@ -2586,7 +2955,9 @@
             "due_date": "2025-06-17",
             "start_date": "2025-05-29",
             "reporting_person": "DevOps Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Cancelled",
+                 "priority":"High"
         },
         {
             "task_name": "Database Backup",
@@ -2600,7 +2971,9 @@
             "due_date": "2025-07-26",
             "start_date": "2025-05-28",
             "reporting_person": "Project Manager",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Cancelled",
+                 "priority":"High"
         },
         {
             "task_name": "Design Homepage",
@@ -2614,7 +2987,9 @@
             "due_date": "2025-08-01",
             "start_date": "2025-07-18",
             "reporting_person": "QA Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Cancelled",
+                 "priority":"High"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -2628,7 +3003,9 @@
             "due_date": "2025-06-15",
             "start_date": "2025-04-28",
             "reporting_person": "QA Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Cancelled",
+                 "priority":"High"
         },
         {
             "task_name": "Performance Testing",
@@ -2642,7 +3019,9 @@
             "due_date": "2025-07-12",
             "start_date": "2025-04-03",
             "reporting_person": "Team Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"Cancelled",
+                 "priority":"High"
         },
         {
             "task_name": "API Integration",
@@ -2656,7 +3035,9 @@
             "due_date": "2025-05-17",
             "start_date": "2025-06-03",
             "reporting_person": "QA Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Cancelled",
+                 "priority":"High"
         },
         {
             "task_name": "Set up CI/CD",
@@ -2670,7 +3051,9 @@
             "due_date": "2025-06-28",
             "start_date": "2025-05-31",
             "reporting_person": "Team Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Cancelled",
+                 "priority":"High"
         },
         {
             "task_name": "Database Backup",
@@ -2684,7 +3067,9 @@
             "due_date": "2025-06-05",
             "start_date": "2025-03-28",
             "reporting_person": "Team Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Write Documentation",
@@ -2698,7 +3083,9 @@
             "due_date": "2025-06-28",
             "start_date": "2025-05-05",
             "reporting_person": "DevOps Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "API Integration",
@@ -2712,7 +3099,9 @@
             "due_date": "2025-05-15",
             "start_date": "2025-07-10",
             "reporting_person": "DevOps Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -2726,7 +3115,9 @@
             "due_date": "2025-07-02",
             "start_date": "2025-06-05",
             "reporting_person": "Project Manager",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Set up CI/CD",
@@ -2740,7 +3131,9 @@
             "due_date": "2025-05-26",
             "start_date": "2025-04-25",
             "reporting_person": "DevOps Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "API Integration",
@@ -2754,7 +3147,9 @@
             "due_date": "2025-05-12",
             "start_date": "2025-07-04",
             "reporting_person": "DevOps Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Optimize Database",
@@ -2768,7 +3163,9 @@
             "due_date": "2025-06-16",
             "start_date": "2025-07-20",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Content Writing",
@@ -2782,7 +3179,9 @@
             "due_date": "2025-07-26",
             "start_date": "2025-05-03",
             "reporting_person": "QA Lead",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -2796,7 +3195,9 @@
             "due_date": "2025-06-29",
             "start_date": "2025-07-19",
             "reporting_person": "QA Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Design Homepage",
@@ -2810,7 +3211,9 @@
             "due_date": "2025-05-30",
             "start_date": "2025-06-13",
             "reporting_person": "QA Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Content Writing",
@@ -2824,7 +3227,9 @@
             "due_date": "2025-06-17",
             "start_date": "2025-06-13",
             "reporting_person": "Project Manager",
-            "task_description": "Assist team members when needed."
+            "task_description": "Assist team members when needed.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Content Writing",
@@ -2838,7 +3243,9 @@
             "due_date": "2025-04-28",
             "start_date": "2025-07-02",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Bug Fixing",
@@ -2852,7 +3259,9 @@
             "due_date": "2025-07-18",
             "start_date": "2025-06-20",
             "reporting_person": "Team Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Database Backup",
@@ -2866,7 +3275,9 @@
             "due_date": "2025-07-01",
             "start_date": "2025-04-22",
             "reporting_person": "Project Manager",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -2880,7 +3291,9 @@
             "due_date": "2025-07-25",
             "start_date": "2025-06-19",
             "reporting_person": "DevOps Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "API Integration",
@@ -2894,7 +3307,9 @@
             "due_date": "2025-05-23",
             "start_date": "2025-03-31",
             "reporting_person": "UI/UX Lead",
-            "task_description": "Communicate risks and issues proactively."
+            "task_description": "Communicate risks and issues proactively.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Performance Testing",
@@ -2908,7 +3323,9 @@
             "due_date": "2025-05-25",
             "start_date": "2025-06-26",
             "reporting_person": "Team Lead",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Create Wireframes",
@@ -2922,7 +3339,9 @@
             "due_date": "2025-05-16",
             "start_date": "2025-07-03",
             "reporting_person": "Project Manager",
-            "task_description": "Ensure code quality and standards."
+            "task_description": "Ensure code quality and standards.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Frontend Cleanup",
@@ -2936,7 +3355,9 @@
             "due_date": "2025-08-09",
             "start_date": "2025-05-07",
             "reporting_person": "DevOps Lead",
-            "task_description": "Complete assigned task as per priority."
+            "task_description": "Complete assigned task as per priority.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Database Backup",
@@ -2950,7 +3371,9 @@
             "due_date": "2025-05-23",
             "start_date": "2025-07-14",
             "reporting_person": "DevOps Lead",
-            "task_description": "Optimize existing modules for better performance."
+            "task_description": "Optimize existing modules for better performance.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Performance Testing",
@@ -2964,7 +3387,9 @@
             "due_date": "2025-05-01",
             "start_date": "2025-06-05",
             "reporting_person": "Project Manager",
-            "task_description": "Coordinate with team members and submit updates."
+            "task_description": "Coordinate with team members and submit updates.",
+            "status":"Cancelled",
+                 "priority":"Low"
         },
         {
             "task_name": "Optimize Database",
@@ -2978,7 +3403,9 @@
             "due_date": "2025-07-16",
             "start_date": "2025-05-23",
             "reporting_person": "DevOps Lead",
-            "task_description": "Document the process thoroughly."
+            "task_description": "Document the process thoroughly.",
+            "status":"Cancelled",
+                 "priority":"Low"
         }
     ]
 }
