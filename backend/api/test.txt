@@ -9,40 +9,71 @@ insert into report_builder.api_reports values (5,'Sample Report',0);
 
 
 table name : api_reportcolumns
-insert into report_builder.api_reportcolumns values (1,1,'Task Name');
-insert into report_builder.api_reportcolumns values (2,1,'Task Id');
-insert into report_builder.api_reportcolumns values (3,1,'Assigned To');
-insert into report_builder.api_reportcolumns values (4,1,'Assigned By');
-insert into report_builder.api_reportcolumns values (5,1,'Due Date');
-insert into report_builder.api_reportcolumns values (6,1,'Start Date');
-insert into report_builder.api_reportcolumns values (7,1,'Reporting Person');
-insert into report_builder.api_reportcolumns values (8,1,'Task Description');
-insert into report_builder.api_reportcolumns values (9,2,'Lead Name');
-insert into report_builder.api_reportcolumns values (10,2,'Lead Generator');
-insert into report_builder.api_reportcolumns values (11,2,'Lead Number');
-insert into report_builder.api_reportcolumns values (12,2,'Lead For');
-insert into report_builder.api_reportcolumns values (13,2,'Lead Description');
-insert into report_builder.api_reportcolumns values (14,3,'Enquiry Related To');
-insert into report_builder.api_reportcolumns values (15,3,'Enquiry Date');
-insert into report_builder.api_reportcolumns values (16,3,'Follow Up Person');
-insert into report_builder.api_reportcolumns values (17,3,'Enquiry For');
-insert into report_builder.api_reportcolumns values (18,3,'Enquiry Description');
-insert into report_builder.api_reportcolumns values (19,4,'Quotation ID');
-insert into report_builder.api_reportcolumns values (20,4,'Transaction Date');
-insert into report_builder.api_reportcolumns values (21,4,'Sales Order No');
-insert into report_builder.api_reportcolumns values (22,4,'Sales Order Date');
-insert into report_builder.api_reportcolumns values (23,4,'Organization Name');
-insert into report_builder.api_reportcolumns values (24,4,'Organization Description');
-insert into report_builder.api_reportcolumns values (25,4,'Assigned To');
-insert into report_builder.api_reportcolumns values (26,4,'Valid Until');
-insert into report_builder.api_reportcolumns values (27,4,'Open Activities');
-insert into report_builder.api_reportcolumns values (28,4,'Closed Activities');
-insert into report_builder.api_reportcolumns values (29,5,'Sample Order ID');
-insert into report_builder.api_reportcolumns values (30,5,'Transaction Date');
-insert into report_builder.api_reportcolumns values (31,5,'Sales Order No');
-insert into report_builder.api_reportcolumns values (32,5,'Sales Order Date');
-insert into report_builder.api_reportcolumns values (33,5,'Company Name');
-insert into report_builder.api_reportcolumns values (34,5,'Status');
+insert into report_builder.api_reportcolumns values (1,1,'task_name','Task Name');
+insert into report_builder.api_reportcolumns values (2,1,'task_id','Task Id');
+insert into report_builder.api_reportcolumns values (3,1,'assigned_to','Assigned To');
+insert into report_builder.api_reportcolumns values (4,1,'assigned_by','Assigned By');
+insert into report_builder.api_reportcolumns values (5,1,'due_date','Due Date');
+insert into report_builder.api_reportcolumns values (6,1,'start_date','Start Date');
+insert into report_builder.api_reportcolumns values (7,1,'reporting_person','Reporting Person');
+insert into report_builder.api_reportcolumns values (8,1,'task_description','Task Description');
+insert into report_builder.api_reportcolumns values (9,1,'task_title','Task Title');
+insert into report_builder.api_reportcolumns values (10,1,'task_type','Task Type');
+insert into report_builder.api_reportcolumns values (11,1,'source_type','Source Type');
+insert into report_builder.api_reportcolumns values (12,1,'source_transaction_no','Source Transaction No');
+insert into report_builder.api_reportcolumns values (13,1,'transaction_date','Transaction Date');
+insert into report_builder.api_reportcolumns values (14,1,'status','Status');
+insert into report_builder.api_reportcolumns values (15,1,'priority','Priority');
+
+insert into report_builder.api_reportcolumns values (16,2,'lead_id','Lead Id');
+insert into report_builder.api_reportcolumns values (17,2,'transaction_date','Transaction Date');
+insert into report_builder.api_reportcolumns values (18,2,'lead_title','Lead Title');
+insert into report_builder.api_reportcolumns values (19,2,'enquiry_id','Enquiry Id');
+insert into report_builder.api_reportcolumns values (20,2,'Enquiry Date','enquiry_date');
+insert into report_builder.api_reportcolumns values (21,2,'company_name','Company Name');
+insert into report_builder.api_reportcolumns values (22,2,'customer_need','Customer Need');
+insert into report_builder.api_reportcolumns values (23,2,'assigned_to','Assigned To');
+insert into report_builder.api_reportcolumns values (24,2,'expected_date','Expected Date');
+insert into report_builder.api_reportcolumns values (25,2,'open_activites','Open Activites');
+insert into report_builder.api_reportcolumns values (26,2,'closed_activities','Closed Activities');
+insert into report_builder.api_reportcolumns values (27,2,'conversion_time','Conversion Time');
+insert into report_builder.api_reportcolumns values (28,2,'lead_lost_reason','Lead Lost Reason');
+insert into report_builder.api_reportcolumns values (29,2,'status','Status');
+
+insert into report_builder.api_reportcolumns values (30,3,'enquiry_id','Enquiry Id');
+insert into report_builder.api_reportcolumns values (31,3,'transaction_date','Transaction Date');
+insert into report_builder.api_reportcolumns values (32,3,'enquiry_title','Enquiry Title');
+insert into report_builder.api_reportcolumns values (33,3,'sales_order_no','Sales Order No');
+insert into report_builder.api_reportcolumns values (34,3,'sales_order_date','Sales Order Date');
+insert into report_builder.api_reportcolumns values (35,3,'company_name','Company Name');
+insert into report_builder.api_reportcolumns values (36,3,'customer_need','Customer Need');
+insert into report_builder.api_reportcolumns values (37,3,'assigned_to','Assigned To');
+insert into report_builder.api_reportcolumns values (38,3,'expected_date','Expected Date');
+insert into report_builder.api_reportcolumns values (39,3,'open_activites','Open Activites');
+insert into report_builder.api_reportcolumns values (40,3,'closed_activities','Closed Activities');
+insert into report_builder.api_reportcolumns values (41,3,'conversion_time','Conversion Time');
+insert into report_builder.api_reportcolumns values (42,3,'lead_lost_reason','Lead Lost Reason');
+insert into report_builder.api_reportcolumns values (43,3,'status','Status');
+
+insert into report_builder.api_reportcolumns values (44,4,'quotation_id','Quotation ID');
+insert into report_builder.api_reportcolumns values (45,4,'transaction_date','Transaction Date');
+insert into report_builder.api_reportcolumns values (46,4,'sales_order_no','Sales Order No');
+insert into report_builder.api_reportcolumns values (47,4,'sales_order_date','Sales Order Date');
+insert into report_builder.api_reportcolumns values (48,4,'company_name','Company Name');
+insert into report_builder.api_reportcolumns values (49,4,'assigned_to','Assigned to');
+insert into report_builder.api_reportcolumns values (50,4,'valid_until','Valid Unitl');
+insert into report_builder.api_reportcolumns values (51,4,'open_activities','Open Activities');
+insert into report_builder.api_reportcolumns values (52,4,'closed_activities','Closed Activities');
+insert into report_builder.api_reportcolumns values (53,4,'conversion_time','Conversion Time');
+insert into report_builder.api_reportcolumns values (54,4,'status','Status');
+
+insert into report_builder.api_reportcolumns values (55,5,'sample_order_id','Sample Order ID');
+insert into report_builder.api_reportcolumns values (56,5,'transaction_date','Transaction Date');
+insert into report_builder.api_reportcolumns values (57,5,'sales_order_no','Sales Order No');
+insert into report_builder.api_reportcolumns values (58,5,'sales_order_date','Sales Order Date');
+insert into report_builder.api_reportcolumns values (59,5,'company_name','Company Name');
+insert into report_builder.api_reportcolumns values (60,5,'status','Status');
+
 
 table_name : [api_outerfilters]
 
