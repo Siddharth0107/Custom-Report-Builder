@@ -71,7 +71,6 @@ export class OuterFilterViewComponent {
 
     this.reportService.createSubReport(payload).subscribe({
       next: (response: any) => {
-        console.log(response)
         this.router.navigate(['/generated-report'], {
           state: {
             report_data: response
@@ -79,7 +78,7 @@ export class OuterFilterViewComponent {
         });
       },
       error: (error: any) => {
-        console.log(error)
+        alert(error.error.error)
       }
     })
   }
