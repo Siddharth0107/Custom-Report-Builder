@@ -1,90 +1,41 @@
-<!-- <main class="container mx-auto">
+<!-- <main class="container mx-auto px-2">
   <h1 class="my-4 text-center text-3xl">All Templates</h1>
-
   <p-confirmDialog></p-confirmDialog>
 
-  <table class="custom-table">
-    <thead>
-      <tr>
-        <th class="w-1_6">Sr No.</th>
-        <th class="w-1_6">Parent Report Name</th>
-        <th class="w-1_6">Template Name</th>
-        <th class="w-1_6">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let template of templates; index as i">
-        <td>{{ i + 1 }}</td>
-        <td>{{ template.parent_report.report_name }}</td>
-        <td>{{ template.name }}</td>
-        <td>
-          <div class="flex justify-center items-center gap-4">
-            <p-button
-              icon="pi pi-eye"
-              severity="secondary"
-              (click)="createReportFromTemplate(template.id)"
-            ></p-button>
-            <p-button
-              severity="info"
-              (click)="openDialog(template)"
-              icon="pi pi-pencil"
-            ></p-button>
-            <p-button
-              icon="pi pi-trash"
-              severity="danger"
-              (click)="confirmDeleteTemplate(template.id)"
-            ></p-button>
-
-            <ColumnDialog
-              *ngIf="template.dialogVisible"
-              [data]="template"
-              [visible]="template.dialogVisible"
-              (onClose)="closeDialog(template)"
-            ></ColumnDialog>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</main> -->
-
-
-<main class="container mx-auto px-4">
-  <h1 class="my-4 text-center text-3xl">All Templates</h1>
-
-  <!-- Confirm Dialog Modal -->
-  <p-confirmDialog></p-confirmDialog>
-
-  <div class="overflow-x-auto">
-    <table class="custom-table min-w-full text-sm">
-      <thead class="bg-gray-100">
+  <div class="overflow-x-auto max-w-full sm:overflow-x-visible">
+    
+    <table class="custom-table min-w-[720px] w-full">
+      <thead>
         <tr>
-          <th class="w-1/6 px-4 py-2 text-left">Sr No.</th>
-          <th class="w-1/6 px-4 py-2 text-left">Parent Report Name</th>
-          <th class="w-1/6 px-4 py-2 text-left">Template Name</th>
-          <th class="w-1/6 px-4 py-2 text-left">Actions</th>
+          <th class="w-1_6">Sr No.</th>
+          <th class="w-1_6">Parent Report Name</th>
+          <th class="w-1_6">Template Name</th>
+          <th class="w-1_6">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let template of templates; index as i" class="border-b">
-          <td class="px-4 py-2">{{ i + 1 }}</td>
-          <td class="px-4 py-2">{{ template.parent_report.report_name }}</td>
-          <td class="px-4 py-2">{{ template.name }}</td>
-          <td class="px-4 py-2">
-            <div class="flex flex-wrap justify-start md:justify-center items-center gap-2 md:gap-4">
+        <tr *ngFor="let template of templates; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ template.parent_report.report_name }}</td>
+          <td>{{ template.name }}</td>
+          <td>
+            <div class="flex justify-center items-center gap-2 sm:gap-4">
               <p-button
                 icon="pi pi-eye"
                 severity="secondary"
+                styleClass="p-button-sm"
                 (click)="createReportFromTemplate(template.id)"
               ></p-button>
               <p-button
                 severity="info"
+                styleClass="p-button-sm"
                 (click)="openDialog(template)"
                 icon="pi pi-pencil"
               ></p-button>
               <p-button
                 icon="pi pi-trash"
                 severity="danger"
+                styleClass="p-button-sm"
                 (click)="confirmDeleteTemplate(template.id)"
               ></p-button>
 
@@ -99,5 +50,66 @@
         </tr>
       </tbody>
     </table>
+  </div>
+</main> -->
+
+<main class="container mx-auto px-2">
+  <h1 class="my-4 text-center text-3xl">All Templates</h1>
+  <p-confirmDialog></p-confirmDialog>
+
+  <div class="overflow-x-auto max-w-full border rounded scrollbar-thin">
+    <div class="min-w-[720px]">
+      <table class="custom-table w-full table-fixed">
+        <thead class="bg-gray-100 sticky top-0 z-10">
+          <tr>
+            <th class="w-1/6">Sr No.</th>
+            <th class="w-1/6">Parent Report Name</th>
+            <th class="w-1/6">Template Name</th>
+            <th class="w-1/6">Actions</th>
+          </tr>
+        </thead>
+      </table>
+
+      <div class="max-h-[calc(100vh-200px)] overflow-y-auto scrollbar-thin">
+        <table class="custom-table w-full table-fixed">
+          <tbody>
+            <tr *ngFor="let template of templates; index as i">
+              <td class="w-1/6">{{ i + 1 }}</td>
+              <td class="w-1/6">{{ template.parent_report.report_name }}</td>
+              <td class="w-1/6">{{ template.name }}</td>
+              <td class="w-1/6">
+                <div class="flex justify-center items-center gap-2 sm:gap-4">
+                  <p-button
+                    icon="pi pi-eye"
+                    severity="secondary"
+                    styleClass="p-button-sm"
+                    (click)="createReportFromTemplate(template.id)"
+                  ></p-button>
+                  <p-button
+                    severity="info"
+                    styleClass="p-button-sm"
+                    (click)="openDialog(template)"
+                    icon="pi pi-pencil"
+                  ></p-button>
+                  <p-button
+                    icon="pi pi-trash"
+                    severity="danger"
+                    styleClass="p-button-sm"
+                    (click)="confirmDeleteTemplate(template.id)"
+                  ></p-button>
+
+                  <ColumnDialog
+                    *ngIf="template.dialogVisible"
+                    [data]="template"
+                    [visible]="template.dialogVisible"
+                    (onClose)="closeDialog(template)"
+                  ></ColumnDialog>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </main>

@@ -1,37 +1,41 @@
-<main class="container mx-auto">
+<main class="container mx-auto px-2">
   <div *ngIf="reportData">
     <h1 class="my-4 text-center text-3xl">
       Generated Report for the {{ reportData.template_name }}
     </h1>
-  
+
     <div class="flex justify-end mb-4">
       <button
         pButton
         type="button"
         label="Download Excel"
         icon="pi pi-download"
-        class="p-button-success"
+        class="p-button-success p-button-sm"
         (click)="downloadExcel()"
       ></button>
     </div>
-  
-    <table class="custom-table">
-      <thead>
-        <tr>
-          <th class="w-1_6">Sr No.</th>
-          <th *ngFor="let column of reportData.columns" class="w-1_6">
-            {{ column }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of reportData.data; index as i">
-          <td>{{ i + 1 }}</td>
-          <td *ngFor="let column of reportData.columns">
-            {{ item[column.toLowerCase().replaceAll(' ','_')] }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
+    <div
+      class="overflow-auto max-h-[calc(100vh-200px)] border rounded scrollbar-thin"
+    >
+      <table class="custom-table min-w-[720px] w-full">
+        <thead class="sticky top-0 bg-white z-10">
+          <tr>
+            <th class="w-1_6">Sr No.</th>
+            <th *ngFor="let column of reportData.columns" class="w-1_6">
+              {{ column }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of reportData.data; index as i">
+            <td>{{ i + 1 }}</td>
+            <td *ngFor="let column of reportData.columns">
+              {{ item[column.toLowerCase().replaceAll(" ", "_")] }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </main>
