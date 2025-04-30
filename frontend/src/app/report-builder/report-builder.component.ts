@@ -80,12 +80,16 @@ export class ColumnDialog implements OnInit {
       } else {
         const matchingFilter = this.data.parent_report.report_filters?.find(
           (f: any) => {
-            // console.log('Checking filter:', f);
             return f.filter_name === fieldWithLabel.column_name;
           }
         );
         if (matchingFilter) {
-          this.selectedFilters.delete(matchingFilter);
+          const existingFilter = Array.from(this.selectedFilters).find(
+            (f: any) => f.filter_name === matchingFilter.filter_name
+          );
+          if (existingFilter) {
+            this.selectedFilters.delete(existingFilter);
+          }
         }
       }
     } else {
@@ -145,7 +149,7 @@ export class ColumnDialog implements OnInit {
           columns: product.selected_fields,
           report_filters: product.selected_filters
         };
-        
+
         this.reportService.createTemplate(payload).subscribe({
           next: (response: any) => {
             this.visible = false;

@@ -28,10 +28,18 @@ export type TransformedReport = {
     reportId: number;
     parent_report_name: string;
     saveBtnEnable: boolean,
-    columns: ReportColumns[];
-    outer_filters: ReportFilters[];
+    columns: Array<ReportColumns>;
+    outer_filters: Array<ReportFilters>;
     dialogVisible: boolean;
     isDisabled: boolean;
+}
+
+export type TransformedTemplate = {
+    id: number;
+    name: string;
+    parent_report: Report;
+    template: Array<ReportColumns>;
+    template_filter: Array<TemplateFilter>;
 }
 
 export type TemplateFilter = {

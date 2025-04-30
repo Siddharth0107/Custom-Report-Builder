@@ -17,7 +17,7 @@ export class OuterFilterViewComponent {
   templateId: number = 0;
     reportData: OuterFilterViewData = {}
   dropdownValues: { [key: string]: string } = {};
-  suggestions: any = [];
+  suggestions: string[] = [];
 
   constructor(private location: Location, private reportService: ReportService, private router: Router) { }
   ngOnInit(): void {
