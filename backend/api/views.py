@@ -340,38 +340,41 @@ def load_task_report():
 @api_view(['POST'])
 def get_filter_options(request):
     try:
-      
+   
         report_data = load_task_report()
+        
         if not report_data:
             return Response({'message': 'Report data not found'}, status=404)
-        data = request.data
-        # report_id = int(data.get('report_id'))
-        template_id = int(data.get('template_id')) 
         
+        data = request.data
+        template_id = int(data.get('template_id')) 
         template_report = ReportTemplates.objects.get(id=template_id)
         template_report_data = model_to_dict(template_report)
         report_id = template_report_data['parent_report']
- 
-        if report_data.get('id') != report_id:
+
+        report = next((item for item in report_data if item['id'] == report_id), None)
+        if not report:
             return Response({'message': 'Report not found'}, status=404)
-      
+
         selected_filters = TemplateFilters.objects.filter(template_id=template_id)
-
         selected_columns = selected_filters.values_list('filter_name', flat=True)
-
+        
         filters = {}
 
-        for row in report_data['rows']:
-            for field, value in row.items():
+        for row in report.get('rows', []):  
+            for field, value in row.items(): 
                 if field in selected_columns:
                     filters.setdefault(field, set()).add(value)
 
+       
         filters = {k: list(v) for k, v in filters.items()}
 
         return Response({'Data': filters})
 
     except Exception as e:
         return Response({'message': str(e)}, status=500)
+
+
 
 # @api_view(['GET'])
 # def get_template_report_data(request):
@@ -406,37 +409,50 @@ def get_filter_options(request):
 #         return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
 #     except Exception as e:
 #         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 @api_view(['POST'])
 def get_template_report_data(request):
     try:
         data = request.data
         template_id = data.get('template_id')
-        selected_filters = data.get('filters', {})  
+        selected_filters = data.get('filters', {})  # Default to empty dict if filters not provided
+        
         template = ReportTemplates.objects.select_related('parent_report').get(id=template_id)
+        
         selected_columns = list(
             TemplateColumns.objects.filter(template_id=template_id)
             .values('column_name', 'label')
         )
+        
         column_names = [col['column_name'] for col in selected_columns]
         labels = {col['column_name']: col['label'] for col in selected_columns}
+        
         full_data = load_task_report()
+        
+        report_id = template.parent_report.id  
+        report = next((r for r in full_data if r.get('id') == report_id), None)
+        
+        if not report:
+            return Response({"error": "Report not found"}, status=status.HTTP_404_NOT_FOUND)
+    
         filtered_rows = [
-            {key: row.get(key, None) for key in column_names if key in row}
-            for row in full_data["rows"]
+            {key: row.get(key, None) for key in column_names if key in row}  
+            for row in report["rows"]
             if all(row.get(field) == value for field, value in selected_filters.items())
         ]
+       
         if not filtered_rows:
             return Response({"error": "No records found for the given filters"}, status=status.HTTP_404_NOT_FOUND)
+        
         return Response({
             "template_id": template.id,
             "template_name": template.name,
             "report_name": template.parent_report.report_name,
-            "columns": [col['label'] for col in selected_columns],
-            "data": filtered_rows
+            "columns": [col['label'] for col in selected_columns], 
+            "data": filtered_rows  
         }, status=status.HTTP_200_OK)
 
     except ReportTemplates.DoesNotExist:
         return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
+    
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

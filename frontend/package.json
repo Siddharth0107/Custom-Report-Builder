@@ -18,13 +18,17 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@primeng/themes": "^19.1.0",
+    "@syncfusion/ej2-angular-base": "^29.1.33",
+    "@syncfusion/ej2-angular-spreadsheet": "^29.1.40",
     "@tailwindcss/postcss": "^4.1.4",
+    "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "primeicons": "^7.0.0",
     "primeng": "^19.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "xlsx": "^0.18.5",
+    "xlsx-style": "^0.8.13",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {

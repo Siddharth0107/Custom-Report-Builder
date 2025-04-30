@@ -7,12 +7,30 @@
         <label for="multiple-ac-1" class="font-bold mb-2 block">
           {{ getLabelName(key) }}
         </label>
-        <p-autocomplete
-          [(ngModel)]="dropdownValues[key]"
-          [dropdown]="true"
-          [suggestions]="filteredOptions[key]"
-          (completeMethod)="filterSuggestions($event, key)"
-        />
+<p>h1 : {{filteredOptions[key]}}</p>
+        <!-- Dynamic Filter Type -->
+        <ng-container *ngIf="isMultiSelect(key)">
+          <!-- Multi-select dropdown for fields like status -->
+          <p-multiselect
+            [options]="filteredOptions[key]"
+            [(ngModel)]="dropdownValues[key]"
+            optionLabel="name"
+            placeholder="Select {{ getLabelName(key) }}"
+            [maxSelectedLabels]="3"
+            styleClass="w-full md:w-80"
+          ></p-multiselect>
+        </ng-container>
+
+        <ng-container *ngIf="!isMultiSelect(key)">
+          <!-- Single-select dropdown for fields like company_name -->
+          <p-autoComplete
+            [suggestions]="filteredOptions[key]"
+            [(ngModel)]="dropdownValues[key]"
+            optionLabel="name"
+            placeholder="Select {{ getLabelName(key) }}"
+            styleClass="w-full md:w-80"
+          ></p-autoComplete>
+        </ng-container>
       </div>
     </div>
   </div>
