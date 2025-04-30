@@ -116,7 +116,7 @@ import { OuterFilterViewData } from '../../types/reportTypes';
 })
 export class OuterFilterViewComponent {
   templateId: number = 0;
-    reportData: OuterFilterViewData = {}
+  reportData: OuterFilterViewData = {}
   dropdownValues: { [key: string]: string } = {};
   suggestions: string[] = [];
 
@@ -145,7 +145,7 @@ export class OuterFilterViewComponent {
       option.toLowerCase().includes(query)
     );
   }
-  
+
 
   objectKeys = Object.keys;
 

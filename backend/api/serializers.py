@@ -25,7 +25,7 @@ class ReportColumnSerializer(serializers.ModelSerializer):
 class ReportFilterSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReportFilters
-        fields = ['id','report_id','filter_name','filter_label','exist_in_report']
+        fields = ['id','report_id','filter_name','filter_label','exist_in_report','is_compulsory','filter_type']
         
 class ReportSerializer(serializers.ModelSerializer):
     report_columns = ReportColumnSerializer(many=True)

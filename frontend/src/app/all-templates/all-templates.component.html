@@ -1,7 +1,6 @@
-<main class="container mx-auto">
+<!-- <main class="container mx-auto">
   <h1 class="my-4 text-center text-3xl">All Templates</h1>
 
-  <!-- Confirm Dialog Modal -->
   <p-confirmDialog></p-confirmDialog>
 
   <table class="custom-table">
@@ -47,4 +46,58 @@
       </tr>
     </tbody>
   </table>
+</main> -->
+
+
+<main class="container mx-auto px-4">
+  <h1 class="my-4 text-center text-3xl">All Templates</h1>
+
+  <!-- Confirm Dialog Modal -->
+  <p-confirmDialog></p-confirmDialog>
+
+  <div class="overflow-x-auto">
+    <table class="custom-table min-w-full text-sm">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="w-1/6 px-4 py-2 text-left">Sr No.</th>
+          <th class="w-1/6 px-4 py-2 text-left">Parent Report Name</th>
+          <th class="w-1/6 px-4 py-2 text-left">Template Name</th>
+          <th class="w-1/6 px-4 py-2 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let template of templates; index as i" class="border-b">
+          <td class="px-4 py-2">{{ i + 1 }}</td>
+          <td class="px-4 py-2">{{ template.parent_report.report_name }}</td>
+          <td class="px-4 py-2">{{ template.name }}</td>
+          <td class="px-4 py-2">
+            <div class="flex flex-wrap justify-start md:justify-center items-center gap-2 md:gap-4">
+              <p-button
+                icon="pi pi-eye"
+                severity="secondary"
+                (click)="createReportFromTemplate(template.id)"
+              ></p-button>
+              <p-button
+                severity="info"
+                (click)="openDialog(template)"
+                icon="pi pi-pencil"
+              ></p-button>
+              <p-button
+                icon="pi pi-trash"
+                severity="danger"
+                (click)="confirmDeleteTemplate(template.id)"
+              ></p-button>
+
+              <ColumnDialog
+                *ngIf="template.dialogVisible"
+                [data]="template"
+                [visible]="template.dialogVisible"
+                (onClose)="closeDialog(template)"
+              ></ColumnDialog>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </main>

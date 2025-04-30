@@ -54,6 +54,8 @@ class ReportFilters(models.Model):
     filter_name = models.CharField(max_length=255)
     filter_label = models.CharField(max_length=255)
     exist_in_report = models.BooleanField()
+    is_compulsory = models.BooleanField(default=False)
+    filter_type = models.CharField(max_length=255,default='none')
     # timestamp = models.DateTimeField(auto_now_add=True)
 
 class TemplateFilters(models.Model):
