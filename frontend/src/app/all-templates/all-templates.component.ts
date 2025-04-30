@@ -93,7 +93,6 @@ export class AllTemplatesComponent implements OnInit {
   }
 
   createReportFromTemplate(id: number) {
-    console.log(id)
     this.reportService.showFilterView({ template_id: id }).subscribe({
       next: (response: any) => {
         this.reportData = response;

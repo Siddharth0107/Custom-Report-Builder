@@ -1,4 +1,4 @@
-<main class="container mx-auto my-5">
+<!-- <main class="container mx-auto my-5">
   <h1 class="text-3xl font-semibold">Select Outer Filters for the Report</h1>
 
   <div *ngIf="templateId" class="my-3">
@@ -8,9 +8,7 @@
           {{ getLabelName(key) }}
         </label>
 <p>h1 : {{filteredOptions[key]}}</p>
-        <!-- Dynamic Filter Type -->
         <ng-container *ngIf="isMultiSelect(key)">
-          <!-- Multi-select dropdown for fields like status -->
           <p-multiselect
             [options]="filteredOptions[key]"
             [(ngModel)]="dropdownValues[key]"
@@ -22,7 +20,6 @@
         </ng-container>
 
         <ng-container *ngIf="!isMultiSelect(key)">
-          <!-- Single-select dropdown for fields like company_name -->
           <p-autoComplete
             [suggestions]="filteredOptions[key]"
             [(ngModel)]="dropdownValues[key]"
@@ -31,6 +28,29 @@
             styleClass="w-full md:w-80"
           ></p-autoComplete>
         </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <p-button label="Submit" (click)="createSubReport()" />
+</main> -->
+
+
+<main class="container mx-auto my-5">
+  <h1 class="text-3xl font-semibold">Select Outer Filters for the Report</h1>
+
+  <div *ngIf="templateId" class="my-3">
+    <div class="card flex items-center gap-3 my-3">
+      <div *ngFor="let key of objectKeys(reportData)">
+        <label for="multiple-ac-1" class="font-bold mb-2 block">
+          {{ getLabelName(key) }}
+        </label>
+        <p-autocomplete
+          [(ngModel)]="dropdownValues[key]"
+          [dropdown]="true"
+          [suggestions]="filteredOptions[key]"
+          (completeMethod)="filterSuggestions($event, key)"
+        />
       </div>
     </div>
   </div>
