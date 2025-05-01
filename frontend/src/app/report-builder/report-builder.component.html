@@ -1,9 +1,9 @@
 <p-dialog
   draggable="false"
   [header]="
-    data.parent_report_name
-      ? 'Create Template from : ' + data.parent_report_name
-      : data.name
+    reportTypeData.parent_report_name
+      ? 'Create Template from : ' + reportTypeData.parent_report_name
+      : templateTypeData.name
   "
   (onHide)="close()"
   [modal]="true"
@@ -11,10 +11,10 @@
   [style]="{ width: '50rem' }"
 >
   <div *ngIf="data?.columns || data?.template; else noFields" class="">
-    <div *ngIf="data.columns && data.columns.length > 0" class="flex gap-8">
-      <div class="w-1/2">
+    <div *ngIf="reportTypeData.columns && reportTypeData.columns.length > 0" class="flex gap-8">
+      <div class="w-1/2 scrollbar-thin h-[50vh] overflow-auto">
         <h3 class="font-semibold mb-2">Report Columns</h3>
-        <div *ngFor="let field of data.columns" class="block">
+        <div *ngFor="let field of reportTypeData.columns" class="block">
           <label class="w-full flex items-center gap-4 my-2">
             <input
               class="h-[20px] w-[20px]"
@@ -30,7 +30,7 @@
       <div class="w-1/2">
         <h3 class="font-semibold mb-2">Outer Filters</h3>
         <div
-          *ngFor="let filter of data.outer_filters; index as idx"
+          *ngFor="let filter of reportTypeData.outer_filters; index as idx"
           class="block"
         >
           <label class="w-full flex items-center gap-4 my-2">
@@ -47,17 +47,17 @@
     </div>
 
     <div class="flex gap-8" *ngIf="data?.template && data.template.length > 0">
-      <div class="w-1/2">
+      <div class="w-1/2 scrollbar-thin h-[50vh] overflow-auto">
         <h3 class="font-semibold mb-2">Report Columns</h3>
         <div
-          *ngFor="let field of data.parent_report.report_columns"
+          *ngFor="let field of templateTypeData.parent_report.report_columns"
           class="block"
         >
           <label class="w-full flex items-center gap-4 my-2">
             <input
               class="h-[20px] w-[20px]"
               type="checkbox"
-              [checked]="isSelected('edit', field.column_name)"
+              [checked]="isSelected('edit', field)"
               (change)="toggleField(field)"
             />
             {{ field.label }}
@@ -67,7 +67,7 @@
       <div class="w-1/2">
         <h3 class="font-semibold mb-2">Outer Filters</h3>
         <div
-          *ngFor="let filter of data.parent_report.report_filters; index as idx"
+          *ngFor="let filter of templateTypeData.parent_report.report_filters; index as idx"
           class="block"
         >
           <label class="w-full flex items-center gap-4 my-2">

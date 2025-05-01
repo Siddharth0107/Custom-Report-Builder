@@ -30,13 +30,12 @@ export class OuterFilterViewComponent {
   constructor(private location: Location, private reportService: ReportService, private router: Router) { }
 
   ngOnInit(): void {
-    this.templateId = history.state.id;
-    this.reportData = history.state.report_data.data;
-
     if (!this.templateId) {
       this.location.back();
       return;
     }
+    this.templateId = history.state.id;
+    this.reportData = history.state.report_data.data;
   }
 
   filterSuggestions(event: any, key: string) {

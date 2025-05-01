@@ -6,7 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { ColumnDialog } from '../report-builder/report-builder.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { OuterFilterViewData, TransformedTemplate,  } from '../../types/reportTypes';
+import { OuterFilterViewData, Templates } from '../../types/reportTypes';
 
 @Component({
   selector: 'app-all-templates',
@@ -17,7 +17,7 @@ import { OuterFilterViewData, TransformedTemplate,  } from '../../types/reportTy
   providers: [ConfirmationService]
 })
 export class AllTemplatesComponent implements OnInit {
-  templates: TransformedTemplate[] = [{
+  templates: Templates[] = [{
     id: 0,
     name: '',
     parent_report: {
@@ -89,11 +89,11 @@ export class AllTemplatesComponent implements OnInit {
     });
   }
 
-  openDialog(template: TransformedTemplate) {
+  openDialog(template: Templates) {
     template.dialogVisible = true;
   }
 
-  closeDialog(template: TransformedTemplate) {
+  closeDialog(template: Templates) {
     template.dialogVisible = false;
     this.handleTemplateListing();
   }

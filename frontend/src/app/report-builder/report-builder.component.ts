@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { ReportService } from './../service/report.service'
+import { ReportColumns, TemplateFilter, TransformedReport, TransformedTemplate } from '../../types/reportTypes';
 
 @Component({
   selector: 'ColumnDialog',
@@ -21,36 +22,62 @@ export class ColumnDialog implements OnInit {
 
   constructor(private reportService: ReportService) { }
 
-  selectedFields: Set<any> = new Set();
-  selectedFilters: Set<any> = new Set();
+  reportTypeData: TransformedReport = {
+    columns: [],
+    dialogVisible: false,
+    isDisabled: false,
+    outer_filters: [],
+    parent_report_name: "",
+    reportId: 0,
+    saveBtnEnable: false,
+  };
+
+  templateTypeData: TransformedTemplate = {
+    id: 0,
+    name: '',
+    parent_report: {
+      id: 0,
+      report_columns: [],
+      report_filters: [],
+      report_name: '',
+    },
+    template: [],
+    template_filter: [],
+  }
+
+  selectedFields: Set<ReportColumns> = new Set();
+  selectedFilters: Set<TemplateFilter> = new Set();
   reportName: string = '';
 
   ngOnInit(): void {
-    if (this.data?.selected_fields) {
-      this.selectedFields = new Set(this.data.selected_fields);
-      this.selectedFilters = new Set(this.data.selected_filters);
-    } else if (this.data?.template) {
-      this.selectedFields = new Set(this.data.template);
-      this.selectedFilters = new Set(this.data.template_filter);
-    } else {
+    console.log(this.data);
+    if (this.data.columns) {
+      this.reportTypeData = this.data;
       this.selectedFields = new Set();
       this.selectedFilters = new Set();
+    } else if (this.data.template) {
+      this.templateTypeData = this.data;
+      this.selectedFields = new Set(this.templateTypeData.template);
+      this.selectedFilters = new Set(this.templateTypeData.template_filter);
+    } else {
+      console.warn("this data is not in correct form")
+      console.log(this.data)
     }
   }
 
-  isSelected(action: string, field: string): boolean {
+  isSelected(action: string, field: ReportColumns): boolean {
     if (action === 'create') {
-      return this.selectedFields.has(field); // Check if the field is in the Set (for 'create' action)
+      return this.selectedFields.has(field);
     } else if (action === 'edit') {
       const reportColumns = Array.from(this.selectedFields).map(item => item.column_name);
-      return reportColumns.includes(field);
+      return reportColumns.includes(field.column_name);
     }
     return false;
   }
 
-  isFilterSelected(action: string, filter: any): boolean {
+  isFilterSelected(action: string, filter: TemplateFilter): boolean {
     if (action === 'create') {
-      return this.selectedFilters.has(filter); // Check if the field is in the Set (for 'create' action)
+      return this.selectedFilters.has(filter);
     } else if (action === 'edit') {
       const reportFilters = Array.from(this.selectedFilters).map(item => item.filter_name);
       return reportFilters.includes(filter.filter_name);
@@ -59,33 +86,28 @@ export class ColumnDialog implements OnInit {
     }
   }
 
-  toggleField(field: any): void {
-    const fieldWithLabel = {
-      column_name: field.column_name.toLowerCase().replace(' ', '_'),
-      label: field.label
-    };
-
+  toggleField(field: ReportColumns): void {
     let existing = Array.from(this.selectedFields).find(
-      (f: any) => f.column_name === fieldWithLabel.column_name
+      (f: ReportColumns) => f.column_name === field.column_name
     );
     if (existing) {
       this.selectedFields.delete(existing);
       if (this.data.outer_filters) {
         const matchingFilter = this.data.outer_filters?.find(
-          (f: any) => f.filter_name === fieldWithLabel.column_name
+          (f: TemplateFilter) => f.filter_name === field.column_name
         );
         if (matchingFilter) {
           this.selectedFilters.delete(matchingFilter);
         }
       } else {
         const matchingFilter = this.data.parent_report.report_filters?.find(
-          (f: any) => {
-            return f.filter_name === fieldWithLabel.column_name;
+          (f: TemplateFilter) => {
+            return f.filter_name === field.column_name;
           }
         );
         if (matchingFilter) {
           const existingFilter = Array.from(this.selectedFilters).find(
-            (f: any) => f.filter_name === matchingFilter.filter_name
+            (f: TemplateFilter) => f.filter_name === matchingFilter.filter_name
           );
           if (existingFilter) {
             this.selectedFilters.delete(existingFilter);
@@ -93,17 +115,17 @@ export class ColumnDialog implements OnInit {
         }
       }
     } else {
-      this.selectedFields.add(fieldWithLabel);
+      this.selectedFields.add(field);
       if (this.data.outer_filters) {
         const matchingFilter = this.data.outer_filters?.find(
-          (f: any) => f.filter_name === fieldWithLabel.column_name
+          (f: TemplateFilter) => f.filter_name === field.column_name
         );
         if (matchingFilter) {
           this.selectedFilters.add(matchingFilter);
         }
       } else {
         const matchingFilter = this.data.parent_report.report_filters?.find(
-          (f: any) => f.filter_name == fieldWithLabel.column_name
+          (f: TemplateFilter) => f.filter_name == field.column_name
         );
         if (matchingFilter) {
           this.selectedFilters.add(matchingFilter);
@@ -111,7 +133,7 @@ export class ColumnDialog implements OnInit {
       }
     }
     this.data.selected_fields = Array.from(this.selectedFields);
-    this.data.selected_filters = Array.from(this.selectedFilters).map((item: any) => ({
+    this.data.selected_filters = Array.from(this.selectedFilters).map((item: TemplateFilter) => ({
       filter_name: item.filter_name,
       filter_label: item.filter_label
     }));
@@ -127,7 +149,7 @@ export class ColumnDialog implements OnInit {
       if (product.columns) {
         product.generated_report_name = this.reportNameToUse;
         product.selected_fields = Array.from(this.selectedFields).map(
-          (item: any) => ({
+          (item: ReportColumns) => ({
             ...item,
             label: item.label
           })
@@ -162,7 +184,7 @@ export class ColumnDialog implements OnInit {
 
       else if (product?.template) {
         product.selected_fields = Array.from(this.selectedFields).map(
-          (item: any) => ({
+          (item: ReportColumns) => ({
             ...item,
             label: item.label
           })
@@ -178,7 +200,7 @@ export class ColumnDialog implements OnInit {
         }
 
         product.selected_filters = Array.from(this.selectedFilters).map(
-          (item: any) => ({
+          (item: TemplateFilter) => ({
             filter_name: item.filter_name,
             filter_label: item.filter_label,
           })
