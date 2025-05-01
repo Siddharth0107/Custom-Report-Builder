@@ -12,9 +12,8 @@ import { ReportColumns, TemplateFilter, TransformedReport, TransformedTemplate }
   templateUrl: './report-builder.component.html',
   styleUrl: './report-builder.component.css',
   standalone: true,
-  imports: [Dialog, FormsModule, InputTextModule, ButtonModule, CommonModule]
+  imports: [Dialog, FormsModule, InputTextModule, ButtonModule, CommonModule],
 })
-
 export class ColumnDialog implements OnInit {
   @Input() data: any;
   @Input() visible: boolean = false;
@@ -48,9 +47,10 @@ export class ColumnDialog implements OnInit {
   selectedFields: Set<ReportColumns> = new Set();
   selectedFilters: Set<TemplateFilter> = new Set();
   reportName: string = '';
+  tempName: string = ''; 
 
   ngOnInit(): void {
-    console.log(this.data);
+    this.tempName = this.data.name;
     if (this.data.columns) {
       this.reportTypeData = this.data;
       this.selectedFields = new Set();
@@ -79,7 +79,9 @@ export class ColumnDialog implements OnInit {
     if (action === 'create') {
       return this.selectedFilters.has(filter);
     } else if (action === 'edit') {
-      const reportFilters = Array.from(this.selectedFilters).map(item => item.filter_name);
+      const reportFilters = Array.from(this.selectedFilters).map(
+        (item) => item.filter_name
+      );
       return reportFilters.includes(filter.filter_name);
     } else {
       return false;
@@ -151,25 +153,25 @@ export class ColumnDialog implements OnInit {
         product.selected_fields = Array.from(this.selectedFields).map(
           (item: ReportColumns) => ({
             ...item,
-            label: item.label
+            label: item.label,
           })
         );
 
         if (product.selected_fields.length == 0) {
-          alert("Atleast select 1 column")
-          return
+          alert('Atleast select 1 column');
+          return;
         }
 
         if (product.generated_report_name == '') {
-          alert("Report Name Cannot be empty")
-          return
+          alert('Report Name Cannot be empty');
+          return;
         }
 
         const payload = {
           parent_report_id: product.reportId,
           template_name: product.generated_report_name,
           columns: product.selected_fields,
-          report_filters: product.selected_filters
+          report_filters: product.selected_filters,
         };
 
         this.reportService.createTemplate(payload).subscribe({
@@ -177,26 +179,25 @@ export class ColumnDialog implements OnInit {
             this.visible = false;
           },
           error: (error: any) => {
-            alert(error.error.error)
-          }
+            alert(error.error.error);
+          },
         });
-      }
-
-      else if (product?.template) {
+      } else if (product?.template) {
+        product.name = this.tempName;
         product.selected_fields = Array.from(this.selectedFields).map(
           (item: ReportColumns) => ({
             ...item,
-            label: item.label
+            label: item.label,
           })
         );
-        if (product.name == "") {
-          alert("Report name cannot be empty")
-          return
+        if (product.name == '') {
+          alert('Report name cannot be empty');
+          return;
         }
 
         if (product.selected_fields.length == 0) {
-          alert("Atleast select 1 column")
-          return
+          alert('Atleast select 1 column');
+          return;
         }
 
         product.selected_filters = Array.from(this.selectedFilters).map(
@@ -204,14 +205,14 @@ export class ColumnDialog implements OnInit {
             filter_name: item.filter_name,
             filter_label: item.filter_label,
           })
-        )
+        );
 
         const payload = {
           template_id: product.id,
           name: product.name,
           columns: product.selected_fields,
           report_filters: product.selected_filters,
-        }
+        };
 
         this.reportService.updateTemplate(payload).subscribe({
           next: (response: any) => {
@@ -220,10 +221,10 @@ export class ColumnDialog implements OnInit {
           },
           error: (error: any) => {
             console.log(error.error.error);
-            alert(error.error.error)
-            return
-          }
-        })
+            alert(error.error.error);
+            return;
+          },
+        });
       }
     } catch (error: any) {
       console.log(error);

@@ -1,0 +1,4 @@
+::ng-deep .blue-placeholder input::placeholder {
+    color: #7774e7;
+  }
+  

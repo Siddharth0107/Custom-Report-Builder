@@ -22,7 +22,7 @@
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background-color: #4ade80; /* Tailwind slate-300 */
+  background-color: #7d7474; /* Tailwind slate-300 */
   border:none;
 }
 

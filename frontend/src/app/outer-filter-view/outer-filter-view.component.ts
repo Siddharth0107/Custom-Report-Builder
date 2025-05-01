@@ -6,10 +6,14 @@ import { CommonModule, Location } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 import { OuterFilterViewData } from '../../types/reportTypes';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { SelectModule } from 'primeng/select';
+import {CalendarModule} from 'primeng/calendar'
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-outer-filter-view',
-  imports: [AutoCompleteModule, FormsModule, CommonModule, ButtonModule],
+  imports: [AutoCompleteModule, FormsModule, CommonModule, ButtonModule,MultiSelectModule,SelectModule,CalendarModule,DatePickerModule],
   templateUrl: './outer-filter-view.component.html',
   styleUrl: './outer-filter-view.component.css'
 })
@@ -23,29 +27,73 @@ export class OuterFilterViewComponent {
     values: [],
   }];
 
-  dropdownValues: { [key: string]: string } = {};
+  dropdownValues: { [key: string]: any } = {};
+  
   suggestions: string[] = [];
   filteredOptions: { [key: string]: string[] } = {};
 
   constructor(private location: Location, private reportService: ReportService, private router: Router) { }
 
+  // ngOnInit(): void {
+  //   this.templateId = history.state.id;
+  //   this.reportData = history.state.report_data.data;
+
+  //   if (!this.templateId) {
+  //     this.location.back();
+  //     return;
+  //   }
+  // }
+
+
   ngOnInit(): void {
+    this.templateId = history.state.id;
     if (!this.templateId) {
       this.location.back();
       return;
     }
-    this.templateId = history.state.id;
-    this.reportData = history.state.report_data.data;
+    const incomingData = history.state.report_data?.data;
+    if (!incomingData) {
+      this.location.back();
+      return;
+    }
+  
+    this.reportData = incomingData;
+  
+    // Initialize default dropdown values (e.g., set today's date for date filters)
+    for (const item of this.reportData) {
+      if (item.filter_type === 'date') {
+        this.dropdownValues[item.filter_name] = new Date(); 
+      } else {
+        this.dropdownValues[item.filter_name] = ''; // Optional: initialize others
+      }
+    }
   }
-
+  
   filterSuggestions(event: any, key: string) {
     const query = event.query.toLowerCase();
-    const matchedItem = this.reportData.find((item:OuterFilterViewData) => item.filter_name === key);
+    // const matchedItem = this.reportData.find((item:OuterFilterViewData) => item.filter_name === key);
+    // if (matchedItem) {
+    //   this.filteredOptions[key] = matchedItem.values.filter((value: string) =>
+    //     value.toLowerCase().includes(query)
+    //   );
+    // }
+     // If the query starts with '#', we trigger the suggestions manually
+  if (query.startsWith('#')) {
+    const matchedItem = this.reportData.find((item: OuterFilterViewData) => item.filter_name === key);
+    if (matchedItem) {
+      this.filteredOptions[key] = matchedItem.values.filter((value: string) =>
+        value.toLowerCase().includes(query.slice(1)) // removing '#' from the query for matching
+      );
+    }
+  } else {
+    // Standard behavior for suggestions
+    const matchedItem = this.reportData.find((item: OuterFilterViewData) => item.filter_name === key);
     if (matchedItem) {
       this.filteredOptions[key] = matchedItem.values.filter((value: string) =>
         value.toLowerCase().includes(query)
       );
     }
+  }
   }
 
   getLabelName(key: string) {
@@ -73,4 +121,16 @@ export class OuterFilterViewComponent {
       }
     });
   }
+  onDoubleClick(autoComp: any, filterName: string) {
+    this.filterSuggestions({ query: '#' }, filterName);
+    autoComp.show(); 
+  }
+
+  formatDate(date: Date): string {
+    const dd = String(date.getDate()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, '0'); 
+    const yy = String(date.getFullYear()).slice(-2);
+    return `${dd}-${mm}-${yy}`;
+  }
+    
 }

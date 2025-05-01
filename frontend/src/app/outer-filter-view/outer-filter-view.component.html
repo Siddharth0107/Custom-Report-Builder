@@ -1,22 +1,79 @@
 <main class="container mx-auto my-5">
-  <h1 class="text-3xl font-semibold">Select Outer Filters for the Report</h1>
+  <h1 class="text-3xl font-semibold mb-4">
+    Select Outer Filters for the Report
+  </h1>
 
   <div *ngIf="templateId" class="my-3">
-    <div class="card flex justify-center-center gap-6 my-3">
-      <div *ngFor="let item of reportData">
-        <label class="font-bold mb-2 flex items-center gap-3">
+    <div class="card flex flex-wrap gap-6 my-3">
+      <div
+        *ngFor="let item of reportData"
+        class="flex flex-col min-w-[200px] max-w-[250px] flex-1"
+      >
+        <label class="font-bold mb-2 flex items-center gap-1">
           {{ item.filter_label }}
           <span *ngIf="item.is_compulsory" class="text-red-600">*</span>
         </label>
 
-        <p-autocomplete
-          [(ngModel)]="dropdownValues[item.filter_name]"
-          [dropdown]="true"
-          [suggestions]="filteredOptions[item.filter_name]"
-          (completeMethod)="filterSuggestions($event, item.filter_name)"
-          placeholder="Select a value"
-          [forceSelection]="false"
-        />
+        <ng-container [ngSwitch]="item.filter_type">
+          <p-calendar
+            *ngIf="item.filter_type === 'date'"
+            [(ngModel)]="dropdownValues[item.filter_name]"
+            selectionMode="range"
+            dateFormat="dd-mm-yy"
+            placeholder="Select date"
+            showIcon="true"
+          ></p-calendar>
+          <!-- <p-datepicker
+            *ngIf="item.filter_type === 'date'"
+            [(ngModel)]="dropdownValues[item.filter_name]"
+            dateFormat="dd-mm-yy"
+            placeholder="Select date"
+            showIcon="true"
+            [showButtonBar]="true">
+          </p-datepicker> -->
+
+          <p-select
+            *ngSwitchCase="'dropdown'"
+            [(ngModel)]="dropdownValues[item.filter_name]"
+            [options]="item.values"
+            [placeholder]="'Select a value'"
+            [autoDisplayFirst]="false"
+          ></p-select>
+
+          <p-multiSelect
+            *ngSwitchCase="'multiselect'"
+            [(ngModel)]="dropdownValues[item.filter_name]"
+            [options]="item.values"
+            [placeholder]="'Select values'"
+          ></p-multiSelect>
+
+          <!-- <p-autoComplete
+            *ngSwitchCase="'autocomplete'"
+            [(ngModel)]="dropdownValues[item.filter_name]"
+            [dropdown]="true"
+            [suggestions]="filteredOptions[item.filter_name]"
+            (completeMethod)="filterSuggestions($event, item.filter_name)"
+            placeholder="Type to search"
+            
+            [forceSelection]="false"
+            
+          ></p-autoComplete> -->
+          <p-autoComplete
+            *ngSwitchCase="'autocomplete'"
+            #autoComp
+            [(ngModel)]="dropdownValues[item.filter_name]"
+            [dropdown]="true"
+            [suggestions]="filteredOptions[item.filter_name]"
+            (completeMethod)="filterSuggestions($event, item.filter_name)"
+            (dblclick)="onDoubleClick(autoComp, item.filter_name)"
+            placeholder="Search values"
+            [forceSelection]="false"
+            class="blue-placeholder"
+          />
+
+
+
+        </ng-container>
       </div>
     </div>
   </div>

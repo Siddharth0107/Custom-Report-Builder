@@ -467,12 +467,19 @@ def get_filter_options(request):
 #         return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
 #     except Exception as e:
 #         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+def value_matches(row_value, filter_value):
+
+    if isinstance(filter_value, list):
+        return row_value in filter_value  
+    return row_value == filter_value
+
 @api_view(['POST'])
 def get_template_report_data(request):
     try:
         data = request.data
         template_id = data.get('template_id')
-        selected_filters = data.get('filters', {})  # Default to empty dict if filters not provided
+        selected_filters = data.get('filters', {})  
         
         template = ReportTemplates.objects.select_related('parent_report').get(id=template_id)
         
@@ -491,13 +498,12 @@ def get_template_report_data(request):
         
         if not report:
             return Response({"error": "Report not found"}, status=status.HTTP_404_NOT_FOUND)
-    
+      
         filtered_rows = [
             {key: row.get(key, None) for key in column_names if key in row}  
             for row in report["rows"]
-            if all(row.get(field) == value for field, value in selected_filters.items())
+            if all(value_matches(row.get(field), value) for field, value in selected_filters.items() if value != "")
         ]
-       
         if not filtered_rows:
             return Response({"error": "No records found for the given filters"}, status=status.HTTP_404_NOT_FOUND)
         

@@ -15,7 +15,6 @@ urlpatterns = [
     path('update-template/',update_template),
     path('delete-template/',delete_template),
     path('create-sub-report/',get_template_report_data),
-    
     path('get-filter-values/',get_filter_options)
     
 ]
