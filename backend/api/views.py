@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Reports,ReportColumns,ReportTemplates,TemplateColumns,TemplateFilters
+from .models import Reports,ReportColumns,ReportFilters,ReportTemplates,TemplateColumns,TemplateFilters
 from .serializers import ReportTemplatesSerializer,ReportSerializer
 from django.db import transaction
 from collections import defaultdict
@@ -337,15 +337,16 @@ def load_task_report():
     except Exception as e:
         print(f"Error loading task report: {e}")
         return None
+    
+
 @api_view(['POST'])
 def get_filter_options(request):
     try:
-   
         report_data = load_task_report()
-        
+
         if not report_data:
             return Response({'message': 'Report data not found'}, status=404)
-        
+
         data = request.data
         template_id = int(data.get('template_id')) 
         template_report = ReportTemplates.objects.get(id=template_id)
@@ -357,22 +358,79 @@ def get_filter_options(request):
             return Response({'message': 'Report not found'}, status=404)
 
         selected_filters = TemplateFilters.objects.filter(template_id=template_id)
-        selected_columns = selected_filters.values_list('filter_name', flat=True)
-        
+        selected_filter_names = selected_filters.values_list('filter_name', flat=True)
+
+        # Get ReportFilters for the parent report
+        report_filters = ReportFilters.objects.filter(report_id=report_id)
+        report_filter_map = {
+            rf.filter_name: {'filter_type': rf.filter_type, 'is_compulsory': rf.is_compulsory}
+            for rf in report_filters
+        }
+
         filters = {}
 
-        for row in report.get('rows', []):  
-            for field, value in row.items(): 
-                if field in selected_columns:
+        for row in report.get('rows', []):
+            for field, value in row.items():
+                if field in selected_filter_names:
                     filters.setdefault(field, set()).add(value)
 
-       
-        filters = {k: list(v) for k, v in filters.items()}
+        # Build final response with additional fields
+        result = []
+        for filter_obj in selected_filters:
+            name = filter_obj.filter_name
+            label = filter_obj.filter_label
+            values = list(filters.get(name, []))
+            extra_meta = report_filter_map.get(name, {'filter_type': '', 'is_compulsory': False})
 
-        return Response({'Data': filters})
+            result.append({
+                'filter_name': name,
+                'filter_label': label,
+                'values': values,
+                'filter_type': extra_meta['filter_type'],
+                'is_compulsory': extra_meta['is_compulsory'],
+            })
+
+        return Response({'data': result})
 
     except Exception as e:
         return Response({'message': str(e)}, status=500)
+
+
+# def get_filter_options(request):
+#     try:
+   
+#         report_data = load_task_report()
+        
+#         if not report_data:
+#             return Response({'message': 'Report data not found'}, status=404)
+        
+#         data = request.data
+#         template_id = int(data.get('template_id')) 
+#         template_report = ReportTemplates.objects.get(id=template_id)
+#         template_report_data = model_to_dict(template_report)
+#         report_id = template_report_data['parent_report']
+
+#         report = next((item for item in report_data if item['id'] == report_id), None)
+#         if not report:
+#             return Response({'message': 'Report not found'}, status=404)
+
+#         selected_filters = TemplateFilters.objects.filter(template_id=template_id)
+#         selected_columns = selected_filters.values_list('filter_name', flat=True)
+        
+#         filters = {}
+
+#         for row in report.get('rows', []):  
+#             for field, value in row.items(): 
+#                 if field in selected_columns:
+#                     filters.setdefault(field, set()).add(value)
+
+       
+#         filters = {k: list(v) for k, v in filters.items()}
+
+#         return Response({'data': filters})
+
+#     except Exception as e:
+#         return Response({'message': str(e)}, status=500)
 
 
 

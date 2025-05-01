@@ -1,55 +1,21 @@
-<!-- <main class="container mx-auto my-5">
-  <h1 class="text-3xl font-semibold">Select Outer Filters for the Report</h1>
-
-  <div *ngIf="templateId" class="my-3">
-    <div class="card flex items-center gap-3 my-3">
-      <div *ngFor="let key of objectKeys(reportData)">
-        <label for="multiple-ac-1" class="font-bold mb-2 block">
-          {{ getLabelName(key) }}
-        </label>
-<p>h1 : {{filteredOptions[key]}}</p>
-        <ng-container *ngIf="isMultiSelect(key)">
-          <p-multiselect
-            [options]="filteredOptions[key]"
-            [(ngModel)]="dropdownValues[key]"
-            optionLabel="name"
-            placeholder="Select {{ getLabelName(key) }}"
-            [maxSelectedLabels]="3"
-            styleClass="w-full md:w-80"
-          ></p-multiselect>
-        </ng-container>
-
-        <ng-container *ngIf="!isMultiSelect(key)">
-          <p-autoComplete
-            [suggestions]="filteredOptions[key]"
-            [(ngModel)]="dropdownValues[key]"
-            optionLabel="name"
-            placeholder="Select {{ getLabelName(key) }}"
-            styleClass="w-full md:w-80"
-          ></p-autoComplete>
-        </ng-container>
-      </div>
-    </div>
-  </div>
-
-  <p-button label="Submit" (click)="createSubReport()" />
-</main> -->
-
-
 <main class="container mx-auto my-5">
   <h1 class="text-3xl font-semibold">Select Outer Filters for the Report</h1>
 
   <div *ngIf="templateId" class="my-3">
-    <div class="card flex items-center gap-3 my-3">
-      <div *ngFor="let key of objectKeys(reportData)">
-        <label for="multiple-ac-1" class="font-bold mb-2 block">
-          {{ getLabelName(key) }}
+    <div class="card flex justify-center-center gap-6 my-3">
+      <div *ngFor="let item of reportData">
+        <label class="font-bold mb-2 flex items-center gap-3">
+          {{ item.filter_label }}
+          <span *ngIf="item.is_compulsory" class="text-red-600">*</span>
         </label>
+
         <p-autocomplete
-          [(ngModel)]="dropdownValues[key]"
+          [(ngModel)]="dropdownValues[item.filter_name]"
           [dropdown]="true"
-          [suggestions]="filteredOptions[key]"
-          (completeMethod)="filterSuggestions($event, key)"
+          [suggestions]="filteredOptions[item.filter_name]"
+          (completeMethod)="filterSuggestions($event, item.filter_name)"
+          placeholder="Select a value"
+          [forceSelection]="false"
         />
       </div>
     </div>
