@@ -33,18 +33,6 @@ export class OuterFilterViewComponent {
   filteredOptions: { [key: string]: string[] } = {};
 
   constructor(private location: Location, private reportService: ReportService, private router: Router) { }
-
-  // ngOnInit(): void {
-  //   this.templateId = history.state.id;
-  //   this.reportData = history.state.report_data.data;
-
-  //   if (!this.templateId) {
-  //     this.location.back();
-  //     return;
-  //   }
-  // }
-
-
   ngOnInit(): void {
     this.templateId = history.state.id;
     if (!this.templateId) {
@@ -59,14 +47,17 @@ export class OuterFilterViewComponent {
   
     this.reportData = incomingData;
   
-    // Initialize default dropdown values (e.g., set today's date for date filters)
     for (const item of this.reportData) {
       if (item.filter_type === 'date') {
-        this.dropdownValues[item.filter_name] = new Date(); 
+        const today = new Date();
+        const lastMonth = new Date();
+        lastMonth.setMonth(today.getMonth() - 1);
+        this.dropdownValues[item.filter_name] = [lastMonth, today]; 
       } else {
-        this.dropdownValues[item.filter_name] = ''; // Optional: initialize others
+        this.dropdownValues[item.filter_name] = '';
       }
     }
+    
   }
   
   filterSuggestions(event: any, key: string) {
@@ -103,9 +94,22 @@ export class OuterFilterViewComponent {
   }
 
   createSubReport() {
+    const filters = { ...this.dropdownValues };
+
+    if (filters['from_to_date'] && filters['from_to_date'].length === 2) {
+      const [from, to] = filters['from_to_date'];
+  
+      // Convert JavaScript Date to 'YYYY-MM-DD'
+      const formatDate = (date: Date) =>
+        date instanceof Date
+          ? date.toISOString().slice(0, 10)  // get YYYY-MM-DD
+          : date;
+  
+      filters['from_to_date'] = [formatDate(from), formatDate(to)];
+    }
     const payload = {
       template_id: this.templateId,
-      filters: this.dropdownValues
+      filters: filters
     };
 
     this.reportService.createSubReport(payload).subscribe({
@@ -124,13 +128,6 @@ export class OuterFilterViewComponent {
   onDoubleClick(autoComp: any, filterName: string) {
     this.filterSuggestions({ query: '#' }, filterName);
     autoComp.show(); 
-  }
-
-  formatDate(date: Date): string {
-    const dd = String(date.getDate()).padStart(2, '0');
-    const mm = String(date.getMonth() + 1).padStart(2, '0'); 
-    const yy = String(date.getFullYear()).slice(-2);
-    return `${dd}-${mm}-${yy}`;
   }
     
 }

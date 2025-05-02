@@ -11,7 +11,7 @@ import os
 import json
 import re
 from django.forms.models import model_to_dict
-
+from datetime import datetime
 logger = logging.getLogger(__name__)
 
 def is_valid_template_name(name: str) -> bool:
@@ -498,12 +498,27 @@ def get_template_report_data(request):
         
         if not report:
             return Response({"error": "Report not found"}, status=status.HTTP_404_NOT_FOUND)
-      
+     # Extract and parse from/to dates
+        from_date_str, to_date_str = selected_filters.get('from_to_date', [None, None])
+
+       
+        from_date = datetime.strptime(from_date_str, "%Y-%m-%d") if from_date_str else None
+        to_date = datetime.strptime(to_date_str, "%Y-%m-%d") if to_date_str else None
+
+        # Apply all filters including date range
         filtered_rows = [
-            {key: row.get(key, None) for key in column_names if key in row}  
+            {key: row.get(key, None) for key in column_names if key in row}
             for row in report["rows"]
-            if all(value_matches(row.get(field), value) for field, value in selected_filters.items() if value != "")
+            if all(
+                value_matches(row.get(field), value)
+                for field, value in selected_filters.items()
+                if value and field != 'from_to_date'
+            ) and (
+                (not from_date or datetime.strptime(row.get('transaction_date', ''), "%Y-%m-%d") >= from_date) and
+                (not to_date or datetime.strptime(row.get('transaction_date', ''), "%Y-%m-%d") <= to_date)
+            )
         ]
+
         if not filtered_rows:
             return Response({"error": "No records found for the given filters"}, status=status.HTTP_404_NOT_FOUND)
         
