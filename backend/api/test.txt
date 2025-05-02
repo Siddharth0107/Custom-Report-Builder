@@ -105,3 +105,341 @@ VALUES
     (22, '5', 'company_name', 'Company', true, false, 'dropdown'),
     (23, '5', 'item_type', 'Item Type', false, false, 'dropdown'),
     (24, '5', 'status', 'Status', true, false, 'multiselect')
+
+
+INSERT INTO report_builder.api_reportcolumns(id, report_id, column_name, label) VALUES
+(57, 6, 'company_name', 'Company Name'),
+(58, 6, 'customer_name', 'Customer Name'),
+(59, 6, 'branch_id', 'Branch ID'),
+(60, 6, 'client_id', 'Client ID'),
+(61, 6, 'department_id', 'Department ID'),
+(62, 6, 'lead_id', 'Lead ID'),
+(63, 6, 'lead_txn_num', 'Lead Transaction Number'),
+(64, 6, 'lead_date', 'Lead Date'),
+(65, 6, 'lead_source_type', 'Lead Source'),
+(66, 6, 'lead_type', 'Lead Type'),
+(67, 6, 'lead_created_by', 'Lead Created By'),
+(68, 6, 'lead_assign_to', 'Lead Assign To'),
+(69, 6, 'lead_expected_date', 'Lead Expected Date'),
+(70, 6, 'lead_status', 'Lead Status'),
+(71, 6, 'lead_reason_for_lost', 'Reason for Lost'),
+(72, 6, 'inquiry_id', 'Inquiry ID'),
+(73, 6, 'inquiry_txn_num', 'Inquiry Transaction Number'),
+(74, 6, 'inquiry_date', 'Inquiry Date'),
+(75, 6, 'inquiry_created_by', 'Inquiry Created By'),
+(76, 6, 'inquiry_assign_to', 'Inquiry Assign To'),
+(77, 6, 'inquiry_source_type', 'Inquiry Source Type'),
+(78, 6, 'inquiry_expected_date', 'Inquiry Expected Date'),
+(79, 6, 'inquiry_status', 'Inquiry Status'),
+(80, 6, 'inquiry_reason_for_lost', 'Inquiry Reason for Lost'),
+(81, 6, 'quotation_id', 'Quotation ID'),
+(82, 6, 'quotation_txn_num', 'Quotation Transaction Number'),
+(83, 6, 'quotation_date', 'Quotation Date'),
+(84, 6, 'quotation_created_by', 'Quotation Created By'),
+(85, 6, 'quotation_assign_to', 'Quotation Assigned To'),
+(86, 6, 'quotation_valid_until', 'Quotation Valid Until'),
+(87, 6, 'item_type', 'Item Type'),
+(88, 6, 'quotation_item_name', 'Quotation Item Name'),
+(89, 6, 'quotation_item_description', 'Quotation Item Description'),
+(90, 6, 'quotation_item_qty', 'Quotation Item Qty'),
+(91, 6, 'quotation_item_unit', 'Quotation Item Unit'),
+(92, 6, 'quotation_item_rate', 'Quotation Item Rate'),
+(93, 6, 'quotation_item_negotiated_rate', 'Quotation Item Negotiated Rate'),
+(94, 6, 'quotation_total_value', 'Quotation Total Value'),
+(95, 6, 'quotation_status', 'Quotation Status'),
+(96, 6, 'quotation_reason_for_lost', 'Quotation Reason for Lost'),
+(97, 6, 'sample_id', 'Sample ID'),
+(98, 6, 'sample_txn_num', 'Sample Transaction Number'),
+(99, 6, 'sample_order_date', 'Sample Order Date'),
+(100, 6, 'sample_order_qty', 'Sample Order Qty'),
+(101, 6, 'sample_order_unit', 'Sample Order Unit'),
+(102, 6, 'sample_order_rate', 'Sample Order Rate'),
+(103, 6, 'sample_order_status', 'Sample Order Status'),
+(104, 6, 'sample_dispatch_id', 'Sample Dispatch ID'),
+(105, 6, 'sample_dispatch_txn_num', 'Sample Dispatch Txn Num'),
+(106, 6, 'sample_dispatch_date', 'Sample Dispatch Date'),
+(107, 6, 'sample_dispatch_value', 'Sample Dispatch Value'),
+(108, 6, 'sample_dispatch_status', 'Sample Dispatch Status'),
+(109, 6, 'sales_order_no', 'Sales Order No.'),
+(110, 6, 'sales_order_date', 'Sales Order Date'),
+(111, 6, 'sales_order_type', 'Sales Order Type'),
+(112, 6, 'sales_order_value', 'Sales Order Value'),
+(113, 6, 'inquiry_to_sales_order_conversion', 'Inquiry to Sales Order Conversion'),
+(114, 6, 'quotation_to_sales_order_conversion', 'Quotation To Sales Order Conversion'),
+(115, 6, 'lead_to_inquiry_order_conversion', 'Lead To Inquiry Order Conversion(In Days)'),
+(116, 6, 'lead_to_sales_order_conversion', 'Lead To Sales Order Conversion(In Days)'),
+(117, 6, 'state_id', 'State ID'),
+(118, 6, 'updated_date', 'Updated Date');
+
+
+
+
+
+
+
+
+
+
+# create template payload
+
+{
+    "parent_report_id": 1,
+    "template_name": "Default",
+    "columns": [
+        {
+            "column_name": "transaction_date",
+            "label": "Transaction Date"
+        },
+        {
+            "column_name": "source_type",
+            "label": "Source type"
+        },
+        {
+            "column_name": "source_transaction_no",
+            "label": "Source transaction no"
+        },
+        {
+            "column_name": "assigned_by",
+            "label": "Assigned By"
+        },
+        {
+            "column_name": "assigned_to",
+            "label": "Assigned to"
+        },
+        {
+            "column_name": "priority",
+            "label": "Priority"
+        },
+        {
+            "column_name": "status",
+            "label": "Status"
+        }
+    ],
+    "report_filters": [
+        {
+            "filter_name": "assigned_by",
+            "filter_label": "Assign By"
+        },
+        {
+            "filter_name": "assigned_to",
+            "filter_label": "Assign To"
+        },
+        {
+            "filter_name": "priority",
+            "filter_label": "Priority"
+        },
+        {
+            "filter_name": "status",
+            "filter_label": "Status"
+        }
+    ]
+};
+
+# template listing
+[
+     {
+        "id": 43,
+        "name": "Task  Sub-report-1",
+        "report": {
+            "id": 1,
+            "report_name": "Task Report",
+            "report_columns": [
+                {
+                    "column_name": "task_id",
+                    "label": "Task ID"
+                },
+                {
+                    "column_name": "transaction_date",
+                    "label": "Transaction Date"
+                },
+                {
+                    "column_name": "source_type",
+                    "label": "Source type"
+                },
+                {
+                    "column_name": "source_transaction_no",
+                    "label": "Source transaction no"
+                },
+                {
+                    "column_name": "task_title",
+                    "label": "Task Title"
+                },
+                {
+                    "column_name": "due_date",
+                    "label": "Due Date"
+                },
+                {
+                    "column_name": "assigned_by",
+                    "label": "Assigned By"
+                },
+                {
+                    "column_name": "assigned_to",
+                    "label": "Assigned to"
+                },
+                {
+                    "column_name": "priority",
+                    "label": "Priority"
+                },
+                {
+                    "column_name": "task_type",
+                    "label": "Task Type"
+                },
+                {
+                    "column_name": "status",
+                    "label": "Status"
+                }
+            ],
+            "report_filters": [
+                {
+                    "id": 1,
+                    "report_id": 1,
+                    "filter_name": "from_to_date",
+                    "filter_label": "From-To-Date",
+                    "exist_in_report": false,
+                    "is_compulsory": true,
+                    "filter_type": "date"
+                },
+                {
+                    "id": 2,
+                    "report_id": 1,
+                    "filter_name": "assigned_to",
+                    "filter_label": "Assign To",
+                    "exist_in_report": true,
+                    "is_compulsory": false,
+                    "filter_type": "autocomplete"
+                },
+                {
+                    "id": 3,
+                    "report_id": 1,
+                    "filter_name": "assigned_by",
+                    "filter_label": "Assign By",
+                    "exist_in_report": true,
+                    "is_compulsory": false,
+                    "filter_type": "autocomplete"
+                },
+                {
+                    "id": 4,
+                    "report_id": 1,
+                    "filter_name": "task_type",
+                    "filter_label": "Task Type",
+                    "exist_in_report": true,
+                    "is_compulsory": false,
+                    "filter_type": "dropdown"
+                },
+                {
+                    "id": 5,
+                    "report_id": 1,
+                    "filter_name": "priority",
+                    "filter_label": "Priority",
+                    "exist_in_report": true,
+                    "is_compulsory": false,
+                    "filter_type": "dropdown"
+                },
+                {
+                    "id": 6,
+                    "report_id": 1,
+                    "filter_name": "status",
+                    "filter_label": "Status",
+                    "exist_in_report": true,
+                    "is_compulsory": false,
+                    "filter_type": "multiselect"
+                }
+            ]
+        },
+        "fields": [
+            {
+                "field_type": "column",
+                "field_name": "transaction_date",
+                "field_label": "Transaction Date"
+            },
+            {
+                "field_type": "column",
+                "field_name": "source_type",
+                "field_label": "Source type"
+            },
+            {
+                "field_type": "column",
+                "field_name": "source_transaction_no",
+                "field_label": "Source transaction no"
+            },
+            {
+                "field_type": "column",
+                "field_name": "task_title",
+                "field_label": "Task Title"
+            },
+            {
+                "field_type": "column",
+                "field_name": "due_date",
+                "field_label": "Due Date"
+            },
+            {
+                "field_type": "column",
+                "field_name": "priority",
+                "field_label": "Priority"
+            },
+            {
+                "field_type": "column",
+                "field_name": "task_type",
+                "field_label": "Task Type"
+            },
+            {
+                "field_type": "filter",
+                "field_name": "priority",
+                "field_label": "Priority"
+            },
+            {
+                "field_type": "filter",
+                "field_name": "task_type",
+                "field_label": "Task Type"
+            }
+        ]
+    }
+];
+
+
+# create-sub-report
+# payload
+{
+    "template_id": 57,
+    "filters":{
+        "status":"Cancelled"
+    }
+}
+
+#template filters values
+
+{
+    "data": [
+        {
+            "filter_name": "assigned_to",
+            "filter_label": "Assign To",
+            "values": [
+                "Eva",
+                "David",
+                "Frank",
+                "Helen",
+                "Charlie",
+                "Bob",
+                "Alice",
+                "Grace"
+            ],
+            "filter_type": "autocomplete",
+            "is_compulsory": false
+        },
+        {
+            "filter_name": "status",
+            "filter_label": "Status",
+            "values": [
+                "Completed",
+                "Cancelled",
+                "Resolved",
+                "In Progress",
+                "New"
+            ],
+            "filter_type": "multiselect",
+            "is_compulsory": false
+        }
+    ]
+}
+
+
