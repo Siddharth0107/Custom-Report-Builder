@@ -62,3 +62,23 @@ class TemplateFilters(models.Model):
     template = models.ForeignKey(ReportTemplates,on_delete=models.CASCADE,related_name='template_filter')
     filter_name = models.CharField(max_length=255)
     filter_label = models.CharField(max_length=255)
+    
+class TemplateMaster(models.Model):
+    user = models.IntegerField(default=1)
+    parent_report = models.ForeignKey(Reports,on_delete=models.CASCADE,related_name='report_template')
+    name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)  
+    updated_at = models.DateTimeField(auto_now=True)   
+    
+class TemplateDetails(models.Model):
+    FIELD_TYPE_CHOICES = [
+        ('column', 'Column'),
+        ('filter', 'Filter'),
+    ]
+    template = models.ForeignKey(TemplateMaster, on_delete=models.CASCADE, related_name='fields')
+    user = models.BigIntegerField(default=1)
+    field_name = models.CharField(max_length=255)
+    field_label = models.CharField(max_length=255)
+    field_type = models.CharField(max_length=10, choices=FIELD_TYPE_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)  
+    updated_at = models.DateTimeField(auto_now=True)   

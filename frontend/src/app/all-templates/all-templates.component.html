@@ -18,7 +18,9 @@
       <div class="max-h-[calc(100vh-200px)] overflow-y-auto scrollbar-thin">
         <table class="custom-table w-full table-fixed">
           <tbody>
+  
             <tr *ngFor="let template of templates; index as i">
+             
               <td class="w-1/6">{{ i + 1 }}</td>
               <td class="w-1/6">{{ template.parent_report.report_name }}</td>
               <td class="w-1/6">{{ template.name }}</td>
