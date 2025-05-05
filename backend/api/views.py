@@ -338,7 +338,6 @@ def load_task_report():
         print(f"Error loading task report: {e}")
         return None
     
-
 @api_view(['POST'])
 def get_filter_options(request):
     try:
@@ -346,7 +345,6 @@ def get_filter_options(request):
 
         if not report_data:
             return Response({'message': 'Report data not found'}, status=404)
-
 
         data = request.data
         template_id = data.get('template_id')
@@ -360,59 +358,32 @@ def get_filter_options(request):
             template_report = ReportTemplates.objects.get(id=template_id)
             template_report_data = model_to_dict(template_report)
             report_id = template_report_data['parent_report']
-
-            # selected_filters = TemplateFilters.objects.filter(template_id=template_id)
-            # selected_filter_names = selected_filters.values_list('filter_name', flat=True)
-            # filter_names = list(selected_filter_names)
             selected_filters_queryset = TemplateFilters.objects.filter(template_id=template_id)
-            selected_filter_names = selected_filters_queryset.values_list('filter_name', flat=True)
-            filter_names = list(selected_filter_names)
 
-            # Normalize to dicts for consistent handling below
             selected_filters = [
                 {'filter_name': f.filter_name, 'filter_label': f.filter_label}
                 for f in selected_filters_queryset
             ]
-        # else:
-        #     # Expecting report_id and filter_names directly in request
-        #     report_id = data.get('report_id')
-        #     if not isinstance(report_id, int):
-        #         return Response({'message': 'report_id must be an integer'}, status=400)
-
-        #     filter_names = data.get('filter_names', [])
-        #     if not isinstance(filter_names, list) or not filter_names:
-        #         return Response({'message': 'filter_names must be a non-empty array'}, status=400)
-
-        #     selected_filters = [
-        #         {'filter_name': name, 'filter_label': name} for name in filter_names
-        #     ]
+            selected_filter_names = [f['filter_name'] for f in selected_filters]
         else:
-            # Expecting report_id and filter_names directly in request
             report_id = data.get('report_id')
             if not isinstance(report_id, int):
                 return Response({'message': 'report_id must be an integer'}, status=400)
 
-            filter_names = data.get('filter_names', [])
-            if not isinstance(filter_names, list) or not filter_names:
-                return Response({'message': 'filter_names must be a non-empty array'}, status=400)
+            selected_filters = data.get('filter_names', [])
+            if not isinstance(selected_filters, list) or not selected_filters:
+                return Response({'message': 'filter_names must be a non-empty array of objects with filter_name and filter_label'}, status=400)
 
-            selected_filters = [
-                {'filter_name': name, 'filter_label': name} for name in filter_names
-            ]
-            selected_filter_names = filter_names  # <-- Add this line        
-        
-        # template_report = ReportTemplates.objects.get(id=template_id)
-        # template_report_data = model_to_dict(template_report)
-        # report_id = template_report_data['parent_report']
+            for f in selected_filters:
+                if not isinstance(f, dict) or 'filter_name' not in f or 'filter_label' not in f:
+                    return Response({'message': 'Each filter must be an object with "filter_name" and "filter_label"'}, status=400)
+
+            selected_filter_names = [f['filter_name'] for f in selected_filters]
 
         report = next((item for item in report_data if item['id'] == report_id), None)
         if not report:
             return Response({'message': 'Report not found'}, status=404)
 
-        # selected_filters = TemplateFilters.objects.filter(template_id=template_id)
-        # selected_filter_names = selected_filters.values_list('filter_name', flat=True)
-
-        # Get ReportFilters for the parent report
         report_filters = ReportFilters.objects.filter(report_id=report_id)
         report_filter_map = {
             rf.filter_name: {'filter_type': rf.filter_type, 'is_compulsory': rf.is_compulsory}
@@ -420,17 +391,12 @@ def get_filter_options(request):
         }
 
         filters = {}
-
         for row in report.get('rows', []):
             for field, value in row.items():
                 if field in selected_filter_names:
                     filters.setdefault(field, set()).add(value)
 
-        # Build final response with additional fields
         result = []
-        # for filter_obj in selected_filters:
-        #     name = filter_obj.filter_name
-        #     label = filter_obj.filter_label
         for filter_obj in selected_filters:
             name = filter_obj['filter_name']
             label = filter_obj['filter_label']
@@ -450,78 +416,6 @@ def get_filter_options(request):
     except Exception as e:
         return Response({'message': str(e)}, status=500)
 
-
-# def get_filter_options(request):
-#     try:
-   
-#         report_data = load_task_report()
-        
-#         if not report_data:
-#             return Response({'message': 'Report data not found'}, status=404)
-        
-#         data = request.data
-#         template_id = int(data.get('template_id')) 
-#         template_report = ReportTemplates.objects.get(id=template_id)
-#         template_report_data = model_to_dict(template_report)
-#         report_id = template_report_data['parent_report']
-
-#         report = next((item for item in report_data if item['id'] == report_id), None)
-#         if not report:
-#             return Response({'message': 'Report not found'}, status=404)
-
-#         selected_filters = TemplateFilters.objects.filter(template_id=template_id)
-#         selected_columns = selected_filters.values_list('filter_name', flat=True)
-        
-#         filters = {}
-
-#         for row in report.get('rows', []):  
-#             for field, value in row.items(): 
-#                 if field in selected_columns:
-#                     filters.setdefault(field, set()).add(value)
-
-       
-#         filters = {k: list(v) for k, v in filters.items()}
-
-#         return Response({'data': filters})
-
-#     except Exception as e:
-#         return Response({'message': str(e)}, status=500)
-
-
-
-# @api_view(['GET'])
-# def get_template_report_data(request):
-#     try:
-#         data = request.data
-#         template_id = data.get('template_id')
-
-#         template = ReportTemplates.objects.select_related('parent_report').get(id=template_id)
-
-#         selected_columns = list(
-#             TemplateColumns.objects.filter(template_id=template_id)
-#             .values('column_name', 'label')
-#         )
-#         column_names = [col['column_name'] for col in selected_columns]
-#         labels = {col['column_name']: col['label'] for col in selected_columns}
-#         full_data = load_task_report() 
-#         filtered_rows = [
-#             {key: row.get(key, None) for key in column_names if key in row}
-#             for row in full_data["rows"]
-#         ]
-#         if not filtered_rows or all(len(row) == 0 for row in filtered_rows):
-#             return Response({"error": "No record Found"}, status=status.HTTP_404_NOT_FOUND)
-#         return Response({
-#             "template_id": template.id,
-#             "template_name": template.name,
-#             "report_name": template.parent_report.report_name,
-#             "columns": [col['label'] for col in selected_columns],
-#             "data": filtered_rows
-#         }, status=status.HTTP_200_OK)
-
-#     except ReportTemplates.DoesNotExist:
-#         return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
-#     except Exception as e:
-#         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 def value_matches(row_value, filter_value):
 

@@ -132,15 +132,23 @@ export class AllTemplatesComponent implements OnInit {
   }
 
   createReportFromTemplate(id: number, isTemporary: boolean | undefined) {
+    console.log("id=>", id);
     if (isTemporary) {
       let data: Templates[];
       let temp = localStorage.getItem('tempTemplate');
       if (temp) {
         data = JSON.parse(temp);
+        console.log(data);
+
+        // Prepare the payload with filter_name and filter_label
         const payload = {
-          report_id: data[0].id,
-          filter_names: data[0].template_filter.map((item: Filters) => item.filter_name),
-        }
+          report_id: data[id - 1].parent_report.id,
+          filter_names: data[id - 1].template_filter.map((item: Filters) => ({
+            filter_name: item.filter_name,
+            filter_label: item.filter_label, // Make sure filter_label is available in the data
+          }))
+        };
+
         this.reportService.showFilterView(payload).subscribe({
           next: (response: any) => {
             this.reportData = response.data;
