@@ -46,10 +46,26 @@ class ReportTemplateFilterSerializer(serializers.ModelSerializer):
         
 class ReportTemplatesMasterSerializer(serializers.ModelSerializer):
     parent_report = ReportSerializer()
-    details = ReportTemplateDetailsSerializer(many=True)
+    # details = ReportTemplateDetailsSerializer(many=True)
+    template = serializers.SerializerMethodField()
+    template_filter = serializers.SerializerMethodField()
     class Meta:
         model = ReportTemplates
-        fields = ['id','name','parent_report','details']
+        fields = ['id','name','parent_report','template','template_filter']
 
     def get_columns(self, obj):
         return TemplateColumns.objects.filter(template=obj).values_list('column_name', flat=True)
+    
+    def get_template(self, obj):
+        if obj.details.exists():
+            detail = obj.details.first()
+            columns = detail.data.get("columns", [])
+            return [{"column_name": col["column_name"], "label": col["label"]} for col in columns]
+        return []
+
+    def get_template_filter(self, obj):
+        if obj.details.exists():
+            detail = obj.details.first()
+            filters = detail.data.get("filters", [])
+            return [{"filter_name": f["filter_name"], "filter_label": f["filter_label"]} for f in filters]
+        return []

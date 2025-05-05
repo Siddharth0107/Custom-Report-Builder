@@ -335,52 +335,52 @@ def load_task_report():
 def get_filter_options(request):
     try:
         report_data = load_task_report()
-
         if not report_data:
             return Response({'message': 'Report data not found'}, status=404)
 
         data = request.data
         template_id = int(data.get('template_id')) 
+        
         template_report = ReportTemplateMaster.objects.get(id=template_id)
         template_report_data = model_to_dict(template_report)
         report_id = template_report_data['parent_report']
-
         report = next((item for item in report_data if item['id'] == report_id), None)
         if not report:
             return Response({'message': 'Report not found'}, status=404)
-            
-        template_details = ReportTemplateDetails.objects.get(template_id=template_id)
-        json_data = template_details.data 
-        filters_json = json_data.get('filters', [])  
-        selected_filters = TemplateFilters.objects.filter(template_id=template_id)
-        selected_filter_names = selected_filters.values_list('filter_name', flat=True)
+        
+        template_details = ReportTemplateDetails.objects.filter(template_id=template_id).first()
+        if not template_details or not template_details.data:
+            return Response({'message': 'No template detail data found'}, status=404)
 
-        # Get ReportFilters for the parent report
+        filters_json = template_details.data.get('filters', [])
         report_filters = ReportFilters.objects.filter(report_id=report_id)
         report_filter_map = {
             rf.filter_name: {'filter_type': rf.filter_type, 'is_compulsory': rf.is_compulsory}
             for rf in report_filters
         }
-        filters = {}
-        for row in report.get('rows', []):
-            for field, value in row.items():
-                if field in selected_filter_names:
-                    filters.setdefault(field, set()).add(value)
+        rows = report.get('rows', [])
+        filter_values = {}
+        for row in rows:
+            for filter_item in filters_json:
+                fname = filter_item['filter_name']
+                if fname in row:
+                    filter_values.setdefault(fname, set()).add(row[fname])
+       
         result = []
-        for filter_obj in selected_filters:
-            name = filter_obj.filter_name
-            label = filter_obj.filter_label
-            values = list(filters.get(name, []))
-            extra_meta = report_filter_map.get(name, {'filter_type': '', 'is_compulsory': False})
+        for filter_item in filters_json:
+            fname = filter_item['filter_name']
+            flabel = filter_item['filter_label']
+            values = list(filter_values.get(fname, []))
+            meta = report_filter_map.get(fname, {})
             result.append({
-                'filter_name': name,
-                'filter_label': label,
+                'filter_name': fname,
+                'filter_label': flabel,
                 'values': values,
-                'filter_type': extra_meta['filter_type'],
-                'is_compulsory': extra_meta['is_compulsory'],
+                'filter_type': meta.get('filter_type', ''),
+                'is_compulsory': meta.get('is_compulsory', False)
             })
 
-        return Response({'data': result})
+        return Response({'data': result}, status=200)
     except Exception as e:
         return Response({'message': str(e)}, status=500)
 
@@ -478,8 +478,6 @@ def get_template_report_data(request):
             return Response({"error": "Template data not found."}, status=status.HTTP_404_NOT_FOUND)
 
         template_data = model_to_dict(template_detail)
-       
-        
         selected_columns = template_detail.data.get('columns', [])
         column_names = [col['column_name'] for col in selected_columns]
         labels = {col['column_name']: col['label'] for col in selected_columns}
@@ -490,13 +488,12 @@ def get_template_report_data(request):
         
         if not report:
             return Response({"error": "Report not found"}, status=status.HTTP_404_NOT_FOUND)
-     # Extract and parse from/to dates
+ 
         from_date_str, to_date_str = selected_filters.get('from_to_date', [None, None])
        
         from_date = datetime.strptime(from_date_str, "%Y-%m-%d") if from_date_str else None
         to_date = datetime.strptime(to_date_str, "%Y-%m-%d") if to_date_str else None
 
-        # Apply all filters including date range
         filtered_rows = [
             {key: row.get(key, None) for key in column_names if key in row}
             for row in report["rows"]

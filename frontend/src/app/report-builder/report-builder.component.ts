@@ -149,7 +149,7 @@ export class ColumnDialog implements OnInit {
   async createUpdateTemplate(product: any) {
     try {
       if (product.columns) {
-        product.generated_report_name = this.reportNameToUse || 'Default-value';
+        product.generated_report_name = this.tempName;
         product.selected_fields = Array.from(this.selectedFields).map(
           (item: ReportColumns) => ({
             ...item,
