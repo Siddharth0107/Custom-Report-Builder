@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Reports,ReportColumns,ReportFilters,ReportTemplates,TemplateColumns,TemplateFilters
-from .serializers import ReportTemplatesSerializer,ReportSerializer
+from .models import Reports,ReportColumns,ReportFilters,ReportTemplateDetails,ReportTemplateMaster,ReportTemplates,TemplateColumns,TemplateFilters
+from .serializers import ReportTemplatesMasterSerializer,ReportSerializer
 from django.db import transaction
 from collections import defaultdict
 from django.conf import settings
@@ -144,29 +144,36 @@ def create_report_template(request):
 
         # Create Template and TemplateColumns
         with transaction.atomic():
-            template = ReportTemplates.objects.create(
+            template = ReportTemplateMaster.objects.create(
                 name=template_name,
                 parent_report_id=parent_report_id
             )
 
-            template_columns = [
-                TemplateColumns(
-                    template=template,
-                    column_name=col['column_name'],
-                    label=col['label']
-                )
-                for col in selected_columns if col.get('column_name') and col.get('label')
-            ]
-            TemplateColumns.objects.bulk_create(template_columns)
-            template_filters = [
-            TemplateFilters(
-                    template=template,
-                    filter_name=col['filter_name'],
-                    filter_label=col['filter_label']
-                )
-                for col in template_filters if col.get('filter_name') and col.get('filter_label')
-            ]
-            TemplateFilters.objects.bulk_create(template_filters)
+            # template_columns = [
+            #     TemplateColumns(
+            #         template=template,
+            #         column_name=col['column_name'],
+            #         label=col['label']
+            #     )
+            #     for col in selected_columns if col.get('column_name') and col.get('label')
+            # ]
+            # TemplateColumns.objects.bulk_create(template_columns)
+            # template_filters = [
+            # TemplateFilters(
+            #         template=template,
+            #         filter_name=col['filter_name'],
+            #         filter_label=col['filter_label']
+            #     )
+            #     for col in template_filters if col.get('filter_name') and col.get('filter_label')
+            # ]
+            # TemplateFilters.objects.bulk_create(template_filters)
+            ReportTemplateDetails.objects.create(
+                template=template,
+                data={
+                    "columns": selected_columns,
+                    "filters": template_filters
+                }
+            )
             report.template_count += 1
             report.save()
 
@@ -182,8 +189,8 @@ def create_report_template(request):
 @api_view(['GET'])
 def get_templates(request):
     try:
-        templates = ReportTemplates.objects.select_related('parent_report').all()
-        serializer = ReportTemplatesSerializer(templates, many=True)
+        templates = ReportTemplateMaster.objects.select_related('parent_report').all()
+        serializer = ReportTemplatesMasterSerializer(templates, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -220,7 +227,7 @@ def update_template(request):
 
         with transaction.atomic():
             # Lock the template record
-            template = ReportTemplates.objects.select_for_update().filter(id=template_id).first()
+            template = ReportTemplateMaster.objects.select_for_update().filter(id=template_id).first()
             if not template:
                 return Response({"error": "Template not found."}, status=status.HTTP_404_NOT_FOUND)
 
@@ -271,28 +278,15 @@ def update_template(request):
             template.save()
 
             # Update columns
-            TemplateColumns.objects.filter(template_id=template_id).delete()
-            TemplateFilters.objects.filter(template_id=template_id).delete()
+            ReportTemplateDetails.objects.filter(template_id=template_id).delete()
             
-            new_template_columns = [
-                TemplateColumns(
-                    template_id=template_id,
-                    column_name=col['column_name'],
-                    label=col['label']
-                )
-                for col in selected_columns if col.get('column_name') and col.get('label')
-            ]
-            TemplateColumns.objects.bulk_create(new_template_columns)
-            
-            new_template_filter = [
-                TemplateFilters(
-                    template_id=template_id,
-                    filter_name=col['filter_name'],
-                    filter_label=col['filter_label']
-                )
-                for col in template_filters if col.get('filter_name') and col.get('filter_label')
-            ]
-            TemplateFilters.objects.bulk_create(new_template_filter)
+            ReportTemplateDetails.objects.create(
+                template=template,
+                data={
+                    "columns": selected_columns,
+                    "filters": template_filters
+                }
+            )
 
         return Response({"message": "Template updated successfully."}, status=status.HTTP_200_OK)
 
@@ -306,17 +300,15 @@ def delete_template(request):
     try:
         data = request.data
         templateId = data.get('template_id')
-        template = ReportTemplates.objects.get(id=templateId)
+        template = ReportTemplateMaster.objects.get(id=templateId)
         report = template.parent_report
         if report.template_count <= 0:
             return Response({
                 "error": "No sub-reports left to delete.Something went wrong!"
             }, status=status.HTTP_400_BAD_REQUEST)
         with transaction.atomic():
-            TemplateColumns.objects.filter(template_id=template.id).delete()
-            TemplateFilters.objects.filter(template_id=template.id).delete()
+            ReportTemplateDetails.objects.filter(template_id=template.id).delete()
             template.delete()
-
             if report.template_count > 0:
                 report.template_count -= 1
                 report.save()
@@ -349,14 +341,17 @@ def get_filter_options(request):
 
         data = request.data
         template_id = int(data.get('template_id')) 
-        template_report = ReportTemplates.objects.get(id=template_id)
+        template_report = ReportTemplateMaster.objects.get(id=template_id)
         template_report_data = model_to_dict(template_report)
         report_id = template_report_data['parent_report']
 
         report = next((item for item in report_data if item['id'] == report_id), None)
         if not report:
             return Response({'message': 'Report not found'}, status=404)
-
+            
+        template_details = ReportTemplateDetails.objects.get(template_id=template_id)
+        json_data = template_details.data 
+        filters_json = json_data.get('filters', [])  
         selected_filters = TemplateFilters.objects.filter(template_id=template_id)
         selected_filter_names = selected_filters.values_list('filter_name', flat=True)
 
@@ -366,22 +361,17 @@ def get_filter_options(request):
             rf.filter_name: {'filter_type': rf.filter_type, 'is_compulsory': rf.is_compulsory}
             for rf in report_filters
         }
-
         filters = {}
-
         for row in report.get('rows', []):
             for field, value in row.items():
                 if field in selected_filter_names:
                     filters.setdefault(field, set()).add(value)
-
-        # Build final response with additional fields
         result = []
         for filter_obj in selected_filters:
             name = filter_obj.filter_name
             label = filter_obj.filter_label
             values = list(filters.get(name, []))
             extra_meta = report_filter_map.get(name, {'filter_type': '', 'is_compulsory': False})
-
             result.append({
                 'filter_name': name,
                 'filter_label': label,
@@ -391,10 +381,8 @@ def get_filter_options(request):
             })
 
         return Response({'data': result})
-
     except Exception as e:
         return Response({'message': str(e)}, status=500)
-
 
 # def get_filter_options(request):
 #     try:
@@ -477,22 +465,26 @@ def value_matches(row_value, filter_value):
 @api_view(['POST'])
 def get_template_report_data(request):
     try:
+        
         data = request.data
+        
         template_id = data.get('template_id')
+        
         selected_filters = data.get('filters', {})  
         
-        template = ReportTemplates.objects.select_related('parent_report').get(id=template_id)
+        template = ReportTemplateMaster.objects.select_related('parent_report').get(id=template_id)
+        template_detail = ReportTemplateDetails.objects.filter(template=template).first()
+        if not template_detail or not isinstance(template_detail.data, dict):
+            return Response({"error": "Template data not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        template_data = model_to_dict(template_detail)
+       
         
-        selected_columns = list(
-            TemplateColumns.objects.filter(template_id=template_id)
-            .values('column_name', 'label')
-        )
-        
+        selected_columns = template_detail.data.get('columns', [])
         column_names = [col['column_name'] for col in selected_columns]
         labels = {col['column_name']: col['label'] for col in selected_columns}
         
         full_data = load_task_report()
-        
         report_id = template.parent_report.id  
         report = next((r for r in full_data if r.get('id') == report_id), None)
         
@@ -500,7 +492,6 @@ def get_template_report_data(request):
             return Response({"error": "Report not found"}, status=status.HTTP_404_NOT_FOUND)
      # Extract and parse from/to dates
         from_date_str, to_date_str = selected_filters.get('from_to_date', [None, None])
-
        
         from_date = datetime.strptime(from_date_str, "%Y-%m-%d") if from_date_str else None
         to_date = datetime.strptime(to_date_str, "%Y-%m-%d") if to_date_str else None
@@ -526,11 +517,11 @@ def get_template_report_data(request):
             "template_id": template.id,
             "template_name": template.name,
             "report_name": template.parent_report.report_name,
-            "columns": [col['label'] for col in selected_columns], 
+            "columns":  [labels.get(col, col) for col in column_names],
             "data": filtered_rows  
         }, status=status.HTTP_200_OK)
 
-    except ReportTemplates.DoesNotExist:
+    except ReportTemplateMaster.DoesNotExist:
         return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
     
     except Exception as e:

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ReportPermission,TemplateColumns,ReportTemplates,Reports,ReportColumns,ReportFilters,TemplateFilters
+from .models import ReportPermission,TemplateColumns,ReportTemplates,Reports,ReportColumns,ReportFilters,TemplateFilters,ReportTemplateDetails,ReportTemplateMaster
 class ColumnSerializer(serializers.Serializer):
     column = serializers.CharField()
     is_selected = serializers.BooleanField()
@@ -34,25 +34,22 @@ class ReportSerializer(serializers.ModelSerializer):
         model = Reports
         fields = ['id','report_name','report_columns','report_filters']
     
-class ReportTemplateColumnSerializer(serializers.ModelSerializer):
+class ReportTemplateDetailsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TemplateColumns
-        fields = ['column_name','label']
+        model = ReportTemplateDetails
+        fields = ['data']
         
 class ReportTemplateFilterSerializer(serializers.ModelSerializer):
     class Meta:
         model = TemplateFilters
         fields = ['filter_name','filter_label']
         
-class ReportTemplatesSerializer(serializers.ModelSerializer):
-    
+class ReportTemplatesMasterSerializer(serializers.ModelSerializer):
     parent_report = ReportSerializer()
-    template = ReportTemplateColumnSerializer(many=True)
-    template_filter = ReportTemplateFilterSerializer(many=True)
-    
+    details = ReportTemplateDetailsSerializer(many=True)
     class Meta:
         model = ReportTemplates
-        fields = ['id','name','parent_report','template','template_filter']
+        fields = ['id','name','parent_report','details']
 
     def get_columns(self, obj):
         return TemplateColumns.objects.filter(template=obj).values_list('column_name', flat=True)
