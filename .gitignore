@@ -9,6 +9,7 @@ env/
 local_settings.py
 db.sqlite3
 backend/backend_project/settings.py
+backend/pyenv
 
 # Node/Angular
 node_modules/
