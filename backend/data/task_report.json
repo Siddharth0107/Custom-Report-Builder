@@ -5367,7 +5367,7 @@
     },
     {
         "id": 4,
-        "report_name": "Quotation Report",
+        "name": "Quotation Report",
         "columns": [
             {
                 "column_name": "quotation_id",
@@ -5484,7 +5484,7 @@
     },
     {
         "id": 5,
-        "report_name": "Sample Report",
+        "name": "Sample Report",
         "columns": [
             {
                 "column_name": "sample_order_id",
