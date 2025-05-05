@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { APIResponse, Report, ReportFilters, TransformedReport } from '../../types/reportTypes';
+import { APIResponse, Filters, Report, TransformedReport } from '../../types/reportTypes';
 import { ReportService } from '../service/report.service';
 import { RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
@@ -28,6 +28,10 @@ export class AllReportsComponent {
 
   async ngOnInit() {
     try {
+      let tempId = localStorage.getItem('lastId');
+      if(!tempId){
+        localStorage.setItem('lastId', JSON.stringify(0));
+      }
       this.reportService.getAllReportsWithColumns().subscribe({
         next: (response: APIResponse) => {
           this.overAllData = response.data;
@@ -53,7 +57,7 @@ export class AllReportsComponent {
       parent_report_name: report.report_name,
       saveBtnEnable: true,
       columns: report.report_columns,
-      outer_filters: report.report_filters.filter((filter: ReportFilters) => filter.report_id == report.id),
+      outer_filters: report.report_filters.filter((filter: Filters) => filter.report_id == report.id),
       dialogVisible: false,
       isDisabled: false,
     }));

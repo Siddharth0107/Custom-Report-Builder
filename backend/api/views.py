@@ -347,18 +347,70 @@ def get_filter_options(request):
         if not report_data:
             return Response({'message': 'Report data not found'}, status=404)
 
+
         data = request.data
-        template_id = int(data.get('template_id')) 
-        template_report = ReportTemplates.objects.get(id=template_id)
-        template_report_data = model_to_dict(template_report)
-        report_id = template_report_data['parent_report']
+        template_id = data.get('template_id')
+
+        if template_id is not None:
+            try:
+                template_id = int(template_id)
+            except ValueError:
+                return Response({'message': 'template_id must be an integer'}, status=400)
+
+            template_report = ReportTemplates.objects.get(id=template_id)
+            template_report_data = model_to_dict(template_report)
+            report_id = template_report_data['parent_report']
+
+            # selected_filters = TemplateFilters.objects.filter(template_id=template_id)
+            # selected_filter_names = selected_filters.values_list('filter_name', flat=True)
+            # filter_names = list(selected_filter_names)
+            selected_filters_queryset = TemplateFilters.objects.filter(template_id=template_id)
+            selected_filter_names = selected_filters_queryset.values_list('filter_name', flat=True)
+            filter_names = list(selected_filter_names)
+
+            # Normalize to dicts for consistent handling below
+            selected_filters = [
+                {'filter_name': f.filter_name, 'filter_label': f.filter_label}
+                for f in selected_filters_queryset
+            ]
+        # else:
+        #     # Expecting report_id and filter_names directly in request
+        #     report_id = data.get('report_id')
+        #     if not isinstance(report_id, int):
+        #         return Response({'message': 'report_id must be an integer'}, status=400)
+
+        #     filter_names = data.get('filter_names', [])
+        #     if not isinstance(filter_names, list) or not filter_names:
+        #         return Response({'message': 'filter_names must be a non-empty array'}, status=400)
+
+        #     selected_filters = [
+        #         {'filter_name': name, 'filter_label': name} for name in filter_names
+        #     ]
+        else:
+            # Expecting report_id and filter_names directly in request
+            report_id = data.get('report_id')
+            if not isinstance(report_id, int):
+                return Response({'message': 'report_id must be an integer'}, status=400)
+
+            filter_names = data.get('filter_names', [])
+            if not isinstance(filter_names, list) or not filter_names:
+                return Response({'message': 'filter_names must be a non-empty array'}, status=400)
+
+            selected_filters = [
+                {'filter_name': name, 'filter_label': name} for name in filter_names
+            ]
+            selected_filter_names = filter_names  # <-- Add this line        
+        
+        # template_report = ReportTemplates.objects.get(id=template_id)
+        # template_report_data = model_to_dict(template_report)
+        # report_id = template_report_data['parent_report']
 
         report = next((item for item in report_data if item['id'] == report_id), None)
         if not report:
             return Response({'message': 'Report not found'}, status=404)
 
-        selected_filters = TemplateFilters.objects.filter(template_id=template_id)
-        selected_filter_names = selected_filters.values_list('filter_name', flat=True)
+        # selected_filters = TemplateFilters.objects.filter(template_id=template_id)
+        # selected_filter_names = selected_filters.values_list('filter_name', flat=True)
 
         # Get ReportFilters for the parent report
         report_filters = ReportFilters.objects.filter(report_id=report_id)
@@ -376,9 +428,12 @@ def get_filter_options(request):
 
         # Build final response with additional fields
         result = []
+        # for filter_obj in selected_filters:
+        #     name = filter_obj.filter_name
+        #     label = filter_obj.filter_label
         for filter_obj in selected_filters:
-            name = filter_obj.filter_name
-            label = filter_obj.filter_label
+            name = filter_obj['filter_name']
+            label = filter_obj['filter_label']
             values = list(filters.get(name, []))
             extra_meta = report_filter_map.get(name, {'filter_type': '', 'is_compulsory': False})
 

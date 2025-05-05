@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { ReportService } from './../service/report.service'
-import { ReportColumns, TemplateFilter, TransformedReport, TransformedTemplate } from '../../types/reportTypes';
+import { Filters, ReportColumns, Templates, TransformedReport, TransformedTemplate } from '../../types/reportTypes';
 
 @Component({
   selector: 'ColumnDialog',
@@ -20,6 +20,20 @@ export class ColumnDialog implements OnInit {
   @Output() onClose = new EventEmitter<void>();
 
   constructor(private reportService: ReportService) { }
+
+  savedTempTemplate: Templates[] = [{
+    id: 0,
+    name: '',
+    parent_report: {
+      id: 0,
+      report_name: '',
+      report_columns: [],
+      report_filters: [],
+    },
+    template: [],
+    template_filter: [],
+    dialogVisible: false,
+  }];
 
   reportTypeData: TransformedReport = {
     columns: [],
@@ -44,24 +58,25 @@ export class ColumnDialog implements OnInit {
     template_filter: [],
   }
 
+  last_template_id: number = 0;
   selectedFields: Set<ReportColumns> = new Set();
-  selectedFilters: Set<TemplateFilter> = new Set();
+  selectedFilters: Set<Filters> = new Set();
   reportName: string = '';
-  tempName: string = ''; 
+  tempName: string = '';
+  isTemporaryTemplate: boolean = false;
 
   ngOnInit(): void {
-    this.tempName = this.data.name;
     if (this.data.columns) {
       this.reportTypeData = this.data;
       this.selectedFields = new Set();
-      this.selectedFilters = new Set();
+      this.selectedFilters = new Set(this.reportTypeData.outer_filters.filter(f => f.is_compulsory));
     } else if (this.data.template) {
       this.templateTypeData = this.data;
       this.selectedFields = new Set(this.templateTypeData.template);
       this.selectedFilters = new Set(this.templateTypeData.template_filter);
+      this.tempName = this.templateTypeData.name;
     } else {
       console.warn("this data is not in correct form")
-      console.log(this.data)
     }
   }
 
@@ -75,9 +90,9 @@ export class ColumnDialog implements OnInit {
     return false;
   }
 
-  isFilterSelected(action: string, filter: TemplateFilter): boolean {
+  isFilterSelected(action: string, filter: Filters): boolean {
     if (action === 'create') {
-      return this.selectedFilters.has(filter);
+      return filter.is_compulsory || this.selectedFilters.has(filter);
     } else if (action === 'edit') {
       const reportFilters = Array.from(this.selectedFilters).map(
         (item) => item.filter_name
@@ -96,20 +111,20 @@ export class ColumnDialog implements OnInit {
       this.selectedFields.delete(existing);
       if (this.data.outer_filters) {
         const matchingFilter = this.data.outer_filters?.find(
-          (f: TemplateFilter) => f.filter_name === field.column_name
+          (f: Filters) => f.filter_name === field.column_name
         );
         if (matchingFilter) {
           this.selectedFilters.delete(matchingFilter);
         }
       } else {
         const matchingFilter = this.data.parent_report.report_filters?.find(
-          (f: TemplateFilter) => {
+          (f: Filters) => {
             return f.filter_name === field.column_name;
           }
         );
         if (matchingFilter) {
           const existingFilter = Array.from(this.selectedFilters).find(
-            (f: TemplateFilter) => f.filter_name === matchingFilter.filter_name
+            (f: Filters) => f.filter_name === matchingFilter.filter_name
           );
           if (existingFilter) {
             this.selectedFilters.delete(existingFilter);
@@ -120,14 +135,14 @@ export class ColumnDialog implements OnInit {
       this.selectedFields.add(field);
       if (this.data.outer_filters) {
         const matchingFilter = this.data.outer_filters?.find(
-          (f: TemplateFilter) => f.filter_name === field.column_name
+          (f: Filters) => f.filter_name === field.column_name
         );
         if (matchingFilter) {
           this.selectedFilters.add(matchingFilter);
         }
       } else {
         const matchingFilter = this.data.parent_report.report_filters?.find(
-          (f: TemplateFilter) => f.filter_name == field.column_name
+          (f: Filters) => f.filter_name == field.column_name
         );
         if (matchingFilter) {
           this.selectedFilters.add(matchingFilter);
@@ -135,7 +150,7 @@ export class ColumnDialog implements OnInit {
       }
     }
     this.data.selected_fields = Array.from(this.selectedFields);
-    this.data.selected_filters = Array.from(this.selectedFilters).map((item: TemplateFilter) => ({
+    this.data.selected_filters = Array.from(this.selectedFilters).map((item: Filters) => ({
       filter_name: item.filter_name,
       filter_label: item.filter_label
     }));
@@ -146,101 +161,181 @@ export class ColumnDialog implements OnInit {
     this.onClose.emit();
   }
 
-  async createUpdateTemplate(product: any) {
+  //NOTE - seperate functions
+  async createTemplate(reportTypeData: TransformedReport) {
     try {
-      if (product.columns) {
-        product.generated_report_name = this.reportNameToUse;
-        product.selected_fields = Array.from(this.selectedFields).map(
-          (item: ReportColumns) => ({
-            ...item,
-            label: item.label,
-          })
-        );
+      // Selected Column Guard Condition
+      if (this.selectedFields.size === 0) {
+        alert('Atleast select 1 column');
+        return;
+      }
 
-        if (product.selected_fields.length == 0) {
-          alert('Atleast select 1 column');
-          return;
+      // Report Name Guard Condition
+      if (this.tempName === '') {
+        alert('Report Name Cannot be empty');
+        return;
+      }
+
+      if (this.isTemporaryTemplate) {
+        let savedTemplates = localStorage.getItem('tempTemplate');
+        let lastId = localStorage.getItem('lastId');
+
+        if (savedTemplates) {
+          this.savedTempTemplate = JSON.parse(savedTemplates);
+        } else {
+          this.savedTempTemplate.pop();
         }
 
-        if (product.generated_report_name == '') {
-          alert('Report Name Cannot be empty');
-          return;
+        if (lastId) {
+          this.last_template_id = JSON.parse(lastId);
         }
 
-        const payload = {
-          parent_report_id: product.reportId,
-          template_name: product.generated_report_name,
-          columns: product.selected_fields,
-          report_filters: product.selected_filters,
+        const tempTemplatePayload: Templates = {
+          id: this.last_template_id + 1,
+          name: this.tempName,
+          parent_report: {
+            id: reportTypeData.reportId,
+            report_name: reportTypeData.parent_report_name,
+            report_columns: reportTypeData.columns,
+            report_filters: reportTypeData.outer_filters,
+          },
+          template: Array.from(this.selectedFields),
+          template_filter: Array.from(this.selectedFilters),
+          dialogVisible: false,
+          isTemporary: true,
         };
 
+        this.savedTempTemplate = this.savedTempTemplate.filter((t: any) => t.id !== 0);
+        this.savedTempTemplate.push(tempTemplatePayload);
+        localStorage.setItem('lastId', JSON.stringify(tempTemplatePayload.id));
+        localStorage.setItem('tempTemplate', JSON.stringify(this.savedTempTemplate));
+        this.visible = false;
+      } else {
+        const payload = {
+          parent_report_id: reportTypeData.reportId,
+          template_name: this.tempName,
+          columns: Array.from(this.selectedFields),
+          report_filters: Array.from(this.selectedFilters),
+        };
         this.reportService.createTemplate(payload).subscribe({
-          next: (response: any) => {
+          next: () => {
             this.visible = false;
           },
           error: (error: any) => {
             alert(error.error.error);
-          },
-        });
-      } else if (product?.template) {
-        product.name = this.tempName;
-        product.selected_fields = Array.from(this.selectedFields).map(
-          (item: ReportColumns) => ({
-            ...item,
-            label: item.label,
-          })
-        );
-        if (product.name == '') {
-          alert('Report name cannot be empty');
-          return;
-        }
-
-        if (product.selected_fields.length == 0) {
-          alert('Atleast select 1 column');
-          return;
-        }
-
-        product.selected_filters = Array.from(this.selectedFilters).map(
-          (item: TemplateFilter) => ({
-            filter_name: item.filter_name,
-            filter_label: item.filter_label,
-          })
-        );
-
-        const payload = {
-          template_id: product.id,
-          name: product.name,
-          columns: product.selected_fields,
-          report_filters: product.selected_filters,
-        };
-
-        this.reportService.updateTemplate(payload).subscribe({
-          next: (response: any) => {
-            console.log(response);
-            this.visible = false;
-          },
-          error: (error: any) => {
-            console.log(error.error.error);
-            alert(error.error.error);
-            return;
           },
         });
       }
-    } catch (error: any) {
-      console.log(error);
-    } finally {
+    } catch (error) {
+      console.error(error)
     }
   }
 
-  get reportNameToUse() {
-    return this.data?.name || this.reportName;
-  }
+  async updateTemplate(templateTypeData: TransformedTemplate) {
+    try {
 
-  set reportNameToUse(value: string) {
-    if (this.data) {
-      this.data.name = value;
-    } else {
-      this.reportName = value;
+      // Selected Column Guard Condition
+      if (this.selectedFields.size === 0) {
+        alert('Atleast select 1 column');
+        return;
+      }
+
+      // Report Name Guard Condition
+      if (this.tempName === '') {
+        alert('Report Name Cannot be empty');
+        return;
+      }
+
+      if (templateTypeData.isTemporary) {
+        let savedTemplates = localStorage.getItem('tempTemplate');
+        if (savedTemplates) {
+          this.savedTempTemplate = JSON.parse(savedTemplates);
+        }
+
+        const tempTemplatePayload: Templates = {
+          id: templateTypeData.id,
+          name: this.tempName,
+          parent_report: templateTypeData.parent_report,
+          template: Array.from(this.selectedFields),
+          template_filter: Array.from(this.selectedFilters),
+          dialogVisible: false,
+          isTemporary: true,
+        };
+
+        const index = this.savedTempTemplate.findIndex((t: any) => t.id === templateTypeData.id);
+        if (index !== -1) {
+          this.savedTempTemplate[index] = tempTemplatePayload;
+        } else {
+          this.savedTempTemplate.push(tempTemplatePayload);
+        }
+
+        localStorage.setItem('tempTemplate', JSON.stringify(this.savedTempTemplate));
+        this.visible = false;
+      } else {
+        const payload = {
+          template_id: templateTypeData.id,
+          name: this.tempName,
+          columns: Array.from(this.selectedFields),
+          report_filters: Array.from(this.selectedFilters),
+        };
+        this.reportService.updateTemplate(payload).subscribe({
+          next: () => {
+            this.visible = false;
+          },
+          error: (error: any) => {
+            alert(error.error.error);
+          },
+        });
+      }
+
+    } catch (error) {
+      console.error(error)
     }
   }
+
+  //NOTE - this is the combined function
+  // async saveTemplate(isUpdate: boolean, data: TransformedReport | TransformedTemplate) {
+  //   try {
+  //     if (this.selectedFields.size === 0) {
+  //       alert('At least select 1 column');
+  //       return;
+  //     }
+
+  //     if (this.tempName === '') {
+  //       alert('Report Name cannot be empty');
+  //       return;
+  //     }
+
+  //     const payload = {
+  //       columns: Array.from(this.selectedFields),
+  //       report_filters: Array.from(this.selectedFilters),
+  //     };
+
+  //     let request$;
+
+  //     if (isUpdate) {
+  //       const updatePayload = {
+  //         ...payload,
+  //         template_id: (data as TransformedTemplate).id,
+  //         name: this.tempName,
+  //       };
+  //       request$ = this.reportService.updateTemplate(updatePayload);
+  //     } else {
+  //       const createPayload = {
+  //         ...payload,
+  //         parent_report_id: (data as TransformedReport).reportId,
+  //         template_name: this.tempName,
+  //       };
+  //       request$ = this.reportService.createTemplate(createPayload);
+  //     }
+
+  //     request$.subscribe({
+  //       next: () => this.visible = false,
+  //       error: (error: any) => alert(error.error.error),
+  //     });
+
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 }

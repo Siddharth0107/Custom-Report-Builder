@@ -6,41 +6,30 @@
   <div *ngIf="templateId" class="my-3">
     <div class="card flex flex-wrap gap-6 my-3">
       <div
-        *ngFor="let item of reportData"
-        class="flex flex-col min-w-[200px] max-w-[250px] flex-1"
+      *ngFor="let item of reportData"
+      class="flex flex-col min-w-[200px] max-w-[250px] flex-1"
       >
         <label class="font-bold mb-2 flex items-center gap-1">
           {{ item.filter_label }}
           <span *ngIf="item.is_compulsory" class="text-red-600">*</span>
         </label>
-
         <ng-container [ngSwitch]="item.filter_type">
           <p-calendar
             *ngIf="item.filter_type === 'date'"
             [(ngModel)]="dropdownValues[item.filter_name]"
-            selectionMode="range"
             dateFormat="dd-mm-yy"
             placeholder="Select date"
             showIcon="true"
-          ></p-calendar>
-          <!-- <p-datepicker
-            *ngIf="item.filter_type === 'date'"
-            [(ngModel)]="dropdownValues[item.filter_name]"
-            dateFormat="dd-mm-yy"
-            placeholder="Select date"
-            showIcon="true"
-            [showButtonBar]="true">
+            [showButtonBar]="true"
             selectionMode="range"
-
-          </p-datepicker> -->
-
+            >
+          </p-calendar>
           <p-select
-            *ngSwitchCase="'dropdown'"
+            *ngIf="item.filter_type === 'dropdown'"
             [(ngModel)]="dropdownValues[item.filter_name]"
             [options]="item.values"
-            [placeholder]="'Select a value'"
-            [autoDisplayFirst]="false"
-          ></p-select>
+            placeholder='Select a value'
+            ></p-select>
 
           <p-multiSelect
             *ngSwitchCase="'multiselect'"
@@ -49,17 +38,6 @@
             [placeholder]="'Select values'"
           ></p-multiSelect>
 
-          <!-- <p-autoComplete
-            *ngSwitchCase="'autocomplete'"
-            [(ngModel)]="dropdownValues[item.filter_name]"
-            [dropdown]="true"
-            [suggestions]="filteredOptions[item.filter_name]"
-            (completeMethod)="filterSuggestions($event, item.filter_name)"
-            placeholder="Type to search"
-            
-            [forceSelection]="false"
-            
-          ></p-autoComplete> -->
           <p-autoComplete
             *ngSwitchCase="'autocomplete'"
             #autoComp

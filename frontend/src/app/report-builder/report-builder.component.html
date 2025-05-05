@@ -10,8 +10,11 @@
   [(visible)]="visible"
   [style]="{ width: '50rem' }"
 >
-  <div *ngIf="data?.columns || data?.template; else noFields" class="">
-    <div *ngIf="reportTypeData.columns && reportTypeData.columns.length > 0" class="flex gap-8">
+  <ng-container *ngIf="data?.columns || data?.template; else noData" class="">
+    <div
+      *ngIf="reportTypeData.columns && reportTypeData.columns.length > 0"
+      class="flex gap-8"
+    >
       <div class="w-1/2 scrollbar-thin h-[50vh] overflow-auto">
         <h3 class="font-semibold mb-2">Report Columns</h3>
         <div *ngFor="let field of reportTypeData.columns" class="block">
@@ -38,9 +41,13 @@
               class="h-[20px] w-[20px]"
               type="checkbox"
               [checked]="isFilterSelected('create', filter)"
-              [disabled]="filter.exist_in_report"
+              [disabled]="filter.exist_in_report || filter.is_compulsory"
             />
-            {{ filter.filter_label }}
+            {{
+              filter.is_compulsory
+                ? filter.filter_label + "*"
+                : filter.filter_label
+            }}
           </label>
         </div>
       </div>
@@ -67,7 +74,10 @@
       <div class="w-1/2">
         <h3 class="font-semibold mb-2">Outer Filters</h3>
         <div
-          *ngFor="let filter of templateTypeData.parent_report.report_filters; index as idx"
+          *ngFor="
+            let filter of templateTypeData.parent_report.report_filters;
+            index as idx
+          "
           class="block"
         >
           <label class="w-full flex items-center gap-4 my-2">
@@ -75,23 +85,47 @@
               class="h-[20px] w-[20px]"
               type="checkbox"
               [checked]="isFilterSelected('edit', filter)"
-              [disabled]="filter.exist_in_report"
+              [disabled]="filter.exist_in_report || filter.is_compulsory"
             />
-            {{ filter.filter_label }}
+            {{
+              filter.is_compulsory
+                ? filter.filter_label + "*"
+                : filter.filter_label
+            }}
           </label>
         </div>
       </div>
     </div>
+  </ng-container>
+
+  <ng-template #noData>No records found</ng-template>
+
+  <div class="flex items-center gap-8">
+    <div class="flex items-center gap-4 my-4">
+      <label for="Report Name">Report Name</label>
+      <input type="text" pInputText [(ngModel)]="tempName" />
+    </div>
+
+    <div *ngIf="templateTypeData.isTemporary || reportTypeData.reportId" class="flex items-center gap-3">
+      <label class="w-full flex items-center gap-4 my-2">
+        <input
+          class="h-[20px] w-[20px]"
+          type="checkbox"
+          (change)="isTemporaryTemplate = !isTemporaryTemplate"
+          [checked]="templateTypeData.isTemporary && true"
+          [disabled]="templateTypeData.isTemporary && true"
+        />
+        Temporary Template
+      </label>
+    </div>
   </div>
 
-  <ng-template #noFields>
-    <p>No columns available.</p>
-  </ng-template>
-
-  <div class="flex items-center gap-4 my-4">
-    <label for="Report Name">Report Name</label>
-    <input type="text" pInputText [(ngModel)]="tempName" />
-  </div>
-
-  <p-button label="Submit" (click)="createUpdateTemplate(data)" />
+  <p-button
+    [label]="reportTypeData.reportId ? 'Create' : 'Update'"
+    (click)="
+      reportTypeData.reportId
+        ? createTemplate(reportTypeData)
+        : updateTemplate(templateTypeData)
+    "
+  />
 </p-dialog>

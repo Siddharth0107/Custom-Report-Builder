@@ -28,7 +28,7 @@
                     icon="pi pi-eye"
                     severity="secondary"
                     styleClass="p-button-sm"
-                    (click)="createReportFromTemplate(template.id)"
+                    (click)="createReportFromTemplate(template.id,template.isTemporary)"
                   ></p-button>
                   <p-button
                     severity="info"
@@ -40,7 +40,9 @@
                     icon="pi pi-trash"
                     severity="danger"
                     styleClass="p-button-sm"
-                    (click)="confirmDeleteTemplate(template.id)"
+                    (click)="
+                      confirmDeleteTemplate(template.id, template.isTemporary)
+                    "
                   ></p-button>
 
                   <ColumnDialog

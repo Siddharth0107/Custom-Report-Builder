@@ -6,7 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { ColumnDialog } from '../report-builder/report-builder.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { OuterFilterViewData, Templates } from '../../types/reportTypes';
+import { Filters, OuterFilterViewData, Templates } from '../../types/reportTypes';
 
 @Component({
   selector: 'app-all-templates',
@@ -16,6 +16,7 @@ import { OuterFilterViewData, Templates } from '../../types/reportTypes';
   styleUrl: './all-templates.component.css',
   providers: [ConfirmationService]
 })
+
 export class AllTemplatesComponent implements OnInit {
   templates: Templates[] = [{
     id: 0,
@@ -30,6 +31,21 @@ export class AllTemplatesComponent implements OnInit {
     template_filter: [],
     dialogVisible: false,
   }];
+
+  savedTempTemplate: Templates[] = [{
+    id: 0,
+    name: '',
+    parent_report: {
+      id: 0,
+      report_name: '',
+      report_columns: [],
+      report_filters: [],
+    },
+    template: [],
+    template_filter: [],
+    dialogVisible: false,
+  }];
+
   reportData: OuterFilterViewData = {
     filter_label: '',
     filter_name: '',
@@ -50,32 +66,49 @@ export class AllTemplatesComponent implements OnInit {
 
   async handleTemplateListing() {
     try {
+      const temp = localStorage.getItem('tempTemplate');
+      if (temp) {
+        this.savedTempTemplate = JSON.parse(temp);
+      }
+
       this.reportService.getAllTemplates().subscribe({
         next: (response: any) => {
           this.templates = response;
+          if (temp) {
+            const validTemplates = this.savedTempTemplate.filter((t: any) => t.id !== 0);
+            this.templates.push(...validTemplates)
+          }
         },
         error: (error: any) => {
-          console.log(error);
+          console.error(error);
         }
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
-  deleteTemplate(id: number) {
-    this.reportService.deleteTemplate(id).subscribe({
-      next: (response: any) => {
-        console.log(response);
-        this.handleTemplateListing();
-      },
-      error: (error: any) => {
-        console.log(error);
+  deleteTemplate(id: number, isTemporary: boolean) {
+    if (isTemporary) {
+      const index = this.savedTempTemplate.findIndex((item: any) => item.id === id);
+      if (index !== -1) {
+        this.savedTempTemplate.splice(index, 1);
+        localStorage.setItem('tempTemplate', JSON.stringify(this.savedTempTemplate));
       }
-    });
+      this.handleTemplateListing()
+    } else {
+      this.reportService.deleteTemplate(id).subscribe({
+        next: () => {
+          this.handleTemplateListing();
+        },
+        error: (error: any) => {
+          console.error(error);
+        }
+      });
+    }
   }
 
-  confirmDeleteTemplate(id: number) {
+  confirmDeleteTemplate(id: number, isTemporary: boolean | undefined) {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this template?',
       header: 'Delete Template',
@@ -84,7 +117,7 @@ export class AllTemplatesComponent implements OnInit {
       rejectLabel: 'No',
       closeOnEscape: false,
       accept: () => {
-        this.deleteTemplate(id);
+        this.deleteTemplate(id, isTemporary as boolean);
       }
     });
   }
@@ -98,20 +131,47 @@ export class AllTemplatesComponent implements OnInit {
     this.handleTemplateListing();
   }
 
-  createReportFromTemplate(id: number) {
-    this.reportService.showFilterView({ template_id: id }).subscribe({
-      next: (response: any) => {
-        this.reportData = response;
-        this.router.navigate(['./outer-filter-view'], {
-          state: {
-            report_data: this.reportData,
-            id: id,
+  createReportFromTemplate(id: number, isTemporary: boolean | undefined) {
+    if (isTemporary) {
+      let data: Templates[];
+      let temp = localStorage.getItem('tempTemplate');
+      if (temp) {
+        data = JSON.parse(temp);
+        const payload = {
+          report_id: data[0].id,
+          filter_names: data[0].template_filter.map((item: Filters) => item.filter_name),
+        }
+        this.reportService.showFilterView(payload).subscribe({
+          next: (response: any) => {
+            this.reportData = response.data;
+            this.router.navigate(['./outer-filter-view'], {
+              state: {
+                report_data: this.reportData,
+                id: id,
+              }
+            });
+          },
+          error: (error: any) => {
+            console.error(error);
           }
         });
-      },
-      error: (error: any) => {
-        console.error(error);
       }
-    });
+
+    } else {
+      this.reportService.showFilterView({ template_id: id }).subscribe({
+        next: (response: any) => {
+          this.reportData = response.data;
+          this.router.navigate(['./outer-filter-view'], {
+            state: {
+              report_data: this.reportData,
+              id: id,
+            }
+          });
+        },
+        error: (error: any) => {
+          console.error(error);
+        }
+      });
+    }
   }
 }

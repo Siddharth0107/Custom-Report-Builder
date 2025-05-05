@@ -9,19 +9,21 @@ export type ReportColumns = {
     label: string;
 }
 
-export type ReportFilters = {
+export type Filters = {
     id: number;
     report_id: number;
     filter_name: string;
     filter_label: string;
     exist_in_report: boolean;
+    filter_type: string;
+    is_compulsory: boolean;
 }
 
 export type Report = {
     id: number;
     report_name: string;
     report_columns: Array<ReportColumns>;
-    report_filters: Array<ReportFilters>;
+    report_filters: Array<Filters>;
 }
 
 export type TransformedReport = {
@@ -29,7 +31,7 @@ export type TransformedReport = {
     parent_report_name: string;
     saveBtnEnable: boolean,
     columns: Array<ReportColumns>;
-    outer_filters: Array<ReportFilters>;
+    outer_filters: Array<Filters>;
     dialogVisible: boolean;
     isDisabled: boolean;
 }
@@ -39,12 +41,8 @@ export type TransformedTemplate = {
     name: string;
     parent_report: Report;
     template: Array<ReportColumns>;
-    template_filter: Array<TemplateFilter>;
-}
-
-export type TemplateFilter = {
-    filter_name: string;
-    filter_label: string;
+    template_filter: Array<Filters>;
+    isTemporary?: boolean;
 }
 
 export type Templates = {
@@ -52,8 +50,9 @@ export type Templates = {
     name: string;
     parent_report: Report;
     template: Array<ReportColumns>;
-    template_filter: Array<TemplateFilter>;
+    template_filter: Array<Filters>;
     dialogVisible: boolean;
+    isTemporary?: boolean;
 }
 
 export type OuterFilterViewData = {

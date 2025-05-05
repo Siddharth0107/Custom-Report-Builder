@@ -1,4 +1,4 @@
-<main class="px-2 sm:px-4">
+<main class="">
   <div class="card">
     <p-tabs [value]="activeTab">
       <p-tablist class="flex flex-wrap sm:flex-nowrap overflow-x-auto no-scrollbar">
@@ -7,6 +7,7 @@
             [value]="tab.route"
             [routerLink]="tab.route"
             class="flex items-center gap-1 sm:gap-2 text-inherit px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm whitespace-nowrap"
+            [disabled]="tab.disabled"
           >
             <i [class]="tab.icon"></i>
             <span>{{ tab.label }}</span>

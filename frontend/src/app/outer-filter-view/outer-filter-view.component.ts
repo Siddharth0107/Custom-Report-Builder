@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 import { OuterFilterViewData } from '../../types/reportTypes';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SelectModule } from 'primeng/select';
-import {CalendarModule} from 'primeng/calendar'
+import { CalendarModule } from 'primeng/calendar'
 import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-outer-filter-view',
-  imports: [AutoCompleteModule, FormsModule, CommonModule, ButtonModule,MultiSelectModule,SelectModule,CalendarModule,DatePickerModule],
+  imports: [AutoCompleteModule, FormsModule, CommonModule, ButtonModule, MultiSelectModule, SelectModule, CalendarModule, DatePickerModule],
   templateUrl: './outer-filter-view.component.html',
   styleUrl: './outer-filter-view.component.css'
 })
@@ -28,63 +28,56 @@ export class OuterFilterViewComponent {
   }];
 
   dropdownValues: { [key: string]: any } = {};
-  
+
   suggestions: string[] = [];
   filteredOptions: { [key: string]: string[] } = {};
 
   constructor(private location: Location, private reportService: ReportService, private router: Router) { }
+
   ngOnInit(): void {
     this.templateId = history.state.id;
     if (!this.templateId) {
       this.location.back();
       return;
     }
-    const incomingData = history.state.report_data?.data;
+    const incomingData = history.state.report_data;
     if (!incomingData) {
       this.location.back();
       return;
     }
-  
+
     this.reportData = incomingData;
-  
+
+    // Initialize default dropdown values (e.g., set today's date for date filters)
     for (const item of this.reportData) {
       if (item.filter_type === 'date') {
         const today = new Date();
         const lastMonth = new Date();
         lastMonth.setMonth(today.getMonth() - 1);
-        this.dropdownValues[item.filter_name] = [lastMonth, today]; 
+        this.dropdownValues[item.filter_name] = [lastMonth, today];
       } else {
         this.dropdownValues[item.filter_name] = '';
       }
     }
-    
   }
-  
+
   filterSuggestions(event: any, key: string) {
     const query = event.query.toLowerCase();
-    // const matchedItem = this.reportData.find((item:OuterFilterViewData) => item.filter_name === key);
-    // if (matchedItem) {
-    //   this.filteredOptions[key] = matchedItem.values.filter((value: string) =>
-    //     value.toLowerCase().includes(query)
-    //   );
-    // }
-     // If the query starts with '#', we trigger the suggestions manually
-  if (query.startsWith('#')) {
-    const matchedItem = this.reportData.find((item: OuterFilterViewData) => item.filter_name === key);
-    if (matchedItem) {
-      this.filteredOptions[key] = matchedItem.values.filter((value: string) =>
-        value.toLowerCase().includes(query.slice(1)) // removing '#' from the query for matching
-      );
+    if (query.startsWith('#')) {
+      const matchedItem = this.reportData.find((item: OuterFilterViewData) => item.filter_name === key);
+      if (matchedItem) {
+        this.filteredOptions[key] = matchedItem.values.filter((value: string) =>
+          value.toLowerCase().includes(query.slice(1)) // removing '#' from the query for matching
+        );
+      }
+    } else {
+      const matchedItem = this.reportData.find((item: OuterFilterViewData) => item.filter_name === key);
+      if (matchedItem) {
+        this.filteredOptions[key] = matchedItem.values.filter((value: string) =>
+          value.toLowerCase().includes(query)
+        );
+      }
     }
-  } else {
-    // Standard behavior for suggestions
-    const matchedItem = this.reportData.find((item: OuterFilterViewData) => item.filter_name === key);
-    if (matchedItem) {
-      this.filteredOptions[key] = matchedItem.values.filter((value: string) =>
-        value.toLowerCase().includes(query)
-      );
-    }
-  }
   }
 
   getLabelName(key: string) {
@@ -98,13 +91,13 @@ export class OuterFilterViewComponent {
 
     if (filters['from_to_date'] && filters['from_to_date'].length === 2) {
       const [from, to] = filters['from_to_date'];
-  
+
       // Convert JavaScript Date to 'YYYY-MM-DD'
       const formatDate = (date: Date) =>
         date instanceof Date
           ? date.toISOString().slice(0, 10)  // get YYYY-MM-DD
           : date;
-  
+
       filters['from_to_date'] = [formatDate(from), formatDate(to)];
     }
     const payload = {
@@ -127,7 +120,6 @@ export class OuterFilterViewComponent {
   }
   onDoubleClick(autoComp: any, filterName: string) {
     this.filterSuggestions({ query: '#' }, filterName);
-    autoComp.show(); 
+    autoComp.show();
   }
-    
 }

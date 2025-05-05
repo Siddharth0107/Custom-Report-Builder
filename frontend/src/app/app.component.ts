@@ -22,8 +22,8 @@ export class AppComponent {
   tabs = [
     { route: 'reports', label: 'Reports', icon: 'pi pi-home', pathMatch: 'full' },
     { route: 'templates', label: 'Templates', icon: 'pi pi-list' },
-    { route: 'outer-filter-view', label: 'Filter Selection', icon: 'pi pi-receipt' },
-    { route: 'generated-report', label: 'Generated Report', icon: 'pi pi-book' },
+    { route: 'outer-filter-view', label: 'Filter Selection', icon: 'pi pi-receipt', disabled: true },
+    { route: 'generated-report', label: 'Generated Report', icon: 'pi pi-book', disabled: true },
   ];
   constructor(private router: Router) {
     this.router.events
