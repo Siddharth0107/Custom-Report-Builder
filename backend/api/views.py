@@ -483,35 +483,114 @@ def value_matches(row_value, filter_value):
     return row_value == filter_value
 
 @api_view(['POST'])
+# template_id must required
+# def get_template_report_data(request):
+#     try:
+#         data = request.data
+#         template_id = data.get('template_id')
+        
+#         selected_filters = data.get('filters', {})  
+        
+#         template = TemplateMaster.objects.select_related('parent_report').get(id=template_id)
+        
+#         selected_fields = TemplateDetails.objects.filter(template_id=template_id, field_type='column').values('field_name', 'field_label')
+
+#         column_names = [field['field_name'] for field in selected_fields]
+#         labels = {field['field_name']: field['field_label'] for field in selected_fields}
+        
+        
+#         full_data = load_task_report()
+        
+#         report_id = template.parent_report.id  
+#         report = next((r for r in full_data if r.get('id') == report_id), None)
+        
+#         if not report:
+#             return Response({"error": "Report not found"}, status=status.HTTP_404_NOT_FOUND)
+#      # Extract and parse from/to dates
+#         from_date_str, to_date_str = selected_filters.get('from_to_date', [None, None])
+#         from_date = datetime.strptime(from_date_str, "%Y-%m-%d") if from_date_str else None
+#         to_date = datetime.strptime(to_date_str, "%Y-%m-%d") if to_date_str else None
+
+#         # Apply all filters including date range
+#         filtered_rows = [
+#             {key: row.get(key, None) for key in column_names if key in row}
+#             for row in report["rows"]
+#             if all(
+#                 value_matches(row.get(field), value)
+#                 for field, value in selected_filters.items()
+#                 if value and field != 'from_to_date'
+#             ) and (
+#                 (not from_date or datetime.strptime(row.get('transaction_date', ''), "%Y-%m-%d") >= from_date) and
+#                 (not to_date or datetime.strptime(row.get('transaction_date', ''), "%Y-%m-%d") <= to_date)
+#             )
+#         ]
+
+#         if not filtered_rows:
+#             return Response({"error": "No records found for the given filters"}, status=status.HTTP_404_NOT_FOUND)
+        
+#         return Response({
+#             "template_id": template.id,
+#             "template_name": template.name,
+#             "report_name": template.parent_report.report_name,
+#             "columns": [col['field_label'] for col in selected_fields], 
+#             "data": filtered_rows  
+#         }, status=status.HTTP_200_OK)
+
+#     except TemplateMaster.DoesNotExist:
+#         return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
+    
+#     except Exception as e:
+#         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+# 
+
+#  get temporary data using report_id
+
 def get_template_report_data(request):
     try:
         data = request.data
         template_id = data.get('template_id')
+        report_id = data.get('report_id')
         selected_filters = data.get('filters', {})  
-        
-        template = TemplateMaster.objects.select_related('parent_report').get(id=template_id)
-        
-        selected_fields = TemplateDetails.objects.filter(template_id=template_id, field_type='column').values('field_name', 'field_label')
 
-        column_names = [field['field_name'] for field in selected_fields]
-        labels = {field['field_name']: field['field_label'] for field in selected_fields}
-        
-        
-        full_data = load_task_report()
-        
-        report_id = template.parent_report.id  
+        full_data = load_task_report()  # This loads all report definitions
+
+        if template_id:
+            # Use template_id to fetch template and its fields
+            template = TemplateMaster.objects.select_related('parent_report').get(id=template_id)
+            report_id = template.parent_report.id
+
+            selected_fields = TemplateDetails.objects.filter(
+                template_id=template_id, field_type='column'
+            ).values('field_name', 'field_label')
+
+            column_names = [field['field_name'] for field in selected_fields]
+            labels = {field['field_name']: field['field_label'] for field in selected_fields}
+
+        elif report_id:
+            # No template, just use report definition
+            report_id = int(report_id)
+            report = next((r for r in full_data if r.get('id') == report_id), None)
+            if not report:
+                return Response({"error": "Report not found"}, status=status.HTTP_404_NOT_FOUND)
+
+            # Extract all column names and labels from report definition
+            column_names = [col["column_name"] for col in report["columns"]]
+            labels = {col["column_name"]: col["label"] for col in report["columns"]}
+            template = None  # No template context
+        else:
+            return Response({"error": "Either template_id or report_id must be provided"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # At this point report_id is guaranteed to be set
         report = next((r for r in full_data if r.get('id') == report_id), None)
-        
         if not report:
             return Response({"error": "Report not found"}, status=status.HTTP_404_NOT_FOUND)
-     # Extract and parse from/to dates
-        from_date_str, to_date_str = selected_filters.get('from_to_date', [None, None])
 
-       
+        # Parse date filter
+        from_date_str, to_date_str = selected_filters.get('from_to_date', [None, None])
         from_date = datetime.strptime(from_date_str, "%Y-%m-%d") if from_date_str else None
         to_date = datetime.strptime(to_date_str, "%Y-%m-%d") if to_date_str else None
 
-        # Apply all filters including date range
+        # Apply filters to report rows
         filtered_rows = [
             {key: row.get(key, None) for key in column_names if key in row}
             for row in report["rows"]
@@ -527,17 +606,16 @@ def get_template_report_data(request):
 
         if not filtered_rows:
             return Response({"error": "No records found for the given filters"}, status=status.HTTP_404_NOT_FOUND)
-        
+
         return Response({
-            "template_id": template.id,
-            "template_name": template.name,
-            "report_name": template.parent_report.report_name,
-            "columns": [col['field_label'] for col in selected_fields], 
-            "data": filtered_rows  
+            "template_id": template.id if template else None,
+            "template_name": template.name if template else None,
+            "report_name": template.parent_report.report_name if template else report["name"],
+            "columns": [labels[field] for field in column_names if field in labels],
+            "data": filtered_rows
         }, status=status.HTTP_200_OK)
 
     except TemplateMaster.DoesNotExist:
         return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
-    
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
