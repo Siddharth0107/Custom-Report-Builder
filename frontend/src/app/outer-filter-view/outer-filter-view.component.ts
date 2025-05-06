@@ -90,39 +90,6 @@ export class OuterFilterViewComponent {
     return key;
   }
 
-  // createSubReport() {
-  //   const filters = { ...this.dropdownValues };
-
-  //   if (filters['from_to_date'] && filters['from_to_date'].length === 2) {
-  //     const [from, to] = filters['from_to_date'];
-
-  //     // Convert JavaScript Date to 'YYYY-MM-DD'
-  //     const formatDate = (date: Date) =>
-  //       date instanceof Date
-  //         ? date.toISOString().slice(0, 10)  // get YYYY-MM-DD
-  //         : date;
-
-  //     filters['from_to_date'] = [formatDate(from), formatDate(to)];
-  //   }
-  //   const payload = {
-  //     template_id: this.templateId,
-  //     filters: filters
-  //   };
-
-  //   this.reportService.createSubReport(payload).subscribe({
-  //     next: (response: any) => {
-  //       this.router.navigate(['/generated-report'], {
-  //         state: {
-  //           report_data: response
-  //         }
-  //       });
-  //     },
-  //     error: (error: any) => {
-  //       alert(error.error?.error || 'Something went wrong');
-  //     }
-  //   });
-  // }
-
   createSubReport() {
     const filters = { ...this.dropdownValues };
 

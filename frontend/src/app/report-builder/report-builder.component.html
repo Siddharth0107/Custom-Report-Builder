@@ -42,6 +42,7 @@
               type="checkbox"
               [checked]="isFilterSelected('create', filter)"
               [disabled]="filter.exist_in_report || filter.is_compulsory"
+              (change) = "toggleFilter(filter)"
             />
             {{
               filter.is_compulsory
@@ -86,6 +87,7 @@
               type="checkbox"
               [checked]="isFilterSelected('edit', filter)"
               [disabled]="filter.exist_in_report || filter.is_compulsory"
+              (change) = "toggleFilter(filter)"
             />
             {{
               filter.is_compulsory

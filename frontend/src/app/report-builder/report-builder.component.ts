@@ -156,6 +156,32 @@ export class ColumnDialog implements OnInit {
     }));
   }
 
+  toggleFilter(filter: Filters): void {
+    try {
+      const existingFilter = Array.from(this.selectedFilters).find(
+        (f: Filters) => f.filter_name === filter.filter_name
+      );
+
+      if (existingFilter) {
+        // If filter is already selected, remove it
+        this.selectedFilters.delete(existingFilter);
+      } else {
+        // Otherwise, add it
+        this.selectedFilters.add(filter);
+      }
+
+      // Update the selected_filters array
+      this.data.selected_filters = Array.from(this.selectedFilters).map((item: Filters) => ({
+        filter_name: item.filter_name,
+        filter_label: item.filter_label
+      }));
+
+      console.log(this.data.selected_filters);
+    } catch (error) {
+      console.error('Error in toggleFilter:', error);
+    }
+  }
+
   close(): void {
     this.visible = false;
     this.onClose.emit();
