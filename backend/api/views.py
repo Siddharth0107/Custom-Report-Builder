@@ -485,9 +485,6 @@ def value_matches(row_value, filter_value):
 #     except Exception as e:
 #         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
-
-
 # payload
 
 #  {
@@ -525,7 +522,7 @@ def get_template_report_data(request):
             labels = {field['column_name']: field['label'] for field in selected_fields}
 
         elif report_id:
-           
+          
             report_id = int(report_id)
             report = next((r for r in full_data if r.get('id') == report_id), None)
             if not report:
@@ -542,9 +539,10 @@ def get_template_report_data(request):
             return Response({"error": "Report not found"}, status=status.HTTP_404_NOT_FOUND)
 
         from_date_str, to_date_str = selected_filters.get('from_to_date', [None, None])
+      
         from_date = datetime.strptime(from_date_str, "%Y-%m-%d") if from_date_str else None
         to_date = datetime.strptime(to_date_str, "%Y-%m-%d") if to_date_str else None
-
+       
         filtered_rows = [
             {key: row.get(key, None) for key in column_names if key in row}
             for row in report["rows"]
@@ -557,7 +555,7 @@ def get_template_report_data(request):
                 (not to_date or datetime.strptime(row.get('transaction_date', ''), "%Y-%m-%d") <= to_date)
             )
         ]
-
+       
         if not filtered_rows:
             return Response({"error": "No records found for the given filters"}, status=status.HTTP_404_NOT_FOUND)
 
