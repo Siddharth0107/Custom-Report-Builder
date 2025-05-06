@@ -340,8 +340,10 @@ def get_filter_options(request):
 
         data = request.data
         template_id = int(data.get('template_id')) 
-        
-        template_report = ReportTemplateMaster.objects.get(id=template_id)
+        try:
+            template_report = ReportTemplateMaster.objects.get(id=template_id)
+        except:
+            return Response({'message': f'Template with {template_id} not found'}, status=404)
         template_report_data = model_to_dict(template_report)
         report_id = template_report_data['parent_report']
         report = next((item for item in report_data if item['id'] == report_id), None)
@@ -463,27 +465,99 @@ def value_matches(row_value, filter_value):
     return row_value == filter_value
 
 @api_view(['POST'])
+# def get_template_report_data(request):
+#     try:
+        
+#         data = request.data
+#         template_id = data.get('template_id')
+#         selected_filters = data.get('filters', {}) 
+#         try: 
+#          template = ReportTemplateMaster.objects.select_related('parent_report').get(id=template_id)
+#         except:
+#             return Response({"error": f"Template with id {template_id} not found".format(template_id)}, status=status.HTTP_404_NOT_FOUND)
+#         template_detail = ReportTemplateDetails.objects.filter(template=template).first()
+#         if not template_detail or not isinstance(template_detail.data, dict):
+#             return Response({"error": "Template data not found."}, status=status.HTTP_404_NOT_FOUND)
+#         template_data = model_to_dict(template_detail)
+#         selected_columns = template_detail.data.get('columns', [])
+#         column_names = [col['column_name'] for col in selected_columns]
+#         labels = {col['column_name']: col['label'] for col in selected_columns}
+        
+#         full_data = load_task_report()
+#         report_id = template.parent_report.id  
+#         report = next((r for r in full_data if r.get('id') == report_id), None)
+        
+#         if not report:
+#             return Response({"error": "Report not found"}, status=status.HTTP_404_NOT_FOUND)
+ 
+#         from_date_str, to_date_str = selected_filters.get('from_to_date', [None, None])
+       
+#         from_date = datetime.strptime(from_date_str, "%Y-%m-%d") if from_date_str else None
+#         to_date = datetime.strptime(to_date_str, "%Y-%m-%d") if to_date_str else None
+
+#         filtered_rows = [
+#             {key: row.get(key, None) for key in column_names if key in row}
+#             for row in report["rows"]
+#             if all(
+#                 value_matches(row.get(field), value)
+#                 for field, value in selected_filters.items()
+#                 if value and field != 'from_to_date'
+#             ) and (
+#                 (not from_date or datetime.strptime(row.get('transaction_date', ''), "%Y-%m-%d") >= from_date) and
+#                 (not to_date or datetime.strptime(row.get('transaction_date', ''), "%Y-%m-%d") <= to_date)
+#             )
+#         ]
+
+#         if not filtered_rows:
+#             return Response({"error": "No records found for the given filters"}, status=status.HTTP_404_NOT_FOUND)
+        
+#         return Response({
+#             "template_id": template.id,
+#             "template_name": template.name,
+#             "report_name": template.parent_report.report_name,
+#             "columns":  [labels.get(col, col) for col in column_names],
+#             "data": filtered_rows  
+#         }, status=status.HTTP_200_OK)
+
+#     except ReportTemplateMaster.DoesNotExist:
+#         return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
+    
+#     except Exception as e:
+#         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 def get_template_report_data(request):
     try:
         
         data = request.data
-        
         template_id = data.get('template_id')
-        
-        selected_filters = data.get('filters', {})  
-        
-        template = ReportTemplateMaster.objects.select_related('parent_report').get(id=template_id)
-        template_detail = ReportTemplateDetails.objects.filter(template=template).first()
-        if not template_detail or not isinstance(template_detail.data, dict):
-            return Response({"error": "Template data not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        template_data = model_to_dict(template_detail)
-        selected_columns = template_detail.data.get('columns', [])
-        column_names = [col['column_name'] for col in selected_columns]
-        labels = {col['column_name']: col['label'] for col in selected_columns}
-        
+        report_id = data.get('report_id')
+        selected_filters = data.get('filters', {}) 
         full_data = load_task_report()
-        report_id = template.parent_report.id  
+        if template_id:
+            try: 
+             template = ReportTemplateMaster.objects.select_related('parent_report').get(id=template_id)
+            except:
+                return Response({"error": f"Template with id {template_id} not found".format(template_id)}, status=status.HTTP_404_NOT_FOUND)
+            report_id = template.parent_report.id  
+            template_detail = ReportTemplateDetails.objects.filter(template=template).first()
+            if not template_detail or not isinstance(template_detail.data, dict):
+                return Response({"error": "Template data not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+            selected_columns = template_detail.data.get('columns', [])
+            column_names = [col['column_name'] for col in selected_columns]
+            labels = {col['column_name']: col['label'] for col in selected_columns}
+        elif report_id:
+            report_id = int(report_id)
+            report = next((r for r in full_data if r.get('id') == report_id), None)
+            if not report:
+                return Response({"error": "Report not found"}, status=status.HTTP_404_NOT_FOUND)
+            
+            column_names = [col["column_name"] for col in report["columns"]]
+            labels = {col["column_name"]: col["label"] for col in report["columns"]}
+            template = None 
+        else:
+            return Response({"error": "Either template_id or report_id is required"}, status=status.HTTP_400_BAD_REQUEST)
+            
         report = next((r for r in full_data if r.get('id') == report_id), None)
         
         if not report:
@@ -511,12 +585,12 @@ def get_template_report_data(request):
             return Response({"error": "No records found for the given filters"}, status=status.HTTP_404_NOT_FOUND)
         
         return Response({
-            "template_id": template.id,
-            "template_name": template.name,
-            "report_name": template.parent_report.report_name,
-            "columns":  [labels.get(col, col) for col in column_names],
-            "data": filtered_rows  
-        }, status=status.HTTP_200_OK)
+            "template_id": template.id if template else None,
+            "template_name": template.name if template else None,
+            "report_name": template.parent_report.report_name if template else report["name"],
+            "columns": [labels[field] for field in column_names if field in labels],
+            "data": filtered_rows
+        },status=status.HTTP_200_OK)
 
     except ReportTemplateMaster.DoesNotExist:
         return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
