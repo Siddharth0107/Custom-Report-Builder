@@ -19,6 +19,8 @@ import { DatePickerModule } from 'primeng/datepicker';
 })
 export class OuterFilterViewComponent {
   templateId: number = 0;
+  parentReportId: number = 0;
+  isTemporary: boolean = false;
   reportData: Array<OuterFilterViewData> = [{
     filter_label: '',
     filter_name: '',
@@ -36,6 +38,8 @@ export class OuterFilterViewComponent {
 
   ngOnInit(): void {
     this.templateId = history.state.id;
+    this.parentReportId = history.state.parent_report_id;
+    this.isTemporary = history.state.is_temporary;
     if (!this.templateId) {
       this.location.back();
       return;
@@ -86,25 +90,69 @@ export class OuterFilterViewComponent {
     return key;
   }
 
+  // createSubReport() {
+  //   const filters = { ...this.dropdownValues };
+
+  //   if (filters['from_to_date'] && filters['from_to_date'].length === 2) {
+  //     const [from, to] = filters['from_to_date'];
+
+  //     // Convert JavaScript Date to 'YYYY-MM-DD'
+  //     const formatDate = (date: Date) =>
+  //       date instanceof Date
+  //         ? date.toISOString().slice(0, 10)  // get YYYY-MM-DD
+  //         : date;
+
+  //     filters['from_to_date'] = [formatDate(from), formatDate(to)];
+  //   }
+  //   const payload = {
+  //     template_id: this.templateId,
+  //     filters: filters
+  //   };
+
+  //   this.reportService.createSubReport(payload).subscribe({
+  //     next: (response: any) => {
+  //       this.router.navigate(['/generated-report'], {
+  //         state: {
+  //           report_data: response
+  //         }
+  //       });
+  //     },
+  //     error: (error: any) => {
+  //       alert(error.error?.error || 'Something went wrong');
+  //     }
+  //   });
+  // }
+
   createSubReport() {
     const filters = { ...this.dropdownValues };
 
+    // Format the from_to_date if it's present
     if (filters['from_to_date'] && filters['from_to_date'].length === 2) {
       const [from, to] = filters['from_to_date'];
 
-      // Convert JavaScript Date to 'YYYY-MM-DD'
       const formatDate = (date: Date) =>
         date instanceof Date
-          ? date.toISOString().slice(0, 10)  // get YYYY-MM-DD
+          ? date.toISOString().slice(0, 10)
           : date;
 
       filters['from_to_date'] = [formatDate(from), formatDate(to)];
     }
-    const payload = {
-      template_id: this.templateId,
-      filters: filters
-    };
 
+    // Construct the payload based on whether it's a temporary template
+    let payload: any;
+    if (this.isTemporary && this.parentReportId) {
+      payload = {
+        report_id: this.parentReportId,
+        filters: filters
+      };
+    } else {
+      payload = {
+        template_id: this.templateId,
+        filters: filters
+      };
+    }
+
+    // API call
     this.reportService.createSubReport(payload).subscribe({
       next: (response: any) => {
         this.router.navigate(['/generated-report'], {
@@ -118,6 +166,7 @@ export class OuterFilterViewComponent {
       }
     });
   }
+
   onDoubleClick(autoComp: any, filterName: string) {
     this.filterSuggestions({ query: '#' }, filterName);
     autoComp.show();

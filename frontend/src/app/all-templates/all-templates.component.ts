@@ -156,6 +156,8 @@ export class AllTemplatesComponent implements OnInit {
               state: {
                 report_data: this.reportData,
                 id: id,
+                parent_report_id: data[id - 1].parent_report.id,
+                is_temporary: data[id - 1].isTemporary,
               }
             });
           },
