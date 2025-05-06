@@ -357,7 +357,10 @@ def get_filter_options(request):
 
         data = request.data
         template_id = int(data.get('template_id')) 
-        template_report = TemplateMaster.objects.get(id=template_id)
+        try:
+         template_report = TemplateMaster.objects.get(id=template_id)
+        except TemplateMaster.DoesNotExist:
+            return Response({'message': f'TemplateMaster with id {template_id} not found'}, status=404)
         template_report_data = model_to_dict(template_report)
         report_id = template_report_data['parent_report']
 
