@@ -76,10 +76,10 @@ def create_report_template(request):
         template_name = data.get('template_name', '').strip()
         selected_columns = data.get('columns', [])
         template_filters = data.get('report_filters',[])
-        if not is_valid_template_name(template_name):
-          return Response({
-            "error": "Template name must start with a letter or digits and can only contain letters, numbers, spaces, underscores (_) or hyphens (-)."
-        }, status=status.HTTP_400_BAD_REQUEST)
+        # if not is_valid_template_name(template_name):
+        #   return Response({
+        #     "error": "Template name must start with a letter or digits and can only contain letters, numbers, spaces, underscores (_) or hyphens (-)."
+        # }, status=status.HTTP_400_BAD_REQUEST)
         if not parent_report_id or not template_name or not selected_columns:
             return Response({"error": "Missing required fields."}, status=status.HTTP_400_BAD_REQUEST)
 
