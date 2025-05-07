@@ -1,30 +1,16 @@
-<p-dialog
-  draggable="false"
-  [header]="
+<p-dialog draggable="false" [header]="
     reportTypeData.parent_report_name
       ? 'Create Template from : ' + reportTypeData.parent_report_name
       : templateTypeData.name
-  "
-  (onHide)="close()"
-  [modal]="true"
-  [(visible)]="visible"
-  [style]="{ width: '50rem' }"
->
-  <ng-container *ngIf="data?.columns || data?.template; else noData" class="">
-    <div
-      *ngIf="reportTypeData.columns && reportTypeData.columns.length > 0"
-      class="flex gap-8"
-    >
+  " (onHide)="close()" [modal]="true" [(visible)]="visible" [style]="{ width: '50rem' }">
+  <ng-container *ngIf="data?.columns || data?.template" class="">
+    <div *ngIf="reportTypeData.columns && reportTypeData.columns.length > 0" class="flex gap-8">
       <div class="w-1/2 scrollbar-thin h-[50vh] overflow-auto">
         <h3 class="font-semibold mb-2">Report Columns</h3>
         <div *ngFor="let field of reportTypeData.columns" class="block">
           <label class="w-full flex items-center gap-4 my-2">
-            <input
-              class="h-[20px] w-[20px]"
-              type="checkbox"
-              [checked]="isSelected('create', field)"
-              (change)="toggleField(field)"
-            />
+            <input class="h-[20px] w-[20px]" type="checkbox" [checked]="isSelected('create', field)"
+              (change)="toggleField(field)" />
             {{ field.label }}
           </label>
         </div>
@@ -32,67 +18,74 @@
 
       <div class="w-1/2">
         <h3 class="font-semibold mb-2">Outer Filters</h3>
-        <div
-          *ngFor="let filter of reportTypeData.outer_filters; index as idx"
-          class="block"
-        >
+        <div *ngFor="let filter of reportTypeData.outer_filters; index as idx" class="block">
           <label class="w-full flex items-center gap-4 my-2">
-            <input
-              class="h-[20px] w-[20px]"
-              type="checkbox"
-              [checked]="isFilterSelected('create', filter)"
-              [disabled]="filter.exist_in_report || filter.is_compulsory"
-              (change) = "toggleFilter(filter)"
-            />
+            <input class="h-[20px] w-[20px]" type="checkbox" [checked]="isFilterSelected('create', filter)"
+              [disabled]="filter.exist_in_report || filter.is_compulsory" (change)="toggleFilter(filter)" />
             {{
-              filter.is_compulsory
-                ? filter.filter_label + "*"
-                : filter.filter_label
+            filter.is_compulsory
+            ? filter.filter_label + "*"
+            : filter.filter_label
             }}
           </label>
         </div>
       </div>
     </div>
 
+    <!-- <div class="flex gap-8" *ngIf="data?.template && data.template.length > 0">
+      <div class="w-1/2 scrollbar-thin h-[50vh] overflow-auto">
+        <h3 class="font-semibold mb-2">Report Columns 2</h3>
+        <div *ngFor="let field of templateTypeData.parent_report.report_columns" class="block">
+          <label class="w-full flex items-center gap-4 my-2">
+            <input class="h-[20px] w-[20px]" type="checkbox" [checked]="isSelected('edit', field)"
+              (change)="toggleField(field)" />
+            {{ field.label }}
+          </label>
+        </div>
+      </div>
+      <div class="w-1/2">
+        <h3 class="font-semibold mb-2">Outer Filters 2</h3>
+        <div *ngFor="
+            let filter of templateTypeData.parent_report.report_filters;
+            index as idx
+          " class="block">
+          <label class="w-full flex items-center gap-4 my-2">
+            <input class="h-[20px] w-[20px]" type="checkbox" [checked]="isFilterSelected('edit', filter)"
+              [disabled]="filter.exist_in_report || filter.is_compulsory" (change)="toggleFilter(filter)" />
+            {{
+            filter.is_compulsory
+            ? filter.filter_label + "*"
+            : filter.filter_label
+            }}
+          </label>
+        </div>
+      </div>
+    </div> -->
+
     <div class="flex gap-8" *ngIf="data?.template && data.template.length > 0">
       <div class="w-1/2 scrollbar-thin h-[50vh] overflow-auto">
         <h3 class="font-semibold mb-2">Report Columns</h3>
-        <div
-          *ngFor="let field of templateTypeData.parent_report.report_columns"
-          class="block"
-        >
+        <div *ngFor="let field of templateTypeData.parent_report.report_columns" class="block">
           <label class="w-full flex items-center gap-4 my-2">
-            <input
-              class="h-[20px] w-[20px]"
-              type="checkbox"
-              [checked]="isSelected('edit', field)"
-              (change)="toggleField(field)"
-            />
+            <input class="h-[20px] w-[20px]" type="checkbox" [checked]="isSelected('edit', field)"
+              (change)="toggleField(field)" />
             {{ field.label }}
           </label>
         </div>
       </div>
       <div class="w-1/2">
         <h3 class="font-semibold mb-2">Outer Filters</h3>
-        <div
-          *ngFor="
+        <div *ngFor="
             let filter of templateTypeData.parent_report.report_filters;
             index as idx
-          "
-          class="block"
-        >
+          " class="block">
           <label class="w-full flex items-center gap-4 my-2">
-            <input
-              class="h-[20px] w-[20px]"
-              type="checkbox"
-              [checked]="isFilterSelected('edit', filter)"
-              [disabled]="filter.exist_in_report || filter.is_compulsory"
-              (change) = "toggleFilter(filter)"
-            />
+            <input class="h-[20px] w-[20px]" type="checkbox" [checked]="isFilterSelected('edit', filter)"
+              [disabled]="filter.exist_in_report || filter.is_compulsory" (change)="toggleFilter(filter)" />
             {{
-              filter.is_compulsory
-                ? filter.filter_label + "*"
-                : filter.filter_label
+            filter.is_compulsory
+            ? filter.filter_label + "*"
+            : filter.filter_label
             }}
           </label>
         </div>
@@ -100,7 +93,68 @@
     </div>
   </ng-container>
 
-  <ng-template #noData>No records found</ng-template>
+  <div *ngIf="groupedDataFalg">
+    <div *ngFor="let item of groupedData;" class="mb-10">
+      <h3 class="font-semibold mb-2 text-2xl">{{item.parent_report_name}}</h3>
+      <div class="flex gap-8">
+        <div class="w-1/2 scrollbar-thin">
+          <h3 class="font-semibold mb-2">Report Columns</h3>
+          <div *ngFor="let field of item.columns" class="block">
+            <label class="w-full flex items-center gap-4 my-2">
+              <input class="h-[20px] w-[20px]" type="checkbox" [checked]="isSelected('create', field)"
+                (change)="toggleField(field,item.reportId)" />
+              {{ field.label }}
+            </label>
+          </div>
+        </div>
+
+        <div class="w-1/2">
+          <h3 class="font-semibold mb-2">Outer Filters</h3>
+          <div *ngFor="let filter of item.outer_filters; index as idx" class="block">
+            <label class="w-full flex items-center gap-4 my-2">
+              <input class="h-[20px] w-[20px]" type="checkbox" [checked]="isFilterSelected('create', filter)"
+                [disabled]="filter.exist_in_report || filter.is_compulsory" (change)="toggleFilter(filter)" />
+              {{
+              filter.is_compulsory
+              ? filter.filter_label + "*"
+              : filter.filter_label
+              }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-8" *ngIf="data?.template && data.template.length > 0">
+      <div class="w-1/2 scrollbar-thin h-[50vh] overflow-auto">
+        <h3 class="font-semibold mb-2">Report Columns</h3>
+        <div *ngFor="let field of templateTypeData.parent_report.report_columns" class="block">
+          <label class="w-full flex items-center gap-4 my-2">
+            <input class="h-[20px] w-[20px]" type="checkbox" [checked]="isSelected('edit', field)"
+              (change)="toggleField(field)" />
+            {{ field.label }}
+          </label>
+        </div>
+      </div>
+      <div class="w-1/2">
+        <h3 class="font-semibold mb-2">Outer Filters</h3>
+        <div *ngFor="
+            let filter of templateTypeData.parent_report.report_filters;
+            index as idx
+          " class="block">
+          <label class="w-full flex items-center gap-4 my-2">
+            <input class="h-[20px] w-[20px]" type="checkbox" [checked]="isFilterSelected('edit', filter)"
+              [disabled]="filter.exist_in_report || filter.is_compulsory" (change)="toggleFilter(filter)" />
+            {{
+            filter.is_compulsory
+            ? filter.filter_label + "*"
+            : filter.filter_label
+            }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="flex items-center gap-8">
     <div class="flex items-center gap-4 my-4">
@@ -110,24 +164,16 @@
 
     <div *ngIf="templateTypeData.isTemporary || reportTypeData.reportId" class="flex items-center gap-3">
       <label class="w-full flex items-center gap-4 my-2">
-        <input
-          class="h-[20px] w-[20px]"
-          type="checkbox"
-          (change)="isTemporaryTemplate = !isTemporaryTemplate"
-          [checked]="templateTypeData.isTemporary && true"
-          [disabled]="templateTypeData.isTemporary && true"
-        />
+        <input class="h-[20px] w-[20px]" type="checkbox" (change)="isTemporaryTemplate = !isTemporaryTemplate"
+          [checked]="templateTypeData.isTemporary && true" [disabled]="templateTypeData.isTemporary && true" />
         Temporary Template
       </label>
     </div>
   </div>
 
-  <p-button
-    [label]="reportTypeData.reportId ? 'Create' : 'Update'"
-    (click)="
+  <p-button [label]="reportTypeData.reportId ? 'Create' : 'Update'" (click)="
       reportTypeData.reportId
         ? createTemplate(reportTypeData)
         : updateTemplate(templateTypeData)
-    "
-  />
+    " />
 </p-dialog>

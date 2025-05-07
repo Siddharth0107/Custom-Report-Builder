@@ -7,6 +7,7 @@ export type APIResponse = {
 export type ReportColumns = {
     column_name: string;
     label: string;
+    report_id: number;
 }
 
 export type Filters = {
@@ -29,7 +30,6 @@ export type Report = {
 export type TransformedReport = {
     reportId: number;
     parent_report_name: string;
-    saveBtnEnable: boolean,
     columns: Array<ReportColumns>;
     outer_filters: Array<Filters>;
     dialogVisible: boolean;
@@ -69,4 +69,9 @@ export type ReportData = {
     report_name: string;
     columns: string[];
     data: { [key: string]: string }[];
+}
+
+export type ReportSelect = {
+    id: number;
+    name: string;
 }

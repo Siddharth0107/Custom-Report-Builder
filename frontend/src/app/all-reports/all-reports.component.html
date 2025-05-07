@@ -1,7 +1,7 @@
 <main class="container mx-auto">
   <h1 class="my-4 text-center text-3xl">Custom Report Builder</h1>
 
-  <div class="overflow-x-auto max-w-full border rounded scrollbar-thin">
+  <div class="overflow-x-auto max-w-full scrollbar-thin">
     <div class="min-w-[720px]">
       <table class="custom-table w-full table-fixed">
         <thead class="bg-gray-100 sticky top-0 z-10">
@@ -11,29 +11,36 @@
             <th class="w-1/6">Actions</th>
           </tr>
         </thead>
-      </table>
 
-      <div class="max-h-[calc(100vh-200px)] overflow-y-auto scrollbar-thin">
-        <table class="custom-table w-full table-fixed">
-          <tbody>
-            <tr *ngFor="let product of products; index as i">
-              <td>{{ i + 1 }}</td>
-              <td>{{ product.parent_report_name }}</td>
-              <td>
-                <div class="actions">
-                  <p-button icon="pi pi-plus" (click)="openDialog(product)"></p-button>
-                  <ColumnDialog
-                    *ngIf="product.dialogVisible"
-                    [data]="product"
-                    [visible]="product.dialogVisible"
-                    (onClose)="closeDialog(product)"
-                  ></ColumnDialog>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <tbody>
+          <tr *ngFor="let product of products; index as i">
+            <td>{{ i + 1 }}</td>
+            <td>{{ product.parent_report_name }}</td>
+            <td>
+              <div class="actions">
+                <p-button icon="pi pi-plus" (click)="openDialog(product)"></p-button>
+                <ColumnDialog *ngIf="product.dialogVisible" [data]="product" [visible]="product.dialogVisible"
+                  (onClose)="closeDialog(product)"></ColumnDialog>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+
+  <div class="card flex items-center my-4 gap-4">
+    <p-multiselect [options]="reports" [(ngModel)]="selectedReports" (ngModelChange)="onReportsChange($event)"
+      placeholder="Select Reports" optionLabel="name" display="chip" styleClass="w-full md:w-80">
+    </p-multiselect>
+
+    <div class="actions">
+      <p-button icon="pi pi-plus" (click)="openGroupDialog()"></p-button>
+    </div>
+
+    <ColumnDialog *ngIf="groupedDataDialog" [data]="passedReportData" [visible]="groupedDataDialog"
+      (onClose)="groupedDataDialog = false;">
+    </ColumnDialog>
+  </div>
+
 </main>

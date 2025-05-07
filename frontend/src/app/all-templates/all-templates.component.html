@@ -2,61 +2,47 @@
   <h1 class="my-4 text-center text-3xl">All Templates</h1>
   <p-confirmDialog></p-confirmDialog>
 
-  <div class="overflow-x-auto max-w-full border rounded scrollbar-thin">
+  <div class="overflow-x-auto max-w-full scrollbar-thin">
     <div class="min-w-[720px]">
       <table class="custom-table w-full table-fixed">
-        <thead class="bg-gray-100 sticky top-0 z-10">
-          <tr>
+        <thead class="sticky top-0 z-10">
+          <tr class="">
             <th class="w-1/6">Sr No.</th>
             <th class="w-1/6">Parent Report Name</th>
             <th class="w-1/6">Template Name</th>
             <th class="w-1/6">Actions</th>
           </tr>
         </thead>
-      </table>
 
-      <div class="max-h-[calc(100vh-200px)] overflow-y-auto scrollbar-thin">
-        <table class="custom-table w-full table-fixed">
-          <tbody>
-            <tr *ngFor="let template of templates; index as i">
-              <td class="w-1/6">{{ i + 1 }}</td>
-              <td class="w-1/6">{{ template.parent_report.report_name }}</td>
-              <td class="w-1/6">{{ template.name }}</td>
-              <td class="w-1/6">
-                <div class="flex justify-center items-center gap-2 sm:gap-4">
-                  <p-button
-                    icon="pi pi-eye"
-                    severity="secondary"
-                    styleClass="p-button-sm"
-                    (click)="createReportFromTemplate(template.id,template.isTemporary)"
-                  ></p-button>
-                  <p-button
-                    severity="info"
-                    styleClass="p-button-sm"
-                    (click)="openDialog(template)"
-                    icon="pi pi-pencil"
-                  ></p-button>
-                  <p-button
-                    icon="pi pi-trash"
-                    severity="danger"
-                    styleClass="p-button-sm"
-                    (click)="
+
+        <tbody>
+          <tr *ngFor="let template of templates; index as i">
+            <td class="w-1/6">{{ i + 1 }}</td>
+            <td class="w-1/6">{{ template.parent_report.report_name }}</td>
+            <td class="w-1/6">{{ template.name }}</td>
+            <td class="w-1/6">
+              <div class="flex justify-center items-center gap-2 sm:gap-4">
+                <i class="cursor-pointer pi pi-eye text-black"
+                  (click)="createReportFromTemplate(template.id,template.isTemporary)"></i>
+                <!-- <p-button icon="pi pi-eye" severity="secondary" styleClass="p-button-sm"
+                    (click)="createReportFromTemplate(template.id,template.isTemporary)"></p-button> -->
+                <i class="pi pi-pencil cursor-pointer primary-icon" (click)="openDialog(template)"></i>
+                <!-- <p-button severity="info" styleClass="p-button-sm" (click)="openDialog(template)"
+                    icon="pi pi-pencil"></p-button> -->
+                <i class="cursor-pointer pi pi-trash danger-icon" (click)="
                       confirmDeleteTemplate(template.id, template.isTemporary)
-                    "
-                  ></p-button>
+                    "></i>
+                <!-- <p-button icon="pi pi-trash" severity="danger" styleClass="p-button-sm" (click)="
+                      confirmDeleteTemplate(template.id, template.isTemporary)
+                    "></p-button> -->
 
-                  <ColumnDialog
-                    *ngIf="template.dialogVisible"
-                    [data]="template"
-                    [visible]="template.dialogVisible"
-                    (onClose)="closeDialog(template)"
-                  ></ColumnDialog>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                <ColumnDialog *ngIf="template.dialogVisible" [data]="template" [visible]="template.dialogVisible"
+                  (onClose)="closeDialog(template)"></ColumnDialog>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </main>

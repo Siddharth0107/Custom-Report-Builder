@@ -4,16 +4,20 @@
   table-layout: fixed;
 }
 
+.border-bottom {
+  border-bottom: 1px solid black;
+}
+
 .custom-table th,
 .custom-table td {
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #000;
   text-align: center;
 }
 
 .custom-table th {
-  background-color: #333;
-  color: #fff;
+  background-color: #deddec;
+  color: black;
 }
 
 .scrollbar-thin::-webkit-scrollbar {
@@ -23,9 +27,17 @@
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
   background-color: #7d7474; /* Tailwind slate-300 */
-  border:none;
+  border: none;
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
-  background-color:none;
+  background-color: none;
+}
+
+.primary-icon {
+  color: #008b8b;
+}
+
+.danger-icon {
+  color: #f9737e;
 }

@@ -35,6 +35,10 @@ export class ColumnDialog implements OnInit {
     dialogVisible: false,
   }];
 
+  groupedData: TransformedReport[] = [];
+
+  groupedDataFalg: boolean = false;
+
   reportTypeData: TransformedReport = {
     columns: [],
     dialogVisible: false,
@@ -42,7 +46,6 @@ export class ColumnDialog implements OnInit {
     outer_filters: [],
     parent_report_name: "",
     reportId: 0,
-    saveBtnEnable: false,
   };
 
   templateTypeData: TransformedTemplate = {
@@ -75,8 +78,27 @@ export class ColumnDialog implements OnInit {
       this.selectedFields = new Set(this.templateTypeData.template);
       this.selectedFilters = new Set(this.templateTypeData.template_filter);
       this.tempName = this.templateTypeData.name;
+    } else if (Array.isArray(this.data)) {
+      // Grouped data scenario
+      this.groupedDataFalg = true;
+      this.groupedData = this.data;
+
+      this.selectedFields = new Set();
+      this.selectedFilters = new Set();
+
+      this.data.forEach(item => {
+        if (item.columns) {
+          // Assuming outer_filters is present in each grouped item
+          (item.outer_filters || []).forEach((filter: any) => {
+            if (filter.is_compulsory) {
+              this.selectedFilters.add(filter);
+            }
+          });
+        }
+        console.log(this.data)
+      });
     } else {
-      console.warn("this data is not in correct form")
+      console.log(this.data);
     }
   }
 
@@ -103,10 +125,12 @@ export class ColumnDialog implements OnInit {
     }
   }
 
-  toggleField(field: ReportColumns): void {
+  toggleField(field: ReportColumns, reportId?: number): void {
+    console.log(field)
     let existing = Array.from(this.selectedFields).find(
-      (f: ReportColumns) => f.column_name === field.column_name
+      (f: ReportColumns) => f.column_name === field.column_name && f.report_id === field.report_id
     );
+    console.log(existing);
     if (existing) {
       this.selectedFields.delete(existing);
       if (this.data.outer_filters) {
@@ -116,7 +140,7 @@ export class ColumnDialog implements OnInit {
         if (matchingFilter) {
           this.selectedFilters.delete(matchingFilter);
         }
-      } else {
+      } else if (this.data.parent_report) {
         const matchingFilter = this.data.parent_report.report_filters?.find(
           (f: Filters) => {
             return f.filter_name === field.column_name;
@@ -130,6 +154,25 @@ export class ColumnDialog implements OnInit {
             this.selectedFilters.delete(existingFilter);
           }
         }
+      } else {
+        console.log("final else", reportId);
+        // debugger
+        // this.data.filter(item=>item.reportId === field.report_id)[0].outer_filters.find(f=>f.filter_name === field.column_name)
+        const filteredReportData = this.data.filter((item: TransformedReport) => item.reportId === field.report_id);
+        const matchingFilter = filteredReportData[0].outer_filters?.find(
+          (f: Filters) => f.filter_name === field.column_name
+        );
+        if (matchingFilter) {
+          const existingFilter = Array.from(this.selectedFilters).find(
+            (f: Filters) => f.filter_name === matchingFilter.filter_name
+          );
+          if (existingFilter) {
+            this.selectedFilters.delete(existingFilter);
+          }
+        }
+        console.log(matchingFilter);
+        console.log(filteredReportData);
+        console.log(this.selectedFields);
       }
     } else {
       this.selectedFields.add(field);
@@ -140,13 +183,27 @@ export class ColumnDialog implements OnInit {
         if (matchingFilter) {
           this.selectedFilters.add(matchingFilter);
         }
-      } else {
+      } else if (this.data.parent_report) {
         const matchingFilter = this.data.parent_report.report_filters?.find(
           (f: Filters) => f.filter_name == field.column_name
         );
         if (matchingFilter) {
           this.selectedFilters.add(matchingFilter);
         }
+      } else {
+        console.log("final else", reportId);
+        // debugger
+        // this.data.filter(item=>item.reportId === field.report_id)[0].outer_filters.find(f=>f.filter_name === field.column_name)
+        const filteredReportData = this.data.filter((item: TransformedReport) => item.reportId === field.report_id);
+        const matchingFilter = filteredReportData[0].outer_filters?.find(
+          (f: Filters) => f.filter_name === field.column_name
+        );
+        if (matchingFilter) {
+          this.selectedFilters.add(matchingFilter);
+        }
+        console.log(matchingFilter);
+        console.log(filteredReportData);
+        console.log(this.selectedFields);
       }
     }
     this.data.selected_fields = Array.from(this.selectedFields);
