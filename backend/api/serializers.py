@@ -20,7 +20,7 @@ class ReportPermissionListSerializer(serializers.ModelSerializer):
 class ReportColumnSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReportColumns
-        fields = ['column_name','label']
+        fields = ['report_id','column_name','label']
         
 class ReportFilterSerializer(serializers.ModelSerializer):
     class Meta:

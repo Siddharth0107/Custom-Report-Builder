@@ -188,7 +188,6 @@ def get_templates(request):
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
  
-
 @api_view(['PUT'])
 def update_template(request):
     try:
@@ -206,7 +205,8 @@ def update_template(request):
           return Response({
             "error": "Template name must start with a letter and can only contain letters, numbers, spaces, underscores (_) or hyphens (-)."
         }, status=status.HTTP_400_BAD_REQUEST)
-        # Ensure selected_columns is a list of objects with column_name and label
+       
+       
         if not isinstance(selected_columns, list) or not all(isinstance(col, dict) for col in selected_columns):
             return Response({"error": "Columns must be a list of objects with column_name and label."}, status=status.HTTP_400_BAD_REQUEST)
 
