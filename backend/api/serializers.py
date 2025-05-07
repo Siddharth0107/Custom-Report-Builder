@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ReportPermission,TemplateColumns,ReportTemplates,Reports,ReportColumns,ReportFilters,TemplateFilters
+from .models import ReportPermission,TemplateColumns,ReportTemplates,Reports,ReportColumns,ReportFilters,TemplateFilters,ReportTemplateDetails,ReportTemplateMaster
 class ColumnSerializer(serializers.Serializer):
     column = serializers.CharField()
     is_selected = serializers.BooleanField()
@@ -34,25 +34,38 @@ class ReportSerializer(serializers.ModelSerializer):
         model = Reports
         fields = ['id','report_name','report_columns','report_filters']
     
-class ReportTemplateColumnSerializer(serializers.ModelSerializer):
+class ReportTemplateDetailsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TemplateColumns
-        fields = ['column_name','label']
+        model = ReportTemplateDetails
+        fields = ['data']
         
 class ReportTemplateFilterSerializer(serializers.ModelSerializer):
     class Meta:
         model = TemplateFilters
         fields = ['filter_name','filter_label']
         
-class ReportTemplatesSerializer(serializers.ModelSerializer):
-    
+class ReportTemplatesMasterSerializer(serializers.ModelSerializer):
     parent_report = ReportSerializer()
-    template = ReportTemplateColumnSerializer(many=True)
-    template_filter = ReportTemplateFilterSerializer(many=True)
-    
+    # details = ReportTemplateDetailsSerializer(many=True)
+    template = serializers.SerializerMethodField()
+    template_filter = serializers.SerializerMethodField()
     class Meta:
         model = ReportTemplates
         fields = ['id','name','parent_report','template','template_filter']
 
     def get_columns(self, obj):
         return TemplateColumns.objects.filter(template=obj).values_list('column_name', flat=True)
+    
+    def get_template(self, obj):
+        if obj.details.exists():
+            detail = obj.details.first()
+            columns = detail.data.get("columns", [])
+            return [{"column_name": col["column_name"], "label": col["label"]} for col in columns]
+        return []
+
+    def get_template_filter(self, obj):
+        if obj.details.exists():
+            detail = obj.details.first()
+            filters = detail.data.get("filters", [])
+            return [{"filter_name": f["filter_name"], "filter_label": f["filter_label"]} for f in filters]
+        return []
